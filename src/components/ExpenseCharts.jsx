@@ -83,9 +83,6 @@ function ExpenseCharts({ expenses = [] }) {
           <Bar data={data} />
         </Grid>
         <Grid item xs={12} md={6} className="chart-grid-item">
-          <Typography variant="h6" className="chart-title">
-            Gráfico Circular
-          </Typography>
           <Box className="pie-chart-container">
             <Pie data={pieData} options={{ maintainAspectRatio: false }} />
           </Box>

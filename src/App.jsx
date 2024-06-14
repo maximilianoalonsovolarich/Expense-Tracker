@@ -12,14 +12,15 @@ import Statistics from './pages/Statistics';
 import { fetchExpenses } from './services/api';
 
 function App() {
-  const [mode, setMode] = useState('light');
+  const storedMode = localStorage.getItem('theme') || 'light';
+  const [mode, setMode] = useState(storedMode);
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     async function getExpenses() {
       try {
-        const expenses = await fetchExpenses();
-        setExpenses(expenses);
+        const expensesData = await fetchExpenses();
+        setExpenses(expensesData);
       } catch (error) {
         console.error('Error fetching expenses:', error);
       }

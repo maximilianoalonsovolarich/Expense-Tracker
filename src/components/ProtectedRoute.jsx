@@ -3,6 +3,8 @@ import { Navigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import {
+  Box,
+  CircularProgress,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -26,7 +28,16 @@ function ProtectedRoute({ children }) {
   }, [user]);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!user) {

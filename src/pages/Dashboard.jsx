@@ -1,26 +1,42 @@
-import React, { useState } from 'react';
-import { addExpense, deleteExpense } from '../services/api';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
   Container,
   CssBaseline,
+  CircularProgress,
   Typography,
-  Button,
+  Paper,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
-import { logOut } from '../firebase';
+import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Dashboard({ expenses }) {
-  const [localExpenses, setLocalExpenses] = useState(expenses);
+function Dashboard() {
+  const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getExpenses() {
+      try {
+        const expensesData = await fetchExpenses();
+        setExpenses(expensesData);
+      } catch (error) {
+        console.error('Error fetching expenses:', error);
+        toast.error('Error al cargar los gastos');
+      } finally {
+        setLoading(false);
+      }
+    }
+    getExpenses();
+  }, []);
 
   const handleAddExpense = async (expense) => {
     try {
       const newExpenses = await addExpense(expense);
-      setLocalExpenses([...localExpenses, ...newExpenses]);
+      setExpenses([...expenses, ...newExpenses]);
       toast.success('Gasto añadido exitosamente');
     } catch (error) {
       console.error('Error adding expense:', error);
@@ -29,59 +45,80 @@ function Dashboard({ expenses }) {
   };
 
   const handleDeleteExpense = async (id) => {
-    const previousExpenses = localExpenses;
-    setLocalExpenses(localExpenses.filter((expense) => expense.id !== id));
+    const previousExpenses = expenses;
+    setExpenses(expenses.filter((expense) => expense.id !== id));
 
     try {
       await deleteExpense(id);
       toast.success('Gasto eliminado exitosamente');
     } catch (error) {
       console.error('Error deleting expense:', error);
-      setLocalExpenses(previousExpenses);
+      setExpenses(previousExpenses);
       toast.error('Error al eliminar el gasto');
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      toast.success('Cierre de sesión exitoso');
-    } catch (error) {
-      toast.error('Error al cerrar sesión: ' + error.message);
-    }
-  };
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="lg" className="container">
       <CssBaseline />
       <ToastContainer position="top-right" />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 2,
-        }}
-      >
-        <Typography variant="h5">Dashboard</Typography>
-        <Button color="secondary" variant="contained" onClick={handleLogout}>
-          Cerrar Sesión
-        </Button>
-      </Box>
-      <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={8}>
-          <ExpenseForm
-            onAddExpense={handleAddExpense}
-            className="form-container"
-          />
+      {expenses.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 2,
+          }}
+        >
+          <Typography variant="h5">Gastos</Typography>
+        </Box>
+      )}
+      {expenses.length > 0 ? (
+        <Grid container spacing={3} sx={{ mt: 3 }}>
+          <Grid item xs={12} md={8}>
+            <ExpenseForm
+              onAddExpense={handleAddExpense}
+              className="form-container"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <ExpenseList
+              expenses={expenses}
+              onDeleteExpense={handleDeleteExpense}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <ExpenseList
-            expenses={localExpenses}
-            onDeleteExpense={handleDeleteExpense}
-          />
-        </Grid>
-      </Grid>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh',
+          }}
+        >
+          <Paper elevation={3} sx={{ padding: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Añadir Gasto
+            </Typography>
+            <ExpenseForm onAddExpense={handleAddExpense} />
+          </Paper>
+        </Box>
+      )}
     </Container>
   );
 }
