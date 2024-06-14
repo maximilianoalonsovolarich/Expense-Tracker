@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import {
-  Grid,
   Box,
+  Grid,
   CircularProgress,
   Container,
   CssBaseline,
+  Typography,
+  Paper,
+  Button,
 } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { fetchExpenses, addExpense, deleteExpense } from '../api';
-import Header from '../components/Header';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import ExpenseChart from '../components/ExpenseChart';
+import { logOut } from '../firebase';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -24,12 +27,11 @@ function Dashboard() {
         const expenses = await fetchExpenses();
         setExpenses(expenses);
       } catch (error) {
-        toast.error('Error fetching data');
+        console.error('Error fetching expenses:', error);
       } finally {
         setLoading(false);
       }
     }
-
     getExpenses();
   }, []);
 
@@ -39,7 +41,8 @@ function Dashboard() {
       setExpenses([...expenses, ...newExpenses]);
       toast.success('Gasto añadido exitosamente');
     } catch (error) {
-      toast.error('Error al añadir gasto');
+      console.error('Error adding expense:', error);
+      toast.error('Error al añadir el gasto');
     }
   };
 
@@ -51,8 +54,18 @@ function Dashboard() {
       await deleteExpense(id);
       toast.success('Gasto eliminado exitosamente');
     } catch (error) {
+      console.error('Error deleting expense:', error);
       setExpenses(previousExpenses);
-      toast.error('Error al eliminar gasto');
+      toast.error('Error al eliminar el gasto');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      toast.success('Cierre de sesión exitoso');
+    } catch (error) {
+      toast.error('Error al cerrar sesión: ' + error.message);
     }
   };
 
@@ -72,7 +85,20 @@ function Dashboard() {
   return (
     <Container maxWidth="lg">
       <CssBaseline />
-      <Header />
+      <ToastContainer />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 2,
+        }}
+      >
+        <Typography variant="h5">Dashboard</Typography>
+        <Button color="secondary" variant="contained" onClick={handleLogout}>
+          Cerrar Sesión
+        </Button>
+      </Box>
       <Grid container spacing={3} sx={{ mt: 3 }}>
         <Grid item xs={12} md={8}>
           <ExpenseList
@@ -85,7 +111,6 @@ function Dashboard() {
           <ExpenseChart expenses={expenses} />
         </Grid>
       </Grid>
-      <ToastContainer />
     </Container>
   );
 }
