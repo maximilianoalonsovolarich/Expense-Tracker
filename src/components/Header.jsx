@@ -1,13 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Button,
-  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from '@mui/material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  Brightness4,
+  Brightness7,
+  Home as HomeIcon,
+  BarChart as BarChartIcon,
+  ExitToApp as ExitToAppIcon,
+} from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, logOut } from '../firebase';
@@ -17,6 +28,7 @@ function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -32,6 +44,7 @@ function Header({ mode, toggleColorMode }) {
 
   const handleNavigate = (path) => {
     navigate(path);
+    setDrawerOpen(false);
   };
 
   const handleLogout = async () => {
@@ -44,59 +57,66 @@ function Header({ mode, toggleColorMode }) {
     }
   };
 
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
+
   return (
-    <AppBar position="static" sx={{ mb: 2 }}>
-      <Toolbar>
-        <Typography variant="h6" className="header-title" sx={{ flexGrow: 1 }}>
-          Aplicación de Gastos
-        </Typography>
-        {user && (
-          <>
-            {location.pathname === '/statistics' ? (
-              <Button color="inherit" onClick={() => handleNavigate('/')}>
-                Volver al Inicio
-              </Button>
-            ) : (
-              <Button
-                color="inherit"
-                onClick={() => handleNavigate('/statistics')}
-              >
-                Ver Estadísticas
-              </Button>
-            )}
-            <Box sx={{ ml: 2 }}>
-              <Button
-                color="inherit"
-                variant="contained"
-                sx={{
-                  backgroundColor: '#1976D2',
-                  color: '#FFFFFF',
-                  '&:hover': {
-                    backgroundColor: '#115293',
-                  },
-                }}
-                onClick={handleLogout}
-              >
-                Cerrar Sesión
-              </Button>
-            </Box>
-          </>
-        )}
-        <IconButton
-          sx={{
-            ml: 1,
-            color: '#FFFFFF',
-            transition: 'color 0.5s',
-            '&:hover': {
-              color: mode === 'light' ? '#FFEB3B' : '#FFC107',
-            },
-          }}
-          onClick={toggleColorMode}
-        >
-          {mode === 'light' ? <Brightness7 /> : <Brightness4 />}
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="static" sx={{ mb: 2 }}>
+        <Toolbar>
+          {user && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Rastreador de Gastos
+          </Typography>
+          <IconButton
+            sx={{
+              color: '#FFFFFF',
+              transition: 'color 0.5s',
+              '&:hover': {
+                color: mode === 'light' ? '#FFEB3B' : '#FFC107',
+              },
+            }}
+            onClick={toggleColorMode}
+          >
+            {mode === 'light' ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      {user && (
+        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+          <List>
+            <ListItem button onClick={() => handleNavigate('/')}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inicio" />
+            </ListItem>
+            <ListItem button onClick={() => handleNavigate('/statistics')}>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Estadísticas" />
+            </ListItem>
+            <ListItem button onClick={handleLogout}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Cerrar Sesión" />
+            </ListItem>
+          </List>
+        </Drawer>
+      )}
+    </>
   );
 }
 

@@ -4,7 +4,6 @@ body {
   background-color: #f9f9f9;
   color: #333;
   transition: background-color 0.5s, color 0.5s;
-  /* Adjusted transition */
 }
 
 * {
@@ -17,6 +16,7 @@ body {
 
 .header-title {
   flex-grow: 1;
+  font-size: 1.5rem;
 }
 
 .header-buttons {
@@ -71,6 +71,20 @@ body {
 }
 
 @media (max-width: 768px) {
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-buttons .menu-button {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
   .form-container {
     margin-bottom: 2rem;
   }
