@@ -1,3 +1,4 @@
+// src/components/ExpenseCharts.jsx
 import React, { useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import {
@@ -33,22 +34,22 @@ function ExpenseCharts({ expenses = [] }) {
   const [filter, setFilter] = useState('Cantidad');
 
   const data = {
-    labels: expenses.map((expense) => expense.fields.Fecha),
+    labels: expenses.map((expense) => expense.Fecha),
     datasets: [
       {
         label: filter,
-        data: expenses.map((expense) => expense.fields[filter]),
+        data: expenses.map((expense) => expense[filter]),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
     ],
   };
 
   const pieData = {
-    labels: expenses.map((expense) => expense.fields.Fecha),
+    labels: expenses.map((expense) => expense.Fecha),
     datasets: [
       {
         label: filter,
-        data: expenses.map((expense) => expense.fields[filter]),
+        data: expenses.map((expense) => expense[filter]),
         backgroundColor: expenses.map(
           () => `#${Math.floor(Math.random() * 16777215).toString(16)}`
         ),

@@ -1,3 +1,4 @@
+// src/components/ExpenseList.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Paper,
@@ -42,22 +43,22 @@ function ExpenseList({ expenses, onDeleteExpense }) {
       {currentExpense ? (
         <Box sx={{ position: 'relative' }}>
           <Typography variant="subtitle1" color="textPrimary">
-            Fecha: {currentExpense.fields.Fecha}
+            Fecha: {currentExpense.Fecha || 'No disponible'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Cantidad: {currentExpense.fields.Cantidad}
+            Cantidad: {currentExpense.Cantidad || 'No disponible'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Categoría: {currentExpense.fields.Categoría}
+            Categoría: {currentExpense.Categoría || 'No disponible'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Descripción: {currentExpense.fields.Descripción}
+            Descripción: {currentExpense.Descripción || 'No disponible'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Ingreso: {currentExpense.fields.Ingreso}
+            Ingreso: {currentExpense.Ingreso || 'No disponible'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Egreso: {currentExpense.fields.Egreso}
+            Egreso: {currentExpense.Egreso || 'No disponible'}
           </Typography>
           <IconButton
             edge="end"

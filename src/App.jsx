@@ -1,76 +1,71 @@
-import React, { useState, useMemo, useEffect } from 'react';
+// src/App.jsx
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import Statistics from './pages/Statistics';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ErrorFallback from './components/ErrorFallback';
+import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
-import Statistics from './pages/Statistics';
-import { fetchExpenses } from './services/api';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
-  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
-  const [expenses, setExpenses] = useState([]);
+  const [mode, setMode] = React.useState(
+    localStorage.getItem('theme') || 'light'
+  );
   const [user, loading] = useAuthState(auth);
-
-  useEffect(() => {
-    if (user) {
-      async function getExpenses() {
-        try {
-          const expensesData = await fetchExpenses();
-          setExpenses(expensesData);
-        } catch (error) {
-          console.error('Error fetching expenses:', error);
-        }
-      }
-      getExpenses();
-    }
-  }, [user]);
 
   const toggleColorMode = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
   };
 
-  const theme = useMemo(() => getTheme(mode), [mode]);
+  const theme = React.useMemo(() => getTheme(mode), [mode]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <Header mode={mode} toggleColorMode={toggleColorMode} />
-        <ToastContainer position="top-right" />
-        <Routes>
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Dashboard expenses={expenses} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/statistics"
-            element={
-              <ProtectedRoute>
-                <Statistics expenses={expenses} />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Routes>
+            <Route
+              path="/login"
+              element={user ? <Navigate to="/" /> : <Login />}
+            />
+            <Route
+              path="/register"
+              element={user ? <Navigate to="/" /> : <Register />}
+            />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/statistics"
+              element={
+                <ProtectedRoute>
+                  <Statistics />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </ErrorBoundary>
       </Router>
     </ThemeProvider>
   );
