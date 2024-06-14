@@ -23,10 +23,10 @@ function Dashboard() {
       try {
         const expensesData = await fetchExpenses();
         setExpenses(expensesData);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching expenses:', error);
         toast.error('Error al cargar los gastos');
-      } finally {
         setLoading(false);
       }
     }
@@ -75,19 +75,16 @@ function Dashboard() {
     <Container maxWidth="lg" className="container">
       <CssBaseline />
       <ToastContainer position="top-right" />
-      {expenses.length > 0 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 2,
-          }}
-        >
-          <Typography variant="h5">Gastos</Typography>
+      {expenses.length === 0 ? (
+        <Box className="no-expenses-container">
+          <Paper elevation={3} sx={{ padding: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Añadir Gasto
+            </Typography>
+            <ExpenseForm onAddExpense={handleAddExpense} />
+          </Paper>
         </Box>
-      )}
-      {expenses.length > 0 ? (
+      ) : (
         <Grid container spacing={3} sx={{ mt: 3 }}>
           <Grid item xs={12} md={8}>
             <ExpenseForm
@@ -102,22 +99,6 @@ function Dashboard() {
             />
           </Grid>
         </Grid>
-      ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '80vh',
-          }}
-        >
-          <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Añadir Gasto
-            </Typography>
-            <ExpenseForm onAddExpense={handleAddExpense} />
-          </Paper>
-        </Box>
       )}
     </Container>
   );

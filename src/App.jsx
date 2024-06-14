@@ -1,5 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -10,23 +15,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import getTheme from './theme';
 import Statistics from './pages/Statistics';
 import { fetchExpenses } from './services/api';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
 
 function App() {
-  const storedMode = localStorage.getItem('theme') || 'light';
-  const [mode, setMode] = useState(storedMode);
+  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
   const [expenses, setExpenses] = useState([]);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    async function getExpenses() {
-      try {
-        const expensesData = await fetchExpenses();
-        setExpenses(expensesData);
-      } catch (error) {
-        console.error('Error fetching expenses:', error);
+    if (user) {
+      async function getExpenses() {
+        try {
+          const expensesData = await fetchExpenses();
+          setExpenses(expensesData);
+        } catch (error) {
+          console.error('Error fetching expenses:', error);
+        }
       }
+      getExpenses();
     }
-    getExpenses();
-  }, []);
+  }, [user]);
 
   const toggleColorMode = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
@@ -41,7 +50,10 @@ function App() {
         <Header mode={mode} toggleColorMode={toggleColorMode} />
         <ToastContainer position="top-right" />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" /> : <Login />}
+          />
           <Route
             path="/"
             element={

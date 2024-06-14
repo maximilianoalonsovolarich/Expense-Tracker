@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Card,
-  CardContent,
-  CardActions,
+  Paper,
   Typography,
   IconButton,
+  Divider,
   Box,
-  Paper,
+  Grid,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function ExpenseList({ expenses, onDeleteExpense }) {
-  const [currentExpenseIndex, setCurrentExpenseIndex] = useState(
-    expenses.length - 1
-  );
+  const [currentExpenseIndex, setCurrentExpenseIndex] = useState(0);
 
   useEffect(() => {
-    setCurrentExpenseIndex(expenses.length - 1);
+    if (expenses.length > 0) {
+      setCurrentExpenseIndex(0);
+    }
   }, [expenses]);
 
   const handlePrevious = () => {
@@ -36,83 +35,88 @@ function ExpenseList({ expenses, onDeleteExpense }) {
   const currentExpense = expenses[currentExpenseIndex];
 
   return (
-    <Box>
+    <Paper elevation={3} sx={{ padding: 2, borderRadius: '15px' }}>
       <Typography variant="h5" gutterBottom>
         Gastos
       </Typography>
-      {currentExpense && (
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 2,
-            marginBottom: 2,
-            backgroundColor: 'background.paper',
-            borderRadius: '15px',
-            position: 'relative',
-          }}
-        >
-          <CardContent>
-            <Typography variant="h6" color="primary">
-              Fecha: {currentExpense.fields.Fecha}
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              Cantidad: {currentExpense.fields.Cantidad}
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              Categoría: {currentExpense.fields.Categoría}
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              Descripción: {currentExpense.fields.Descripción}
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              Ingreso: {currentExpense.fields.Ingreso}
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              Egreso: {currentExpense.fields.Egreso}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => onDeleteExpense(currentExpense.id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </CardActions>
-        </Paper>
-      )}
-      {expenses.length > 0 && (
-        <Box display="flex" justifyContent="space-between" mt={2}>
+      {currentExpense ? (
+        <Box sx={{ position: 'relative' }}>
+          <Typography variant="subtitle1" color="textPrimary">
+            Fecha: {currentExpense.fields.Fecha}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Cantidad: {currentExpense.fields.Cantidad}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Categoría: {currentExpense.fields.Categoría}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Descripción: {currentExpense.fields.Descripción}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Ingreso: {currentExpense.fields.Ingreso}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Egreso: {currentExpense.fields.Egreso}
+          </Typography>
           <IconButton
-            onClick={handlePrevious}
-            disabled={currentExpenseIndex === 0}
-            sx={{
-              backgroundColor:
-                currentExpenseIndex === 0 ? '#BDBDBD' : '#1976D2',
-              color: '#FFFFFF',
-              '&:hover': { backgroundColor: '#1976D2' },
-            }}
+            edge="end"
+            aria-label="delete"
+            onClick={() => onDeleteExpense(currentExpense.id)}
+            sx={{ position: 'absolute', top: 8, right: 8 }}
           >
-            <ArrowBackIosIcon />
+            <DeleteIcon />
           </IconButton>
-          <IconButton
-            onClick={handleNext}
-            disabled={currentExpenseIndex === expenses.length - 1}
-            sx={{
-              backgroundColor:
-                currentExpenseIndex === expenses.length - 1
-                  ? '#BDBDBD'
-                  : '#1976D2',
-              color: '#FFFFFF',
-              '&:hover': { backgroundColor: '#1976D2' },
-            }}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
+          <Divider sx={{ my: 2 }} />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <IconButton
+                onClick={handlePrevious}
+                disabled={currentExpenseIndex === 0}
+                sx={{
+                  width: '100%',
+                  borderRadius: '15px',
+                  backgroundColor:
+                    currentExpenseIndex === 0 ? '#BDBDBD' : '#1976D2',
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    backgroundColor:
+                      currentExpenseIndex === 0 ? '#BDBDBD' : '#115293',
+                  },
+                }}
+              >
+                <ArrowBackIosIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs={6}>
+              <IconButton
+                onClick={handleNext}
+                disabled={currentExpenseIndex === expenses.length - 1}
+                sx={{
+                  width: '100%',
+                  borderRadius: '15px',
+                  backgroundColor:
+                    currentExpenseIndex === expenses.length - 1
+                      ? '#BDBDBD'
+                      : '#1976D2',
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    backgroundColor:
+                      currentExpenseIndex === expenses.length - 1
+                        ? '#BDBDBD'
+                        : '#115293',
+                  },
+                }}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
         </Box>
+      ) : (
+        <Typography>No hay gastos disponibles</Typography>
       )}
-    </Box>
+    </Paper>
   );
 }
 
