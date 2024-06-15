@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container,
-  CssBaseline,
-  Typography,
   Box,
+  Typography,
   CircularProgress,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
   Button,
+  Paper,
 } from '@mui/material';
-import ExpenseCharts from '../components/ExpenseCharts';
 import { fetchExpenses } from '../services/api';
+import ExpenseCharts from '../components/ExpenseCharts';
 import { saveAs } from 'file-saver';
 
 function Statistics() {
@@ -81,12 +81,15 @@ function Statistics() {
   }
 
   return (
-    <Container maxWidth="lg" className="container" sx={{ mt: 1 }}>
-      <CssBaseline />
-      <Box>
-        <Typography variant="h4" gutterBottom sx={{ mt: 1 }}>
-          Estadísticas de Gastos
-        </Typography>
+    <Container maxWidth="lg" className="container" sx={{ mt: 2 }}>
+      {' '}
+      {/* Reduce top margin */}
+      <Typography variant="h4" gutterBottom sx={{ mt: 2, mb: 2 }}>
+        {' '}
+        {/* Reduce bottom margin */}
+        Estadísticas de Gastos
+      </Typography>
+      <Box sx={{ mb: 2 }}>
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Filtro</InputLabel>
           <Select value={filter} label="Filtro" onChange={handleFilterChange}>
@@ -98,11 +101,11 @@ function Statistics() {
         <Button variant="contained" color="primary" onClick={handleExport}>
           Exportar a CSV
         </Button>
-        <ExpenseCharts
-          expenses={expenses.filter((expense) => expense[filter] !== undefined)}
-          saldoInicial={saldoInicial}
-        />
       </Box>
+      <ExpenseCharts
+        expenses={expenses.filter((expense) => expense[filter] !== undefined)}
+        saldoInicial={saldoInicial}
+      />
     </Container>
   );
 }

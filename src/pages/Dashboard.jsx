@@ -97,10 +97,14 @@ function Dashboard() {
   }
 
   return (
-    <Container maxWidth="lg" className="container" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" className="container" sx={{ mt: 2 }}>
+      {' '}
+      {/* Reduce top margin */}
       <CssBaseline />
       <ToastContainer position="top-right" />
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ mt: 2, mb: 2 }}>
+        {' '}
+        {/* Reduce bottom margin */}
         Dashboard de Gastos
       </Typography>
       <Grid container spacing={4}>

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Button,
   Drawer,
   List,
   ListItem,
@@ -63,7 +62,9 @@ function Header({ mode, toggleColorMode }) {
 
   return (
     <>
-      <AppBar position="static" sx={{ mb: 2 }}>
+      <AppBar position="static" sx={{ mb: 1 }}>
+        {' '}
+        {/* Reduce bottom margin */}
         <Toolbar>
           {user && (
             <IconButton
