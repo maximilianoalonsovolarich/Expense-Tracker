@@ -1,8 +1,9 @@
+/* Estilos generales */
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: var(--background-default);
+  color: var(--text-primary);
   transition: background-color 0.5s, color 0.5s;
 }
 
@@ -12,7 +13,6 @@ body {
 
 .container {
   padding: 1rem;
-  /* Ajusta según sea necesario */
 }
 
 .header-title {
@@ -31,7 +31,7 @@ body {
 
 .chart-container {
   padding: 1rem;
-  background-color: var(--paper);
+  background-color: var(--background-paper);
   border-radius: 8px;
   margin-top: 1rem;
 }
@@ -42,7 +42,7 @@ body {
 
 .form-container {
   padding: 1rem;
-  background-color: var(--paper);
+  background-color: var(--background-paper);
   border-radius: 8px;
   margin-top: 1rem;
 }
@@ -78,6 +78,35 @@ body {
   align-items: center;
   height: calc(100vh - 64px);
   margin-top: -3rem;
+}
+
+/* Estilos de las filas de la tabla */
+.even-row {
+  background-color: var(--even-row-bg);
+}
+
+.odd-row {
+  background-color: var(--odd-row-bg);
+}
+
+/* Variables para modo claro */
+:root {
+  --background-default: #F1F3F4;
+  --background-paper: #FFFFFF;
+  --text-primary: #333;
+  --primary-main: #4285F4;
+  --secondary-main: #DB4437;
+  --even-row-bg: #f5f5f5;
+  --odd-row-bg: #ffffff;
+}
+
+/* Variables para modo oscuro */
+[data-theme="dark"] {
+  --background-default: #121212;
+  --background-paper: #424242;
+  --text-primary: #ffffff;
+  --even-row-bg: #424242;
+  --odd-row-bg: #303030;
 }
 
 @media (max-width: 768px) {

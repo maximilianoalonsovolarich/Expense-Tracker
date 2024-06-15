@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -12,16 +12,18 @@ import {
   Box,
   CircularProgress,
 } from '@mui/material';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Statistics from './pages/Statistics';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Header from './components/Header/Header';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
 import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
 import useAuth from './hooks/useAuth';
+
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const Login = React.lazy(() => import('./pages/Login'));
+const Register = React.lazy(() => import('./pages/Register'));
+const Statistics = React.lazy(() => import('./pages/Statistics'));
+const Tabla = React.lazy(() => import('./pages/Tabla'));
 
 function App() {
   const [mode, setMode] = React.useState(
@@ -54,33 +56,43 @@ function App() {
       <Router>
         <Header mode={mode} toggleColorMode={toggleColorMode} />
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Routes>
-            <Route
-              path="/login"
-              element={user ? <Navigate to="/" /> : <Login />}
-            />
-            <Route
-              path="/register"
-              element={user ? <Navigate to="/" /> : <Register />}
-            />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/statistics"
-              element={
-                <ProtectedRoute>
-                  <Statistics />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
+          <Suspense fallback={<CircularProgress />}>
+            <Routes>
+              <Route
+                path="/login"
+                element={user ? <Navigate to="/" /> : <Login />}
+              />
+              <Route
+                path="/register"
+                element={user ? <Navigate to="/" /> : <Register />}
+              />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/statistics"
+                element={
+                  <ProtectedRoute>
+                    <Statistics />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tabla"
+                element={
+                  <ProtectedRoute>
+                    <Tabla />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </Suspense>
         </ErrorBoundary>
       </Router>
     </ThemeProvider>

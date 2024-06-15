@@ -37,8 +37,7 @@ export const fetchCategories = async () => {
     const categories = response.data.records.map(
       (record) => record.fields.Categoría
     );
-    console.log('Fetch Categories Response:', categories); // Agregar console.log aquí para ver todas las categorías
-    return [...new Set(categories)]; // Eliminar duplicados
+    return [...new Set(categories)];
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw error;
@@ -64,9 +63,6 @@ export const addExpense = async (expense) => {
     }));
   } catch (error) {
     console.error('Error adding expense:', error);
-    if (error.response) {
-      console.error('Response data:', error.response.data);
-    }
     throw error;
   }
 };
@@ -79,9 +75,6 @@ export const deleteExpense = async (id) => {
     return response.data;
   } catch (error) {
     console.error('Error deleting expense:', error);
-    if (error.response) {
-      console.error('Response data:', error.response.data);
-    }
     throw error;
   }
 };

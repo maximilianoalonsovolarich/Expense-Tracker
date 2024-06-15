@@ -1,3 +1,5 @@
+// src/components/Header/Header.jsx
+
 import React, { useState, useEffect } from 'react';
 import {
   AppBar,
@@ -16,6 +18,7 @@ import {
   Brightness7,
   Home as HomeIcon,
   BarChart as BarChartIcon,
+  TableChart as TableChartIcon, // Importar el icono de tabla
   ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -104,6 +107,12 @@ function Header({ mode, toggleColorMode }) {
                 <BarChartIcon />
               </ListItemIcon>
               <ListItemText primary="Estadísticas" />
+            </ListItem>
+            <ListItem button onClick={() => handleNavigate('/tabla')}>
+              <ListItemIcon>
+                <TableChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tabla" />
             </ListItem>
             <ListItem button onClick={handleLogout}>
               <ListItemIcon>

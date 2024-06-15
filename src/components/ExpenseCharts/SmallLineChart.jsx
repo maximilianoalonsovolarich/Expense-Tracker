@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { format, parseISO } from 'date-fns';
 
 ChartJS.register(
   CategoryScale,
@@ -20,13 +21,23 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
 const SmallLineChart = ({ expenses }) => {
+  const groupedExpenses = expenses.reduce((acc, expense) => {
+    const month = format(parseISO(expense.Fecha), 'yyyy-MM');
+    if (!acc[month]) {
+      acc[month] = 0;
+    }
+    acc[month] += expense.Cantidad;
+    return acc;
+  }, {});
+
   const data = {
-    labels: expenses.map((expense) => expense.Fecha),
+    labels: Object.keys(groupedExpenses),
     datasets: [
       {
         label: 'Cantidad',
-        data: expenses.map((expense) => expense.Cantidad),
+        data: Object.values(groupedExpenses),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: false,
@@ -40,14 +51,14 @@ const SmallLineChart = ({ expenses }) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        display: false,
+        display: true,
         grid: {
           display: true,
           color: 'rgba(200, 200, 200, 0.1)',
         },
       },
       y: {
-        display: false,
+        display: true,
         grid: {
           display: true,
           color: 'rgba(200, 200, 200, 0.1)',

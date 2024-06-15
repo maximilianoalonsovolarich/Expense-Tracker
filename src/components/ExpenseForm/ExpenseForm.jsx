@@ -111,13 +111,7 @@ function ExpenseForm({ onAddExpense }) {
               }
               helperText={formik.touched.categoria && formik.errors.categoria}
             >
-              {[
-                'Alimentación',
-                'Transporte',
-                'Entretenimiento',
-                'Sueldo',
-                'Merienda',
-              ].map((category, index) => (
+              {categories.map((category, index) => (
                 <MenuItem key={index} value={category}>
                   {category}
                 </MenuItem>

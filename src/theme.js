@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
+import { grey, blue, red } from '@mui/material/colors';
 
 const getDesignTokens = (mode) => ({
   palette: {
@@ -13,8 +13,12 @@ const getDesignTokens = (mode) => ({
     ...(mode === 'dark'
       ? {
           background: {
-            default: grey[900],
-            paper: grey[800],
+            default: '#121212',
+            paper: '#424242',
+          },
+          text: {
+            primary: '#ffffff',
+            secondary: grey[500],
           },
         }
       : {
@@ -22,10 +26,35 @@ const getDesignTokens = (mode) => ({
             default: '#F1F3F4',
             paper: '#FFFFFF',
           },
+          text: {
+            primary: '#000000',
+            secondary: grey[800],
+          },
         }),
   },
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif',
+  },
+  components: {
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          border: 0,
+          color: mode === 'dark' ? '#ffffff' : '#000000',
+        },
+        columnHeaders: {
+          backgroundColor: mode === 'dark' ? blue[700] : blue[100],
+        },
+        row: {
+          '&:nth-of-type(even)': {
+            backgroundColor: mode === 'dark' ? grey[800] : grey[100],
+          },
+          '&:nth-of-type(odd)': {
+            backgroundColor: mode === 'dark' ? grey[900] : '#ffffff',
+          },
+        },
+      },
+    },
   },
 });
 

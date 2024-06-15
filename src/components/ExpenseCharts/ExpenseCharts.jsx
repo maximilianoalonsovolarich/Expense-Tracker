@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { format, parseISO } from 'date-fns';
 
 ChartJS.register(
   CategoryScale,
@@ -21,23 +22,38 @@ ChartJS.register(
 );
 
 function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
-  const ingresos = expenses
-    .filter((expense) => expense.Ingreso)
-    .map((expense) => expense.Cantidad);
-  const egresos = expenses
-    .filter((expense) => expense.Egreso)
-    .map((expense) => expense.Cantidad);
+  const groupedExpenses = expenses.reduce(
+    (acc, expense) => {
+      const month = format(parseISO(expense.Fecha), 'yyyy-MM');
+      if (!acc.ingresos[month]) {
+        acc.ingresos[month] = 0;
+      }
+      if (!acc.egresos[month]) {
+        acc.egresos[month] = 0;
+      }
+      if (expense.Ingreso) {
+        acc.ingresos[month] += expense.Cantidad;
+      }
+      if (expense.Egreso) {
+        acc.egresos[month] += expense.Cantidad;
+      }
+      return acc;
+    },
+    { ingresos: {}, egresos: {} }
+  );
 
   const data = {
-    labels: ['Ingreso', 'Egreso'],
+    labels: Object.keys(groupedExpenses.ingresos),
     datasets: [
       {
-        label: 'Monto',
-        data: [
-          ingresos.reduce((total, cantidad) => total + cantidad, 0),
-          egresos.reduce((total, cantidad) => total + cantidad, 0),
-        ],
-        backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+        label: 'Ingreso',
+        data: Object.values(groupedExpenses.ingresos),
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      },
+      {
+        label: 'Egreso',
+        data: Object.values(groupedExpenses.egresos),
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
       },
     ],
   };
@@ -48,8 +64,8 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
       {
         label: 'Monto',
         data: [
-          ingresos.reduce((total, cantidad) => total + cantidad, 0),
-          egresos.reduce((total, cantidad) => total + cantidad, 0),
+          Object.values(groupedExpenses.ingresos).reduce((a, b) => a + b, 0),
+          Object.values(groupedExpenses.egresos).reduce((a, b) => a + b, 0),
         ],
         backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
       },
