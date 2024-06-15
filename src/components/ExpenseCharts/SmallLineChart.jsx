@@ -20,7 +20,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 const SmallLineChart = ({ expenses }) => {
   const data = {
     labels: expenses.map((expense) => expense.Fecha),

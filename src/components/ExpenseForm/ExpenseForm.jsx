@@ -12,7 +12,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
-import { fetchCategories } from '../services/api';
+import { fetchCategories } from '../../services/api';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),

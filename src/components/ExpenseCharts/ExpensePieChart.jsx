@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Paper,
-  Typography,
-} from '@mui/material';
+import React from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
+import { Box, Paper, Typography, Grid } from '@mui/material';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
+  ArcElement,
   Tooltip,
   Legend,
 } from 'chart.js';
@@ -23,7 +15,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
+  ArcElement,
   Tooltip,
   Legend
 );

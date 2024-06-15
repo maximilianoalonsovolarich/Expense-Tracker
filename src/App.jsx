@@ -6,30 +6,47 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import {
+  ThemeProvider,
+  CssBaseline,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Statistics from './pages/Statistics';
-import ProtectedRoute from './components/ProtectedRoute';
-import Header from './components/Header';
-import ErrorFallback from './components/ErrorFallback';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import Header from './components/Header/Header';
+import ErrorFallback from './components/ErrorFallback/ErrorFallback';
 import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
-import { auth } from './firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import useAuth from './hooks/useAuth';
 
 function App() {
   const [mode, setMode] = React.useState(
     localStorage.getItem('theme') || 'light'
   );
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useAuth();
 
   const toggleColorMode = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
   };
 
   const theme = React.useMemo(() => getTheme(mode), [mode]);
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>

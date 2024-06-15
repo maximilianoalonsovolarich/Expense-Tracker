@@ -1,7 +1,7 @@
+// src/components/ProtectedRoute/ProtectedRoute.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
 import {
   Box,
   CircularProgress,
@@ -13,11 +13,12 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAuth from '../../hooks/useAuth';
 
 const allowedEmails = import.meta.env.VITE_ALLOWED_EMAILS.split(',');
 
-function ProtectedRoute({ children }) {
-  const [user, loading] = useAuthState(auth);
+const ProtectedRoute = ({ children }) => {
+  const { user, loading, error } = useAuth();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -65,6 +66,6 @@ function ProtectedRoute({ children }) {
   }
 
   return children;
-}
+};
 
 export default ProtectedRoute;

@@ -14,11 +14,10 @@ import {
   TextField,
 } from '@mui/material';
 import { fetchExpenses } from '../services/api';
-import ExpenseCharts from '../components/ExpenseCharts';
-import SmallLineChart from '../components/SmallLineChart';
+import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
+import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
-
 function Statistics() {
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);

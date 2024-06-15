@@ -1,4 +1,3 @@
-// src/pages/ErrorPage.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, Box } from '@mui/material';

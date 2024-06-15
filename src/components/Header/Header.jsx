@@ -19,9 +19,10 @@ import {
   ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, logOut } from '../firebase';
 import { toast } from 'react-toastify';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, logOut } from '../../services/firebase';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
@@ -81,9 +82,7 @@ function Header({ mode, toggleColorMode }) {
             sx={{
               color: '#FFFFFF',
               transition: 'color 0.5s',
-              '&:hover': {
-                color: mode === 'light' ? '#FFEB3B' : '#FFC107',
-              },
+              '&:hover': { color: mode === 'light' ? '#FFEB3B' : '#FFC107' },
             }}
             onClick={toggleColorMode}
           >

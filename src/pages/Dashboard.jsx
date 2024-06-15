@@ -10,9 +10,9 @@ import {
   TextField,
   Divider,
 } from '@mui/material';
-import ExpenseForm from '../components/ExpenseForm';
-import ExpenseList from '../components/ExpenseList';
-import SmallLineChart from '../components/SmallLineChart';
+import ExpenseForm from '../components/ExpenseForm/ExpenseForm';
+import ExpenseList from '../components/ExpenseList/ExpenseList';
+import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

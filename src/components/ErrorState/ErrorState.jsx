@@ -1,4 +1,3 @@
-// src/components/ErrorState.jsx
 import React from 'react';
 import {
   Alert,

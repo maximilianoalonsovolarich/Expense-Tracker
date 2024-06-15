@@ -1,7 +1,6 @@
-// src/components/Logout.jsx
 import React from 'react';
 import { Button } from '@mui/material';
-import { logOut } from '../firebase';
+import { logOut } from '../../services/firebase';
 
 function Logout() {
   const handleLogout = async () => {

@@ -1,4 +1,3 @@
-// src/components/ErrorFallback.jsx
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 

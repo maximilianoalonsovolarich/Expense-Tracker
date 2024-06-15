@@ -7,7 +7,7 @@ import {
   Container,
   Divider,
 } from '@mui/material';
-import { signInWithGoogle } from '../firebase';
+import { signInWithGoogle } from '../services/firebase';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
