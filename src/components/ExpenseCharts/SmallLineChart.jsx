@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isValid } from 'date-fns';
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +24,13 @@ ChartJS.register(
 
 const SmallLineChart = ({ expenses }) => {
   const groupedExpenses = expenses.reduce((acc, expense) => {
-    const month = format(parseISO(expense.Fecha), 'yyyy-MM');
+    const date = parseISO(expense.Fecha);
+    if (!isValid(date)) {
+      // Verifica si la fecha es válida
+      console.error(`Fecha inválida: ${expense.Fecha}`);
+      return acc;
+    }
+    const month = format(date, 'yyyy-MM');
     if (!acc[month]) {
       acc[month] = 0;
     }

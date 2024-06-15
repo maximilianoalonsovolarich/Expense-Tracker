@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fetchCategories } from '/src/services/api.js';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -12,7 +13,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
-import { fetchCategories } from '../../services/api';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),
@@ -64,7 +64,7 @@ function ExpenseForm({ onAddExpense }) {
   });
 
   return (
-    <Paper elevation={3} sx={{ padding: 3 }}>
+    <Paper elevation={3} sx={{ padding: 2 }}>
       <Box component="form" onSubmit={formik.handleSubmit}>
         <Typography variant="h6" gutterBottom>
           Añadir Gasto

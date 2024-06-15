@@ -9,16 +9,19 @@ const HEADERS = {
 export const fetchExpenses = async () => {
   try {
     const response = await axios.get(AIRTABLE_ENDPOINT, { headers: HEADERS });
-    const records = response.data.records.map((record) => ({
-      ...record.fields,
-      id: record.id,
-      Fecha: record.fields.Fecha || 'No disponible',
-      Cantidad: record.fields.Cantidad || 'No disponible',
-      Categoría: record.fields.Categoría || 'No disponible',
-      Descripción: record.fields.Descripción || 'No disponible',
-      Ingreso: record.fields.Ingreso || false,
-      Egreso: record.fields.Egreso || false,
-    }));
+    const records = response.data.records
+      .map((record) => ({
+        ...record.fields,
+        id: record.id,
+        Fecha: record.fields.Fecha || 'No disponible',
+        Cantidad: record.fields.Cantidad || 0,
+        Categoría: record.fields.Categoría || 'No especificada',
+        Descripción: record.fields.Descripción || 'No disponible',
+        Ingreso: record.fields.Ingreso || false,
+        Egreso: record.fields.Egreso || false,
+      }))
+      .filter((record) => record.Fecha && record.Fecha !== 'No disponible'); // Filtrar registros con fecha inválida
+
     const saldoInicialRecord = records.find(
       (record) => record.Categoría === 'Saldo Inicial'
     );
