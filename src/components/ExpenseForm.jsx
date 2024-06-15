@@ -9,8 +9,8 @@ import {
   Paper,
   Grid,
   MenuItem,
-  Checkbox,
   FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { fetchCategories } from '../services/api';
 
@@ -64,13 +64,13 @@ function ExpenseForm({ onAddExpense }) {
   });
 
   return (
-    <Paper elevation={3} sx={{ padding: 2 }}>
+    <Paper elevation={3} sx={{ padding: 3 }}>
       <Box component="form" onSubmit={formik.handleSubmit}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Añadir Gasto
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               id="fecha"
@@ -84,7 +84,7 @@ function ExpenseForm({ onAddExpense }) {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               id="cantidad"
@@ -111,7 +111,13 @@ function ExpenseForm({ onAddExpense }) {
               }
               helperText={formik.touched.categoria && formik.errors.categoria}
             >
-              {categories.map((category, index) => (
+              {[
+                'Alimentación',
+                'Transporte',
+                'Entretenimiento',
+                'Sueldo',
+                'Merienda',
+              ].map((category, index) => (
                 <MenuItem key={index} value={category}>
                   {category}
                 </MenuItem>

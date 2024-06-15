@@ -8,6 +8,7 @@ import {
   Typography,
   Paper,
   TextField,
+  Divider,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
@@ -52,7 +53,6 @@ function Dashboard() {
   const handleDeleteExpense = async (id) => {
     const previousExpenses = expenses;
     setExpenses(expenses.filter((expense) => expense.id !== id));
-
     try {
       await deleteExpense(id);
       toast.success('Gasto eliminado exitosamente');
@@ -97,46 +97,73 @@ function Dashboard() {
   }
 
   return (
-    <Container maxWidth="lg" className="container" sx={{ mt: 1 }}>
+    <Container maxWidth="lg" className="container" sx={{ mt: 4 }}>
       <CssBaseline />
       <ToastContainer position="top-right" />
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="h4" gutterBottom sx={{ mt: 1 }}>
-          Dashboard de Gastos
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ padding: 2, mb: 2 }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>
-                Total Ingreso: ${totalIngreso}
-              </Typography>
-              <Typography variant="h6" sx={{ mb: 1 }}>
-                Total Egreso: ${totalEgreso}
-              </Typography>
-              <Typography variant="h6" sx={{ mb: 1 }}>
-                Saldo Actual: ${saldoActual}
-              </Typography>
-              <TextField
-                type="date"
-                value={filterDate}
-                onChange={handleFilterDateChange}
-                fullWidth
-              />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <ExpenseForm onAddExpense={handleAddExpense} />
-          </Grid>
-          <Grid item xs={12}>
-            <Paper elevation={3} sx={{ padding: 2 }}>
-              <ExpenseList
-                expenses={filteredExpenses}
-                onDeleteExpense={handleDeleteExpense}
-              />
-            </Paper>
+      <Typography variant="h4" gutterBottom>
+        Dashboard de Gastos
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Grid container spacing={4} sx={{ height: '100%' }}>
+            <Grid item xs={12} md={expenses.length === 0 ? 12 : 6}>
+              <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    mb: 2,
+                    color: saldoActual < 0 ? 'error.main' : 'success.main',
+                    backgroundColor:
+                      saldoActual < 0
+                        ? 'rgba(255, 99, 71, 0.1)'
+                        : 'rgba(144, 238, 144, 0.1)',
+                    padding: '8px',
+                    borderRadius: '4px',
+                  }}
+                >
+                  Total de Gastos
+                </Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                  Total Ingreso: ${totalIngreso}
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                  Total Egreso: ${totalEgreso}
+                </Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mb: 2,
+                    color: saldoActual < 0 ? 'error.main' : 'text.primary',
+                  }}
+                >
+                  Saldo Actual: ${saldoActual}
+                </Typography>
+                <TextField
+                  type="date"
+                  value={filterDate}
+                  onChange={handleFilterDateChange}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  sx={{ mt: 2 }}
+                />
+              </Paper>
+            </Grid>
+            {expenses.length > 0 && (
+              <Grid item xs={12} md={6}>
+                <ExpenseList
+                  expenses={filteredExpenses}
+                  onDeleteExpense={handleDeleteExpense}
+                />
+              </Grid>
+            )}
           </Grid>
         </Grid>
-      </Box>
+        <Grid item xs={12} md={6}>
+          <ExpenseForm onAddExpense={handleAddExpense} />
+        </Grid>
+      </Grid>
     </Container>
   );
 }

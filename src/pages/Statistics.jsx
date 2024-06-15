@@ -62,6 +62,7 @@ function Statistics() {
     ]
       .map((e) => e.join(','))
       .join('\n');
+
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'gastos.csv');
   };

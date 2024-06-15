@@ -58,9 +58,6 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
 
   return (
     <Paper elevation={3} className="chart-container">
-      <Typography variant="h6" className="chart-title">
-        Gráficos de Gastos
-      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} className="chart-grid-item">
           <Typography variant="h6" className="chart-title">

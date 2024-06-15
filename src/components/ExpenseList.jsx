@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, IconButton, Divider, Box, Grid } from '@mui/material';
+import {
+  Typography,
+  IconButton,
+  Divider,
+  Box,
+  Grid,
+  Paper,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -9,7 +16,7 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
 
   useEffect(() => {
     if (expenses.length > 0) {
-      setCurrentExpenseIndex(0);
+      setCurrentExpenseIndex(expenses.length - 1); // Set the index to the latest expense
     }
   }, [expenses]);
 
@@ -25,18 +32,37 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
     );
   };
 
-  if (!expenses || expenses.length === 0) {
-    return <Typography>No hay gastos disponibles</Typography>;
-  }
-
   const currentExpense = expenses[currentExpenseIndex];
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        Gastos
-      </Typography>
+    <Paper
+      elevation={3}
+      sx={{
+        padding: 2,
+        height: '100%',
+        backgroundColor: currentExpense?.Ingreso
+          ? 'rgba(144, 238, 144, 0.1)'
+          : 'rgba(255, 99, 71, 0.1)',
+        transition: 'background-color 0.3s ease',
+        '&:hover': {
+          backgroundColor: currentExpense?.Ingreso
+            ? 'rgba(144, 238, 144, 0.2)'
+            : 'rgba(255, 99, 71, 0.2)',
+        },
+      }}
+    >
       <Box sx={{ position: 'relative' }}>
+        <Typography variant="h6" gutterBottom>
+          Gastos
+        </Typography>
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={() => onDeleteExpense(currentExpense.id)}
+          sx={{ position: 'absolute', top: 8, right: 8 }}
+        >
+          <DeleteIcon />
+        </IconButton>
         <Typography variant="subtitle1" color="textPrimary">
           Fecha: {currentExpense?.Fecha || 'No disponible'}
         </Typography>
@@ -55,14 +81,6 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
         <Typography variant="body2" color="textSecondary">
           Egreso: {currentExpense?.Egreso ? 'Sí' : 'No'}
         </Typography>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => onDeleteExpense(currentExpense.id)}
-          sx={{ position: 'absolute', top: 8, right: 8 }}
-        >
-          <DeleteIcon />
-        </IconButton>
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -109,7 +127,7 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </Paper>
   );
 }
 
