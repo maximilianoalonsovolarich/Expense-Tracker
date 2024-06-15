@@ -16,7 +16,7 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
 
   useEffect(() => {
     if (expenses.length > 0) {
-      setCurrentExpenseIndex(expenses.length - 1); // Set the index to the latest expense
+      setCurrentExpenseIndex(0);
     }
   }, [expenses]);
 
@@ -32,37 +32,28 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
     );
   };
 
+  if (!expenses || expenses.length === 0) {
+    return null;
+  }
+
   const currentExpense = expenses[currentExpenseIndex];
 
   return (
     <Paper
-      elevation={3}
       sx={{
         padding: 2,
-        height: '100%',
         backgroundColor: currentExpense?.Ingreso
-          ? 'rgba(144, 238, 144, 0.1)'
-          : 'rgba(255, 99, 71, 0.1)',
-        transition: 'background-color 0.3s ease',
-        '&:hover': {
-          backgroundColor: currentExpense?.Ingreso
-            ? 'rgba(144, 238, 144, 0.2)'
-            : 'rgba(255, 99, 71, 0.2)',
-        },
+          ? 'rgba(0, 128, 0, 0.1)'
+          : 'rgba(255, 0, 0, 0.1)',
       }}
     >
+      <Typography variant="h5" gutterBottom>
+        Gastos
+      </Typography>
+      <Typography variant="subtitle2" color="textSecondary" sx={{ mb: 1 }}>
+        {currentExpense?.Descripción || 'No disponible'}
+      </Typography>
       <Box sx={{ position: 'relative' }}>
-        <Typography variant="h6" gutterBottom>
-          Gastos
-        </Typography>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => onDeleteExpense(currentExpense.id)}
-          sx={{ position: 'absolute', top: 8, right: 8 }}
-        >
-          <DeleteIcon />
-        </IconButton>
         <Typography variant="subtitle1" color="textPrimary">
           Fecha: {currentExpense?.Fecha || 'No disponible'}
         </Typography>
@@ -73,14 +64,19 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
           Categoría: {currentExpense?.Categoría || 'No disponible'}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Descripción: {currentExpense?.Descripción || 'No disponible'}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
           Ingreso: {currentExpense?.Ingreso ? 'Sí' : 'No'}
         </Typography>
         <Typography variant="body2" color="textSecondary">
           Egreso: {currentExpense?.Egreso ? 'Sí' : 'No'}
         </Typography>
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={() => onDeleteExpense(currentExpense.id)}
+          sx={{ position: 'absolute', top: 8, right: 8 }}
+        >
+          <DeleteIcon />
+        </IconButton>
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={2}>
           <Grid item xs={6}>
