@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { fetchExpenses } from '../services/api';
 import ExpenseCharts from '../components/ExpenseCharts';
+import SmallLineChart from '../components/SmallLineChart'; // Importar el nuevo componente
 import { saveAs } from 'file-saver';
 
 function Statistics() {
@@ -102,10 +103,24 @@ function Statistics() {
           Exportar a CSV
         </Button>
       </Box>
-      <ExpenseCharts
-        expenses={expenses.filter((expense) => expense[filter] !== undefined)}
-        saldoInicial={saldoInicial}
-      />
+      <Paper
+        elevation={3}
+        sx={{ padding: 2, height: '100%', position: 'relative' }}
+      >
+        <ExpenseCharts
+          expenses={expenses.filter((expense) => expense[filter] !== undefined)}
+          saldoInicial={saldoInicial}
+        />
+        <Box sx={{ height: 100, mt: 2 }}>
+          {' '}
+          {/* Ajusta el tamaño según sea necesario */}
+          <SmallLineChart
+            expenses={expenses.filter(
+              (expense) => expense[filter] !== undefined
+            )}
+          />
+        </Box>
+      </Paper>
     </Container>
   );
 }

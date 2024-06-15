@@ -62,9 +62,7 @@ function Header({ mode, toggleColorMode }) {
 
   return (
     <>
-      <AppBar position="static" sx={{ mb: 1 }}>
-        {' '}
-        {/* Reduce bottom margin */}
+      <AppBar position="static">
         <Toolbar>
           {user && (
             <IconButton

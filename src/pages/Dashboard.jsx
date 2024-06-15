@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
+import SmallLineChart from '../components/SmallLineChart';
 import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -73,11 +74,13 @@ function Dashboard() {
       )
     : expenses;
 
-  const totalIngreso = expenses
+  const totalGastos = filteredExpenses.length;
+
+  const totalIngreso = filteredExpenses
     .filter((expense) => expense.Ingreso)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
-  const totalEgreso = expenses
+  const totalEgreso = filteredExpenses
     .filter((expense) => expense.Egreso)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
@@ -97,20 +100,16 @@ function Dashboard() {
   }
 
   return (
-    <Container maxWidth="lg" className="container" sx={{ mt: 2 }}>
-      {' '}
-      {/* Reduce top margin */}
+    <Container maxWidth="lg" className="container" sx={{ mt: 0, pt: 2 }}>
       <CssBaseline />
       <ToastContainer position="top-right" />
-      <Typography variant="h4" gutterBottom sx={{ mt: 2, mb: 2 }}>
-        {' '}
-        {/* Reduce bottom margin */}
+      <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
         Dashboard de Gastos
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={4} sx={{ height: '100%' }}>
-            <Grid item xs={12} md={expenses.length === 0 ? 12 : 6}>
+            <Grid item xs={12} md={filteredExpenses.length === 0 ? 12 : 6}>
               <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
                 <Typography
                   variant="h6"
@@ -125,7 +124,7 @@ function Dashboard() {
                     borderRadius: '4px',
                   }}
                 >
-                  Total de Gastos
+                  Total de Gastos: {totalGastos}
                 </Typography>
                 <Divider sx={{ my: 1 }} />
                 <Typography variant="body1" sx={{ mb: 2 }}>
@@ -152,9 +151,14 @@ function Dashboard() {
                   InputLabelProps={{ shrink: true }}
                   sx={{ mt: 2 }}
                 />
+                <Box sx={{ height: 100, mt: 2 }}>
+                  {' '}
+                  {/* Ajusta el tamaño según sea necesario */}
+                  <SmallLineChart expenses={filteredExpenses} />
+                </Box>
               </Paper>
             </Grid>
-            {expenses.length > 0 && (
+            {filteredExpenses.length > 0 && (
               <Grid item xs={12} md={6}>
                 <ExpenseList
                   expenses={filteredExpenses}
