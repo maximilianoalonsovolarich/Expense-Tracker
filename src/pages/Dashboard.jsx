@@ -27,7 +27,10 @@ function Dashboard() {
     async function getExpenses() {
       try {
         const { expenses: expensesData, saldoInicial } = await fetchExpenses();
-        setExpenses(expensesData);
+        const sortedExpenses = expensesData.sort(
+          (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+        );
+        setExpenses(sortedExpenses);
         setSaldoInicial(saldoInicial);
         setLoading(false);
       } catch (error) {
@@ -42,8 +45,11 @@ function Dashboard() {
   const handleAddExpense = async (expense) => {
     try {
       const newExpenses = await addExpense(expense);
-      const updatedExpenses = [...expenses, ...newExpenses];
-      setExpenses(updatedExpenses);
+      const updatedExpenses = [...newExpenses, ...expenses];
+      const sortedExpenses = updatedExpenses.sort(
+        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+      );
+      setExpenses(sortedExpenses);
       toast.success('Gasto añadido exitosamente');
     } catch (error) {
       console.error('Error adding expense:', error);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCategories } from '/src/services/api.js';
+import { fetchCategories } from '../../services/api';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
