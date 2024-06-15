@@ -1,4 +1,3 @@
-// src/services/api.js
 import axios from 'axios';
 
 const AIRTABLE_ENDPOINT = import.meta.env.VITE_AIRTABLE_ENDPOINT;
@@ -10,18 +9,38 @@ const HEADERS = {
 export const fetchExpenses = async () => {
   try {
     const response = await axios.get(AIRTABLE_ENDPOINT, { headers: HEADERS });
-    return response.data.records.map((record) => ({
+    const records = response.data.records.map((record) => ({
       ...record.fields,
       id: record.id,
       Fecha: record.fields.Fecha || 'No disponible',
       Cantidad: record.fields.Cantidad || 'No disponible',
       Categoría: record.fields.Categoría || 'No disponible',
       Descripción: record.fields.Descripción || 'No disponible',
-      Ingreso: record.fields.Ingreso || 'No disponible',
-      Egreso: record.fields.Egreso || 'No disponible',
+      Ingreso: record.fields.Ingreso || false,
+      Egreso: record.fields.Egreso || false,
     }));
+    const saldoInicialRecord = records.find(
+      (record) => record.Categoría === 'Saldo Inicial'
+    );
+    const saldoInicial = saldoInicialRecord ? saldoInicialRecord.Cantidad : 0;
+
+    return { expenses: records, saldoInicial };
   } catch (error) {
     console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const fetchCategories = async () => {
+  try {
+    const response = await axios.get(AIRTABLE_ENDPOINT, { headers: HEADERS });
+    const categories = response.data.records.map(
+      (record) => record.fields.Categoría
+    );
+    console.log('Fetch Categories Response:', categories); // Agregar console.log aquí para ver todas las categorías
+    return [...new Set(categories)]; // Eliminar duplicados
+  } catch (error) {
+    console.error('Error fetching categories:', error);
     throw error;
   }
 };
@@ -40,8 +59,8 @@ export const addExpense = async (expense) => {
       Cantidad: record.fields.Cantidad || 'No disponible',
       Categoría: record.fields.Categoría || 'No disponible',
       Descripción: record.fields.Descripción || 'No disponible',
-      Ingreso: record.fields.Ingreso || 'No disponible',
-      Egreso: record.fields.Egreso || 'No disponible',
+      Ingreso: record.fields.Ingreso || false,
+      Egreso: record.fields.Egreso || false,
     }));
   } catch (error) {
     console.error('Error adding expense:', error);

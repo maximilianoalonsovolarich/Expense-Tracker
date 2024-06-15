@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button, Box, Typography, Paper, Grid } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
+import { fetchCategories } from '../services/api';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),
@@ -10,23 +21,33 @@ const validationSchema = Yup.object({
     .positive('Cantidad debe ser positiva'),
   categoria: Yup.string().required('Requerido'),
   descripcion: Yup.string().required('Requerido'),
-  ingreso: Yup.number()
-    .required('Requerido')
-    .positive('Ingreso debe ser positivo'),
-  egreso: Yup.number()
-    .required('Requerido')
-    .positive('Egreso debe ser positivo'),
+  ingreso: Yup.boolean(),
+  egreso: Yup.boolean(),
 });
 
 function ExpenseForm({ onAddExpense }) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const categoriesData = await fetchCategories();
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+    getCategories();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       fecha: '',
       cantidad: '',
       categoria: '',
       descripcion: '',
-      ingreso: '',
-      egreso: '',
+      ingreso: false,
+      egreso: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
@@ -35,24 +56,21 @@ function ExpenseForm({ onAddExpense }) {
         Cantidad: parseFloat(values.cantidad),
         Categoría: values.categoria,
         Descripción: values.descripcion,
-        Ingreso: parseFloat(values.ingreso),
-        Egreso: parseFloat(values.egreso),
+        Ingreso: values.ingreso,
+        Egreso: values.egreso,
       });
       resetForm();
     },
   });
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ padding: 2, backgroundColor: 'background.paper' }}
-    >
+    <Paper elevation={3} sx={{ padding: 2 }}>
       <Box component="form" onSubmit={formik.handleSubmit}>
         <Typography variant="h5" gutterBottom>
           Añadir Gasto
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
             <TextField
               fullWidth
               id="fecha"
@@ -66,7 +84,7 @@ function ExpenseForm({ onAddExpense }) {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
             <TextField
               fullWidth
               id="cantidad"
@@ -82,6 +100,7 @@ function ExpenseForm({ onAddExpense }) {
           <Grid item xs={12}>
             <TextField
               fullWidth
+              select
               id="categoria"
               name="categoria"
               label="Categoría"
@@ -91,7 +110,13 @@ function ExpenseForm({ onAddExpense }) {
                 formik.touched.categoria && Boolean(formik.errors.categoria)
               }
               helperText={formik.touched.categoria && formik.errors.categoria}
-            />
+            >
+              {categories.map((category, index) => (
+                <MenuItem key={index} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -110,29 +135,31 @@ function ExpenseForm({ onAddExpense }) {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              fullWidth
-              id="ingreso"
-              name="ingreso"
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="ingreso"
+                  name="ingreso"
+                  checked={formik.values.ingreso}
+                  onChange={formik.handleChange}
+                  color="primary"
+                />
+              }
               label="Ingreso"
-              type="number"
-              value={formik.values.ingreso}
-              onChange={formik.handleChange}
-              error={formik.touched.ingreso && Boolean(formik.errors.ingreso)}
-              helperText={formik.touched.ingreso && formik.errors.ingreso}
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              fullWidth
-              id="egreso"
-              name="egreso"
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="egreso"
+                  name="egreso"
+                  checked={formik.values.egreso}
+                  onChange={formik.handleChange}
+                  color="primary"
+                />
+              }
               label="Egreso"
-              type="number"
-              value={formik.values.egreso}
-              onChange={formik.handleChange}
-              error={formik.touched.egreso && Boolean(formik.errors.egreso)}
-              helperText={formik.touched.egreso && formik.errors.egreso}
             />
           </Grid>
         </Grid>
