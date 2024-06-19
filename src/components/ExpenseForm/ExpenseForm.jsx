@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCategories } from '../../services/api';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -13,6 +12,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),
@@ -21,23 +22,38 @@ const validationSchema = Yup.object({
     .positive('Cantidad debe ser positiva'),
   categoria: Yup.string().required('Requerido'),
   descripcion: Yup.string().required('Requerido'),
-  ingreso: Yup.boolean(),
-  egreso: Yup.boolean(),
+  ganancia: Yup.boolean(),
+  gasto: Yup.boolean(),
 });
 
 function ExpenseForm({ onAddExpense }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    async function getCategories() {
+    async function fetchCategoriesFromAPI() {
       try {
-        const categoriesData = await fetchCategories();
+        const response = await fetch(
+          'https://api.airtable.com/v0/meta/bases/app30fCoAP4n2LysL/tables',
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_KEY}`,
+            },
+          }
+        );
+        const data = await response.json();
+        const categoryField = data.tables[0].fields.find(
+          (field) => field.name === 'Categoría'
+        );
+        const categoriesData = categoryField.options.choices.map((choice) => ({
+          name: choice.name,
+          color: choice.color,
+        }));
         setCategories(categoriesData);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     }
-    getCategories();
+    fetchCategoriesFromAPI();
   }, []);
 
   const formik = useFormik({
@@ -46,20 +62,24 @@ function ExpenseForm({ onAddExpense }) {
       cantidad: '',
       categoria: '',
       descripcion: '',
-      ingreso: false,
-      egreso: false,
+      ganancia: false,
+      gasto: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      onAddExpense({
-        Fecha: values.fecha,
-        Cantidad: parseFloat(values.cantidad),
-        Categoría: values.categoria,
-        Descripción: values.descripcion,
-        Ingreso: values.ingreso,
-        Egreso: values.egreso,
-      });
-      resetForm();
+      if (values.ganancia || values.gasto) {
+        onAddExpense({
+          Fecha: values.fecha,
+          Cantidad: parseFloat(values.cantidad),
+          Categoría: values.categoria,
+          Descripción: values.descripcion,
+          Ganancia: values.ganancia,
+          Gasto: values.gasto,
+        });
+        resetForm();
+      } else {
+        toast.error('Debe seleccionar al menos Ganancia o Gasto');
+      }
     },
   });
 
@@ -112,8 +132,8 @@ function ExpenseForm({ onAddExpense }) {
               helperText={formik.touched.categoria && formik.errors.categoria}
             >
               {categories.map((category, index) => (
-                <MenuItem key={index} value={category}>
-                  {category}
+                <MenuItem key={index} value={category.name}>
+                  <span style={{ color: category.color }}>{category.name}</span>
                 </MenuItem>
               ))}
             </TextField>
@@ -138,28 +158,28 @@ function ExpenseForm({ onAddExpense }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  id="ingreso"
-                  name="ingreso"
-                  checked={formik.values.ingreso}
+                  id="ganancia"
+                  name="ganancia"
+                  checked={formik.values.ganancia}
                   onChange={formik.handleChange}
                   color="primary"
                 />
               }
-              label="Ingreso"
+              label="Ganancia"
             />
           </Grid>
           <Grid item xs={6}>
             <FormControlLabel
               control={
                 <Checkbox
-                  id="egreso"
-                  name="egreso"
-                  checked={formik.values.egreso}
+                  id="gasto"
+                  name="gasto"
+                  checked={formik.values.gasto}
                   onChange={formik.handleChange}
                   color="primary"
                 />
               }
-              label="Egreso"
+              label="Gasto"
             />
           </Grid>
         </Grid>

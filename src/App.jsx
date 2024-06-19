@@ -18,6 +18,8 @@ import ErrorFallback from './components/ErrorFallback/ErrorFallback';
 import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
 import useAuth from './hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -94,11 +96,10 @@ function App() {
             </Routes>
           </Suspense>
         </ErrorBoundary>
+        <ToastContainer />
       </Router>
     </ThemeProvider>
   );
 }
 
 export default App;
-
-//  Path: src/components/ProtectedRoute/ProtectedRoute.jsx

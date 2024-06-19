@@ -16,7 +16,7 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
 
   useEffect(() => {
     if (expenses.length > 0) {
-      setCurrentExpenseIndex(0);
+      setCurrentExpenseIndex(expenses.length - 1); // Mostrar el último gasto añadido
     }
   }, [expenses]);
 
@@ -42,13 +42,13 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
     <Paper
       sx={{
         padding: 2,
-        backgroundColor: currentExpense?.Ingreso
+        backgroundColor: currentExpense?.Ganancia
           ? 'rgba(0, 128, 0, 0.1)'
           : 'rgba(255, 0, 0, 0.1)',
       }}
     >
       <Typography variant="h5" gutterBottom>
-        Gastos
+        Ticket #{currentExpense?.ID || 'No disponible'}
       </Typography>
       <Typography variant="subtitle2" color="textSecondary" sx={{ mb: 1 }}>
         {currentExpense?.Descripción || 'No disponible'}
@@ -64,10 +64,10 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
           Categoría: {currentExpense?.Categoría || 'No disponible'}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Ingreso: {currentExpense?.Ingreso ? 'Sí' : 'No'}
+          Ganancia: {currentExpense?.Ganancia ? 'Sí' : 'No'}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Egreso: {currentExpense?.Egreso ? 'Sí' : 'No'}
+          Gasto: {currentExpense?.Gasto ? 'Sí' : 'No'}
         </Typography>
         <IconButton
           edge="end"

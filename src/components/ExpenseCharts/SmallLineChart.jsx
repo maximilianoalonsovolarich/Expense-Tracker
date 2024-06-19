@@ -26,7 +26,6 @@ const SmallLineChart = ({ expenses }) => {
   const groupedExpenses = expenses.reduce((acc, expense) => {
     const date = parseISO(expense.Fecha);
     if (!isValid(date)) {
-      // Verifica si la fecha es válida
       console.error(`Fecha inválida: ${expense.Fecha}`);
       return acc;
     }
@@ -34,7 +33,12 @@ const SmallLineChart = ({ expenses }) => {
     if (!acc[month]) {
       acc[month] = 0;
     }
-    acc[month] += expense.Cantidad;
+    if (expense.Ganancia) {
+      acc[month] += expense.Cantidad;
+    }
+    if (expense.Gasto) {
+      acc[month] -= expense.Cantidad;
+    }
     return acc;
   }, {});
 
@@ -42,7 +46,7 @@ const SmallLineChart = ({ expenses }) => {
     labels: Object.keys(groupedExpenses),
     datasets: [
       {
-        label: 'Cantidad',
+        label: 'Saldo',
         data: Object.values(groupedExpenses),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',

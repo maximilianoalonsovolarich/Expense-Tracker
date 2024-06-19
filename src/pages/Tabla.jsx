@@ -10,11 +10,12 @@ import {
   MenuItem,
 } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { fetchExpenses } from '../services/api';
+import { fetchExpenses, fetchCategories } from '../services/api';
 import { saveAs } from 'file-saver';
 
 function Tabla() {
   const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
@@ -25,7 +26,9 @@ function Tabla() {
     async function getExpenses() {
       try {
         const { expenses: expensesData } = await fetchExpenses();
+        const categoriesData = await fetchCategories();
         setExpenses(expensesData);
+        setCategories(categoriesData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching expenses:', error);
@@ -53,18 +56,18 @@ function Tabla() {
       Cantidad: expense.Cantidad,
       Categoría: expense.Categoría,
       Descripción: expense.Descripción,
-      Ingreso: expense.Ingreso ? 'Sí' : 'No',
-      Egreso: expense.Egreso ? 'Sí' : 'No',
+      Ganancia: expense.Ganancia ? 'Sí' : 'No',
+      Gasto: expense.Gasto ? 'Sí' : 'No',
     }));
     const csvContent = [
-      ['Fecha', 'Cantidad', 'Categoría', 'Descripción', 'Ingreso', 'Egreso'],
+      ['Fecha', 'Cantidad', 'Categoría', 'Descripción', 'Ganancia', 'Gasto'],
       ...csvData.map((item) => [
         item.Fecha,
         item.Cantidad,
         item.Categoría,
         item.Descripción,
-        item.Ingreso,
-        item.Egreso,
+        item.Ganancia,
+        item.Gasto,
       ]),
     ]
       .map((e) => e.join(','))
@@ -79,8 +82,8 @@ function Tabla() {
     { field: 'Cantidad', headerName: 'Cantidad', width: 150 },
     { field: 'Categoría', headerName: 'Categoría', width: 150 },
     { field: 'Descripción', headerName: 'Descripción', width: 200 },
-    { field: 'Ingreso', headerName: 'Ingreso', width: 150 },
-    { field: 'Egreso', headerName: 'Egreso', width: 150 },
+    { field: 'Ganancia', headerName: 'Ganancia', width: 150 },
+    { field: 'Gasto', headerName: 'Gasto', width: 150 },
   ];
 
   if (loading) {
@@ -130,11 +133,11 @@ function Tabla() {
             fullWidth
           >
             <MenuItem value="">Todas</MenuItem>
-            <MenuItem value="Alimentación">Alimentación</MenuItem>
-            <MenuItem value="Transporte">Transporte</MenuItem>
-            <MenuItem value="Entretenimiento">Entretenimiento</MenuItem>
-            <MenuItem value="Sueldo">Sueldo</MenuItem>
-            <MenuItem value="Merienda">Merienda</MenuItem>
+            {categories.map((category, index) => (
+              <MenuItem key={index} value={category}>
+                {category}
+              </MenuItem>
+            ))}
           </TextField>
         </Grid>
         <Grid item xs={12} sm={12} md={6} textAlign="right">

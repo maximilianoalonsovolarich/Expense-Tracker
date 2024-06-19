@@ -28,7 +28,7 @@ function Dashboard() {
       try {
         const { expenses: expensesData, saldoInicial } = await fetchExpenses();
         const sortedExpenses = expensesData.sort(
-          (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+          (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
         );
         setExpenses(sortedExpenses);
         setSaldoInicial(saldoInicial);
@@ -45,9 +45,9 @@ function Dashboard() {
   const handleAddExpense = async (expense) => {
     try {
       const newExpenses = await addExpense(expense);
-      const updatedExpenses = [...newExpenses, ...expenses];
+      const updatedExpenses = [...expenses, ...newExpenses];
       const sortedExpenses = updatedExpenses.sort(
-        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
       );
       setExpenses(sortedExpenses);
       toast.success('Gasto añadido exitosamente');
@@ -80,17 +80,21 @@ function Dashboard() {
       )
     : expenses;
 
-  const totalGastos = filteredExpenses.length;
+  const sortedExpenses = [...filteredExpenses].sort(
+    (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+  );
 
-  const totalIngreso = filteredExpenses
-    .filter((expense) => expense.Ingreso)
+  const totalGastos = sortedExpenses.length;
+
+  const totalGanancia = sortedExpenses
+    .filter((expense) => expense.Ganancia)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
-  const totalEgreso = filteredExpenses
-    .filter((expense) => expense.Egreso)
+  const totalGasto = sortedExpenses
+    .filter((expense) => expense.Gasto)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
-  const saldoActual = saldoInicial + totalIngreso - totalEgreso;
+  const saldoActual = saldoInicial + totalGanancia - totalGasto;
 
   if (loading) {
     return (
@@ -115,7 +119,7 @@ function Dashboard() {
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={4} sx={{ height: '100%' }}>
-            <Grid item xs={12} md={filteredExpenses.length === 0 ? 12 : 6}>
+            <Grid item xs={12} md={sortedExpenses.length === 0 ? 12 : 6}>
               <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
                 <Typography
                   variant="h6"
@@ -130,14 +134,14 @@ function Dashboard() {
                     borderRadius: '4px',
                   }}
                 >
-                  Total de Gastos: {totalGastos}
+                  Total de Tickets: {totalGastos}
                 </Typography>
                 <Divider sx={{ my: 1 }} />
                 <Typography variant="body1" sx={{ mb: 2 }}>
-                  Total Ingreso: ${totalIngreso}
+                  Total Ganancia: ${totalGanancia}
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 2 }}>
-                  Total Egreso: ${totalEgreso}
+                  Total Gasto: ${totalGasto}
                 </Typography>
                 <Divider sx={{ my: 1 }} />
                 <Typography
@@ -158,16 +162,14 @@ function Dashboard() {
                   sx={{ mt: 2 }}
                 />
                 <Box sx={{ height: 100, mt: 2 }}>
-                  {' '}
-                  {/* Ajusta el tamaño según sea necesario */}
-                  <SmallLineChart expenses={filteredExpenses} />
+                  <SmallLineChart expenses={sortedExpenses} />
                 </Box>
               </Paper>
             </Grid>
-            {filteredExpenses.length > 0 && (
+            {sortedExpenses.length > 0 && (
               <Grid item xs={12} md={6}>
                 <ExpenseList
-                  expenses={filteredExpenses}
+                  expenses={sortedExpenses}
                   onDeleteExpense={handleDeleteExpense}
                 />
               </Grid>

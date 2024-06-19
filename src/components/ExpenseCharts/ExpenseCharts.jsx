@@ -26,52 +26,51 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
     (acc, expense) => {
       const date = parseISO(expense.Fecha);
       if (!isValid(date)) {
-        // Verifica si la fecha es válida
         console.error(`Fecha inválida: ${expense.Fecha}`);
         return acc;
       }
       const month = format(date, 'yyyy-MM');
-      if (!acc.ingresos[month]) {
-        acc.ingresos[month] = 0;
+      if (!acc.ganancias[month]) {
+        acc.ganancias[month] = 0;
       }
-      if (!acc.egresos[month]) {
-        acc.egresos[month] = 0;
+      if (!acc.gastos[month]) {
+        acc.gastos[month] = 0;
       }
-      if (expense.Ingreso) {
-        acc.ingresos[month] += expense.Cantidad;
+      if (expense.Ganancia) {
+        acc.ganancias[month] += expense.Cantidad;
       }
-      if (expense.Egreso) {
-        acc.egresos[month] += expense.Cantidad;
+      if (expense.Gasto) {
+        acc.gastos[month] += expense.Cantidad;
       }
       return acc;
     },
-    { ingresos: {}, egresos: {} }
+    { ganancias: {}, gastos: {} }
   );
 
   const data = {
-    labels: Object.keys(groupedExpenses.ingresos),
+    labels: Object.keys(groupedExpenses.ganancias),
     datasets: [
       {
-        label: 'Ingreso',
-        data: Object.values(groupedExpenses.ingresos),
+        label: 'Ganancia',
+        data: Object.values(groupedExpenses.ganancias),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
       {
-        label: 'Egreso',
-        data: Object.values(groupedExpenses.egresos),
+        label: 'Gasto',
+        data: Object.values(groupedExpenses.gastos),
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
       },
     ],
   };
 
   const pieData = {
-    labels: ['Ingreso', 'Egreso'],
+    labels: ['Ganancia', 'Gasto'],
     datasets: [
       {
         label: 'Monto',
         data: [
-          Object.values(groupedExpenses.ingresos).reduce((a, b) => a + b, 0),
-          Object.values(groupedExpenses.egresos).reduce((a, b) => a + b, 0),
+          Object.values(groupedExpenses.ganancias).reduce((a, b) => a + b, 0),
+          Object.values(groupedExpenses.gastos).reduce((a, b) => a + b, 0),
         ],
         backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
       },

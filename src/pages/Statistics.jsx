@@ -13,13 +13,15 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import { fetchExpenses } from '../services/api';
+import { fetchExpenses, fetchCategories } from '../services/api';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
 import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
+
 function Statistics() {
   const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState('');
@@ -37,7 +39,16 @@ function Statistics() {
         setLoading(false);
       }
     }
+    async function getCategories() {
+      try {
+        const categoriesData = await fetchCategories();
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
     getExpenses();
+    getCategories();
   }, []);
 
   const handleDateChange = (event) => {
@@ -54,18 +65,18 @@ function Statistics() {
       Cantidad: expense.Cantidad,
       Categoría: expense.Categoría,
       Descripción: expense.Descripción,
-      Ingreso: expense.Ingreso ? 'Sí' : 'No',
-      Egreso: expense.Egreso ? 'Sí' : 'No',
+      Ganancia: expense.Ganancia ? 'Sí' : 'No',
+      Gasto: expense.Gasto ? 'Sí' : 'No',
     }));
     const csvContent = [
-      ['Fecha', 'Cantidad', 'Categoría', 'Descripción', 'Ingreso', 'Egreso'],
+      ['Fecha', 'Cantidad', 'Categoría', 'Descripción', 'Ganancia', 'Gasto'],
       ...csvData.map((item) => [
         item.Fecha,
         item.Cantidad,
         item.Categoría,
         item.Descripción,
-        item.Ingreso,
-        item.Egreso,
+        item.Ganancia,
+        item.Gasto,
       ]),
     ]
       .map((e) => e.join(','))
@@ -83,15 +94,19 @@ function Statistics() {
       filterCategory ? expense.Categoría === filterCategory : true
     );
 
-  const totalIngreso = filteredExpenses
-    .filter((expense) => expense.Ingreso)
+  const sortedExpenses = [...filteredExpenses].sort(
+    (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+  );
+
+  const totalGanancia = sortedExpenses
+    .filter((expense) => expense.Ganancia)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
-  const totalEgreso = filteredExpenses
-    .filter((expense) => expense.Egreso)
+  const totalGasto = sortedExpenses
+    .filter((expense) => expense.Gasto)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
-  const saldoActual = saldoInicial + totalIngreso - totalEgreso;
+  const saldoActual = saldoInicial + totalGanancia - totalGasto;
 
   if (loading) {
     return (
@@ -136,11 +151,11 @@ function Statistics() {
                 }}
               >
                 <MenuItem value="">Todas</MenuItem>
-                <MenuItem value="Alimentación">Alimentación</MenuItem>
-                <MenuItem value="Transporte">Transporte</MenuItem>
-                <MenuItem value="Entretenimiento">Entretenimiento</MenuItem>
-                <MenuItem value="Sueldo">Sueldo</MenuItem>
-                <MenuItem value="Merienda">Merienda</MenuItem>
+                {categories.map((category, index) => (
+                  <MenuItem key={index} value={category}>
+                    {category}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -162,12 +177,11 @@ function Statistics() {
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
           <Typography variant="h6">
-            Total Ingreso:{' '}
-            <CountUp end={totalIngreso} prefix="$" duration={1.5} />
+            Total Ganancia:{' '}
+            <CountUp end={totalGanancia} prefix="$" duration={1.5} />
           </Typography>
           <Typography variant="h6">
-            Total Egreso:{' '}
-            <CountUp end={totalEgreso} prefix="$" duration={1.5} />
+            Total Gasto: <CountUp end={totalGasto} prefix="$" duration={1.5} />
           </Typography>
           <Typography variant="h6">
             Saldo Actual:{' '}
@@ -179,12 +193,9 @@ function Statistics() {
             />
           </Typography>
         </Box>
-        <ExpenseCharts
-          expenses={filteredExpenses}
-          saldoInicial={saldoInicial}
-        />
+        <ExpenseCharts expenses={sortedExpenses} saldoInicial={saldoInicial} />
         <Box sx={{ height: 100, mt: 2 }}>
-          <SmallLineChart expenses={filteredExpenses} />
+          <SmallLineChart expenses={sortedExpenses} />
         </Box>
       </Paper>
     </Container>
