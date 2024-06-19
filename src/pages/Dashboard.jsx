@@ -1,3 +1,5 @@
+// src/pages/Dashboard.jsx
+
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -16,40 +18,44 @@ import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useCache from '../hooks/useCache';
 
 function Dashboard() {
+  const {
+    data: cachedData,
+    loading,
+    error,
+  } = useCache('expenses', fetchExpenses);
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState('');
 
   useEffect(() => {
-    async function getExpenses() {
-      try {
-        const { expenses: expensesData, saldoInicial } = await fetchExpenses();
-        const sortedExpenses = expensesData.sort(
-          (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-        );
-        setExpenses(sortedExpenses);
-        setSaldoInicial(saldoInicial);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching expenses:', error);
-        toast.error('Error al cargar los gastos');
-        setLoading(false);
-      }
+    if (cachedData && Array.isArray(cachedData.expenses)) {
+      const sortedExpenses = cachedData.expenses.sort(
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+      );
+      setExpenses(sortedExpenses);
+      setSaldoInicial(cachedData.saldoInicial || 0);
     }
-    getExpenses();
-  }, []);
+  }, [cachedData]);
 
   const handleAddExpense = async (expense) => {
     try {
       const newExpenses = await addExpense(expense);
-      const updatedExpenses = [...expenses, ...newExpenses];
-      const sortedExpenses = updatedExpenses.sort(
-        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-      );
-      setExpenses(sortedExpenses);
+      setExpenses((prevExpenses) => {
+        const updatedExpenses = [...prevExpenses, ...newExpenses];
+        localStorage.setItem(
+          'expenses',
+          JSON.stringify({
+            data: { expenses: updatedExpenses, saldoInicial },
+            timestamp: new Date().getTime(),
+          })
+        );
+        return updatedExpenses.sort(
+          (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+        );
+      });
       toast.success('Gasto añadido exitosamente');
     } catch (error) {
       console.error('Error adding expense:', error);
@@ -74,6 +80,27 @@ function Dashboard() {
     setFilterDate(event.target.value);
   };
 
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Typography variant="h6" color="error">
+        Error al cargar los gastos: {error.message}
+      </Typography>
+    );
+  }
+
   const filteredExpenses = filterDate
     ? expenses.filter(
         (expense) => new Date(expense.Fecha) <= new Date(filterDate)
@@ -95,19 +122,6 @@ function Dashboard() {
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
   const saldoActual = saldoInicial + totalGanancia - totalGasto;
-
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Container maxWidth="lg" className="container" sx={{ mt: 0, pt: 2 }}>

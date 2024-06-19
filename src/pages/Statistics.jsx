@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/Statistics.jsx
+
+import React, { useState } from 'react';
 import {
   Container,
   Box,
@@ -13,43 +15,47 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import { fetchExpenses, fetchCategories } from '../services/api';
-import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
-import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
+import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
+import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
+import useCache from '../hooks/useCache';
+import { fetchExpenses, fetchCategories } from '../services/api';
 
 function Statistics() {
-  const [expenses, setExpenses] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [saldoInicial, setSaldoInicial] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: cachedData,
+    loading,
+    error,
+  } = useCache('expenses', fetchExpenses);
+  const {
+    data: cachedCategories,
+    loading: loadingCategories,
+    error: errorCategories,
+  } = useCache('categories', fetchCategories);
   const [filterDate, setFilterDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
 
-  useEffect(() => {
-    async function getExpenses() {
-      try {
-        const { expenses: expensesData, saldoInicial } = await fetchExpenses();
-        setExpenses(expensesData);
-        setSaldoInicial(saldoInicial);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching expenses:', error);
-        setLoading(false);
-      }
-    }
-    async function getCategories() {
-      try {
-        const categoriesData = await fetchCategories();
-        setCategories(categoriesData);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    }
-    getExpenses();
-    getCategories();
-  }, []);
+  if (loading || loadingCategories) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error || errorCategories) {
+    return (
+      <Typography variant="h6" color="error">
+        Error al cargar los datos: {error?.message || errorCategories?.message}
+      </Typography>
+    );
+  }
 
   const handleDateChange = (event) => {
     setFilterDate(event.target.value);
@@ -60,7 +66,7 @@ function Statistics() {
   };
 
   const handleExport = () => {
-    const csvData = expenses.map((expense) => ({
+    const csvData = cachedData.expenses.map((expense) => ({
       Fecha: expense.Fecha,
       Cantidad: expense.Cantidad,
       Categoría: expense.Categoría,
@@ -86,7 +92,7 @@ function Statistics() {
     saveAs(blob, 'gastos.csv');
   };
 
-  const filteredExpenses = expenses
+  const filteredExpenses = cachedData.expenses
     .filter((expense) =>
       filterDate ? new Date(expense.Fecha) <= new Date(filterDate) : true
     )
@@ -106,20 +112,8 @@ function Statistics() {
     .filter((expense) => expense.Gasto)
     .reduce((total, expense) => total + expense.Cantidad, 0);
 
+  const saldoInicial = cachedData.saldoInicial || 0;
   const saldoActual = saldoInicial + totalGanancia - totalGasto;
-
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Container maxWidth="lg" className="container" sx={{ mt: 2 }}>
@@ -145,13 +139,10 @@ function Statistics() {
                 value={filterCategory}
                 onChange={handleCategoryChange}
                 label="Categoría"
-                inputProps={{
-                  name: 'filter-category',
-                  id: 'filter-category',
-                }}
+                inputProps={{ name: 'filter-category', id: 'filter-category' }}
               >
                 <MenuItem value="">Todas</MenuItem>
-                {categories.map((category, index) => (
+                {cachedCategories.map((category, index) => (
                   <MenuItem key={index} value={category}>
                     {category}
                   </MenuItem>

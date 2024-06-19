@@ -1,3 +1,5 @@
+// src/services/api.js
+
 import axios from 'axios';
 
 const AIRTABLE_ENDPOINT = import.meta.env.VITE_AIRTABLE_ENDPOINT;
@@ -23,6 +25,7 @@ export const fetchExpenses = async () => {
         Gasto: record.fields.Gasto || false,
       }))
       .filter((record) => record.Fecha && record.Fecha !== 'No disponible');
+
     const saldoInicialRecord = records.find(
       (record) => record.Categoría === 'Saldo Inicial'
     );
