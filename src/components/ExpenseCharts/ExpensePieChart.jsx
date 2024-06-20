@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import './ExpensePieChart.css';
 
 ChartJS.register(
   CategoryScale,

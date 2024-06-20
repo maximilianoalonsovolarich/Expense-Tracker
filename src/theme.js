@@ -1,5 +1,7 @@
+// src/theme.js
+
 import { createTheme } from '@mui/material/styles';
-import { grey, blue, red } from '@mui/material/colors';
+import { grey, blue } from '@mui/material/colors';
 
 const getDesignTokens = (mode) => ({
   palette: {
@@ -20,6 +22,10 @@ const getDesignTokens = (mode) => ({
             primary: '#ffffff',
             secondary: grey[500],
           },
+          action: {
+            active: '#ffffff',
+          },
+          divider: 'rgba(255, 255, 255, 0.12)',
         }
       : {
           background: {
@@ -30,6 +36,10 @@ const getDesignTokens = (mode) => ({
             primary: '#000000',
             secondary: grey[800],
           },
+          action: {
+            active: '#000000',
+          },
+          divider: 'rgba(0, 0, 0, 0.12)',
         }),
   },
   typography: {
@@ -52,6 +62,39 @@ const getDesignTokens = (mode) => ({
           '&:nth-of-type(odd)': {
             backgroundColor: mode === 'dark' ? grey[900] : '#ffffff',
           },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& label.Mui-focused': {
+            color: mode === 'dark' ? '#ffffff' : '#000000',
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: mode === 'dark' ? '#ffffff' : '#000000',
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: mode === 'dark' ? '#ffffff' : '#000000',
+            },
+            '&:hover fieldset': {
+              borderColor: mode === 'dark' ? '#ffffff' : '#000000',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: mode === 'dark' ? '#ffffff' : '#000000',
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: mode === 'dark' ? '#ffffff' : '#000000',
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: mode === 'dark' ? '#424242' : '#ffffff',
         },
       },
     },

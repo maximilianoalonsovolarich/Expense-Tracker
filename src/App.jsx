@@ -1,5 +1,4 @@
-// App.jsx
-import React, { Suspense } from 'react';
+import React, { Suspense, useCallback, useMemo } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +12,7 @@ import {
   Box,
   CircularProgress,
 } from '@mui/material';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Header from './components/Header/Header';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
@@ -36,11 +36,16 @@ function App() {
   );
   const { user, loading } = useAuth();
 
-  const toggleColorMode = () => {
+  const toggleColorMode = useCallback(() => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-  };
+  }, []);
 
-  const theme = React.useMemo(() => getTheme(mode), [mode]);
+  const theme = useMemo(() => getTheme(mode), [mode]);
+
+  // Apply theme class to body
+  React.useEffect(() => {
+    document.body.setAttribute('data-theme', mode);
+  }, [mode]);
 
   if (loading) {
     return (
@@ -60,45 +65,55 @@ function App() {
       <CssBaseline />
       <Router>
         <ModalProvider>
-          {' '}
-          {/* envolvemos la aplicación con el proveedor de modal */}
           <Header mode={mode} toggleColorMode={toggleColorMode} />
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={<CircularProgress />}>
               <Routes>
-                <Route
-                  path="/login"
-                  element={user ? <Navigate to="/" /> : <Login />}
-                />
-                <Route
-                  path="/register"
-                  element={user ? <Navigate to="/" /> : <Register />}
-                />
-                <Route
-                  path="/"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/statistics"
-                  element={
-                    <ProtectedRoute>
-                      <Statistics />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/tabla"
-                  element={
-                    <ProtectedRoute>
-                      <Tabla />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="*" element={<ErrorPage />} />
+                {[
+                  {
+                    path: '/login',
+                    element: user ? <Navigate to="/" /> : <Login />,
+                  },
+                  {
+                    path: '/register',
+                    element: user ? <Navigate to="/" /> : <Register />,
+                  },
+                  {
+                    path: '/',
+                    element: (
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    ),
+                  },
+                  {
+                    path: '/statistics',
+                    element: (
+                      <ProtectedRoute>
+                        <Statistics />
+                      </ProtectedRoute>
+                    ),
+                  },
+                  {
+                    path: '/tabla',
+                    element: (
+                      <ProtectedRoute>
+                        <Tabla />
+                      </ProtectedRoute>
+                    ),
+                  },
+                  { path: '*', element: <ErrorPage /> },
+                ].map(({ path, element }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={
+                      <CSSTransition timeout={300} classNames="fade">
+                        <div>{element}</div>
+                      </CSSTransition>
+                    }
+                  />
+                ))}
               </Routes>
             </Suspense>
           </ErrorBoundary>

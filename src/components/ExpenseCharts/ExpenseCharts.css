@@ -1,0 +1,17 @@
+.chart-container,
+.form-container,
+.chart-grid-item {
+    padding: 1rem;
+    background-color: var(--background-paper);
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.chart-title {
+    margin-bottom: 1rem;
+}
+
+.pie-chart-container {
+    position: relative;
+    height: 200px;
+}

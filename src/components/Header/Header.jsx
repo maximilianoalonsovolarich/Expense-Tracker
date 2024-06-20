@@ -1,6 +1,6 @@
-// src/components/Header/Header.jsx
-
-import React, { useState, useEffect } from 'react';
+/** @jsxImportSource @emotion/react */
+import React, { useState, useEffect, useCallback } from 'react';
+import styled from '@emotion/styled';
 import {
   AppBar,
   Toolbar,
@@ -31,6 +31,31 @@ import 'react-toastify/dist/ReactToastify.css';
 import useCache from '../../hooks/useCache';
 import { fetchExpenses } from '../../services/api';
 
+const HeaderTitle = styled(Typography)`
+  flex-grow: 1;
+  font-size: 1.5rem;
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+`;
+
+const HeaderButtons = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const MenuButton = styled(IconButton)`
+  margin-right: 1rem;
+  @media (max-width: 768px) {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+`;
+
 function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -51,12 +76,15 @@ function Header({ mode, toggleColorMode }) {
     localStorage.setItem('theme', mode);
   }, [mode]);
 
-  const handleNavigate = (path) => {
-    navigate(path);
-    setDrawerOpen(false);
-  };
+  const handleNavigate = useCallback(
+    (path) => {
+      navigate(path);
+      setDrawerOpen(false);
+    },
+    [navigate]
+  );
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await logOut();
       toast.success('Cierre de sesión exitoso');
@@ -64,34 +92,32 @@ function Header({ mode, toggleColorMode }) {
     } catch (error) {
       toast.error('Error al cerrar sesión: ' + error.message);
     }
-  };
+  }, [navigate]);
 
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
   };
 
-  const handleClearCache = () => {
+  const handleClearCache = useCallback(() => {
     clearCache();
     window.location.reload();
-  };
+  }, [clearCache]);
 
   return (
     <>
       <AppBar position="static">
         <Toolbar>
           {user && (
-            <IconButton
+            <MenuButton
               edge="start"
               color="inherit"
               aria-label="menu"
               onClick={toggleDrawer(true)}
             >
               <MenuIcon />
-            </IconButton>
+            </MenuButton>
           )}
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Finanzas
-          </Typography>
+          <HeaderTitle variant="h6">Finanzas</HeaderTitle>
           <IconButton
             sx={{
               color: '#FFFFFF',

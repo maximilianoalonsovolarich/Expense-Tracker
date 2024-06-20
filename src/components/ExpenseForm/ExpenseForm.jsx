@@ -1,7 +1,7 @@
-// ExpenseForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import styled from 'styled-components';
 import {
   TextField,
   Button,
@@ -28,9 +28,23 @@ const validationSchema = Yup.object({
   gasto: Yup.boolean(),
 });
 
+const FormContainer = styled(Paper)`
+  && {
+    padding: 1rem;
+    background-color: var(--background-paper);
+    border-radius: 8px;
+    margin-top: 1rem;
+    color: var(--text-primary);
+  }
+`;
+
+const ButtonContainer = styled(Button)`
+  margin-top: 1rem;
+`;
+
 function ExpenseForm({ onAddExpense }) {
   const [categories, setCategories] = useState([]);
-  const { showModal } = useModal(); // usamos el hook
+  const { showModal } = useModal();
 
   useEffect(() => {
     async function fetchCategoriesFromAPI() {
@@ -80,7 +94,7 @@ function ExpenseForm({ onAddExpense }) {
           Gasto: values.gasto,
         });
         resetForm();
-        showModal(); // mostramos el modal al añadir un gasto
+        showModal();
       } else {
         toast.error('Debe seleccionar al menos Ganancia o Gasto');
       }
@@ -88,18 +102,18 @@ function ExpenseForm({ onAddExpense }) {
   });
 
   return (
-    <Paper elevation={3} sx={{ padding: 2 }}>
+    <FormContainer elevation={3}>
       <Box component="form" onSubmit={formik.handleSubmit}>
         <Typography variant="h6" gutterBottom>
           Añadir Gasto
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
+            <label htmlFor="fecha">Fecha</label>
             <TextField
               fullWidth
               id="fecha"
               name="fecha"
-              label="Fecha"
               type="date"
               value={formik.values.fecha}
               onChange={formik.handleChange}
@@ -109,11 +123,11 @@ function ExpenseForm({ onAddExpense }) {
             />
           </Grid>
           <Grid item xs={12}>
+            <label htmlFor="cantidad">Cantidad</label>
             <TextField
               fullWidth
               id="cantidad"
               name="cantidad"
-              label="Cantidad"
               type="number"
               value={formik.values.cantidad}
               onChange={formik.handleChange}
@@ -122,12 +136,12 @@ function ExpenseForm({ onAddExpense }) {
             />
           </Grid>
           <Grid item xs={12}>
+            <label htmlFor="categoria">Categoría</label>
             <TextField
               fullWidth
               select
               id="categoria"
               name="categoria"
-              label="Categoría"
               value={formik.values.categoria}
               onChange={formik.handleChange}
               error={
@@ -137,17 +151,17 @@ function ExpenseForm({ onAddExpense }) {
             >
               {categories.map((category, index) => (
                 <MenuItem key={index} value={category.name}>
-                  <span style={{ color: category.color }}>{category.name}</span>
+                  {category.name}
                 </MenuItem>
               ))}
             </TextField>
           </Grid>
           <Grid item xs={12}>
+            <label htmlFor="descripcion">Descripción</label>
             <TextField
               fullWidth
               id="descripcion"
               name="descripcion"
-              label="Descripción"
               value={formik.values.descripcion}
               onChange={formik.handleChange}
               error={
@@ -187,17 +201,16 @@ function ExpenseForm({ onAddExpense }) {
             />
           </Grid>
         </Grid>
-        <Button
+        <ButtonContainer
           color="primary"
           variant="contained"
           fullWidth
           type="submit"
-          sx={{ mt: 2 }}
         >
           Añadir Gasto
-        </Button>
+        </ButtonContainer>
       </Box>
-    </Paper>
+    </FormContainer>
   );
 }
 

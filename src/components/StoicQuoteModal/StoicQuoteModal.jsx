@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useModal } from '../../hooks/useModal.jsx';
+import './StoicQuoteModal.css';
 
 const modalStyle = {
   position: 'absolute',
@@ -55,7 +56,7 @@ const StoicQuoteModal = () => {
       }}
     >
       <Fade in={isOpen}>
-        <Box sx={modalStyle}>
+        <Box sx={modalStyle} className="modal">
           <IconButton
             aria-label="close"
             onClick={hideModal}

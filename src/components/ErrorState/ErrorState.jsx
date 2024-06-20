@@ -5,6 +5,7 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react';
+import './ErrorState.css';
 
 const ErrorState = () => (
   <Alert status="error">

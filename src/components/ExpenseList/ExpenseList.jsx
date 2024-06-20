@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   Typography,
   IconButton,
@@ -11,12 +12,35 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+const ExpenseCard = styled(Paper)`
+  padding: 1rem;
+  background-color: var(--ticket-background); // Usando la variable CSS
+  border-radius: 15px;
+  margin-bottom: 1rem;
+`;
+
+const ExpenseTitle = styled(Typography)`
+  color: var(--primary-main);
+`;
+
+const IconButtonStyled = styled(IconButton)`
+  color: var(--primary-main);
+`;
+
+const NoExpensesContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px);
+  margin-top: -3rem;
+`;
+
 function ExpenseList({ expenses = [], onDeleteExpense }) {
   const [currentExpenseIndex, setCurrentExpenseIndex] = useState(0);
 
   useEffect(() => {
     if (expenses.length > 0) {
-      setCurrentExpenseIndex(expenses.length - 1); // Mostrar el último gasto añadido
+      setCurrentExpenseIndex(expenses.length - 1);
     }
   }, [expenses]);
 
@@ -39,9 +63,8 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
   const currentExpense = expenses[currentExpenseIndex];
 
   return (
-    <Paper
+    <ExpenseCard
       sx={{
-        padding: 2,
         backgroundColor: currentExpense?.Ganancia
           ? 'rgba(0, 128, 0, 0.1)'
           : 'rgba(255, 0, 0, 0.1)',
@@ -69,14 +92,14 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
         <Typography variant="body2" color="textSecondary">
           Gasto: {currentExpense?.Gasto ? 'Sí' : 'No'}
         </Typography>
-        <IconButton
+        <IconButtonStyled
           edge="end"
           aria-label="delete"
           onClick={() => onDeleteExpense(currentExpense.id)}
           sx={{ position: 'absolute', top: 8, right: 8 }}
         >
           <DeleteIcon />
-        </IconButton>
+        </IconButtonStyled>
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -123,7 +146,7 @@ function ExpenseList({ expenses = [], onDeleteExpense }) {
           </Grid>
         </Grid>
       </Box>
-    </Paper>
+    </ExpenseCard>
   );
 }
 

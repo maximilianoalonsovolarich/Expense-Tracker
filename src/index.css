@@ -5,9 +5,6 @@ body {
   background-color: var(--background-default);
   color: var(--text-primary);
   transition: background-color 0.5s, color 0.5s;
-}
-
-* {
   box-sizing: border-box;
 }
 
@@ -29,18 +26,7 @@ body {
   margin-right: 1rem;
 }
 
-.chart-container {
-  padding: 1rem;
-  background-color: var(--background-paper);
-  border-radius: 8px;
-  margin-top: 1rem;
-}
-
-.chart-title {
-  margin-bottom: 1rem;
-}
-
-.form-container {
+.common-container {
   padding: 1rem;
   background-color: var(--background-paper);
   border-radius: 8px;
@@ -49,27 +35,15 @@ body {
 
 .expense-card {
   padding: 1rem;
-  background-color: #FFF8E1;
+  background-color: var(--ticket-background);
   border-radius: 15px;
   margin-bottom: 1rem;
+  color: var(--ticket-text);
 }
 
-.expense-title {
-  color: var(--primary-main);
-}
-
+.expense-title,
 .icon-button {
   color: var(--primary-main);
-}
-
-.chart-grid-item {
-  padding: 1rem;
-  height: 100%;
-}
-
-.pie-chart-container {
-  position: relative;
-  height: 200px;
 }
 
 .no-expenses-container {
@@ -98,6 +72,11 @@ body {
   --secondary-main: #DB4437;
   --even-row-bg: #f5f5f5;
   --odd-row-bg: #ffffff;
+  --input-border: #000000;
+  --input-background: #ffffff;
+  --input-text: #000000;
+  --ticket-background: #FFFFFF;
+  --ticket-text: #000000;
 }
 
 /* Variables para modo oscuro */
@@ -107,6 +86,64 @@ body {
   --text-primary: #ffffff;
   --even-row-bg: #424242;
   --odd-row-bg: #303030;
+  --input-border: #ffffff;
+  --input-background: #424242;
+  --input-text: #ffffff;
+  --ticket-background: #424242;
+  --ticket-text: #ffffff;
+}
+
+/* Estilos de transición */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* Estilos específicos para formularios */
+.MuiOutlinedInput-root {
+  background-color: var(--input-background);
+  color: var(--input-text);
+
+  fieldset {
+    border-color: var(--input-border);
+  }
+
+  & fieldset {
+    border-color: var(--input-border);
+  }
+
+  &.Mui-focused fieldset {
+    border-color: var(--input-border);
+  }
+}
+
+.MuiInputLabel-root {
+  color: var(--text-primary);
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: var(--text-primary);
+}
+
+.MuiInputBase-input {
+  color: var(--input-text);
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-border);
 }
 
 @media (max-width: 768px) {

@@ -10,7 +10,14 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { format, parseISO, isValid } from 'date-fns';
+import {
+  format,
+  parseISO,
+  isValid,
+  eachDayOfInterval,
+  addDays,
+  startOfMonth,
+} from 'date-fns';
 
 ChartJS.register(
   CategoryScale,
@@ -22,32 +29,52 @@ ChartJS.register(
   Legend
 );
 
-const SmallLineChart = ({ expenses }) => {
-  const groupedExpenses = expenses.reduce((acc, expense) => {
+const getQuincenalLabels = (startDate, endDate) => {
+  const start = startOfMonth(startDate);
+  const end = endDate;
+  const labels = eachDayOfInterval({ start, end }).filter(
+    (date) => date.getDate() === 1 || date.getDate() === 15
+  );
+  return labels.map((date) => format(date, 'yyyy-MM-dd'));
+};
+
+const groupExpensesByQuincena = (expenses) => {
+  return expenses.reduce((acc, expense) => {
     const date = parseISO(expense.Fecha);
     if (!isValid(date)) {
       console.error(`Fecha inválida: ${expense.Fecha}`);
       return acc;
     }
-    const month = format(date, 'yyyy-MM');
-    if (!acc[month]) {
-      acc[month] = 0;
+
+    const day = date.getDate() <= 15 ? '01' : '15';
+    const quincena = `${format(date, 'yyyy-MM')}-${day}`;
+
+    if (!acc[quincena]) {
+      acc[quincena] = 0;
     }
     if (expense.Ganancia) {
-      acc[month] += expense.Cantidad;
+      acc[quincena] += expense.Cantidad;
     }
     if (expense.Gasto) {
-      acc[month] -= expense.Cantidad;
+      acc[quincena] -= expense.Cantidad;
     }
     return acc;
   }, {});
+};
+
+const SmallLineChart = ({ expenses }) => {
+  const groupedExpenses = groupExpensesByQuincena(expenses);
+  const labels = getQuincenalLabels(
+    new Date(expenses[0]?.Fecha),
+    new Date(expenses[expenses.length - 1]?.Fecha)
+  );
 
   const data = {
-    labels: Object.keys(groupedExpenses),
+    labels: labels,
     datasets: [
       {
         label: 'Saldo',
-        data: Object.values(groupedExpenses),
+        data: labels.map((label) => groupedExpenses[label] || 0),
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: false,

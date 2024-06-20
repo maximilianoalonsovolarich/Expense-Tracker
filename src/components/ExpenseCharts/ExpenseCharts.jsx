@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { format, parseISO, isValid } from 'date-fns';
+import './ExpenseCharts.css';
 
 ChartJS.register(
   CategoryScale,
