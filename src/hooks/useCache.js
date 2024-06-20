@@ -40,7 +40,16 @@ const useCache = (key, fetchFunction, expiryTime = 3600000) => {
     fetchData();
   };
 
-  return { data, loading, error, clearCache };
+  const updateCache = (newData) => {
+    const now = new Date().getTime();
+    localStorage.setItem(
+      key,
+      JSON.stringify({ data: newData, timestamp: now })
+    );
+    setData(newData);
+  };
+
+  return { data, loading, error, clearCache, updateCache };
 };
 
 export default useCache;

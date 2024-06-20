@@ -26,6 +26,7 @@ function Dashboard() {
     loading,
     error,
     clearCache,
+    updateCache,
   } = useCache('expenses', fetchExpenses);
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
@@ -44,19 +45,10 @@ function Dashboard() {
   const handleAddExpense = async (expense) => {
     try {
       const newExpenses = await addExpense(expense);
-      setExpenses((prevExpenses) => {
-        const updatedExpenses = [...prevExpenses, ...newExpenses];
-        localStorage.setItem(
-          'expenses',
-          JSON.stringify({
-            data: { expenses: updatedExpenses, saldoInicial },
-            timestamp: new Date().getTime(),
-          })
-        );
-        return updatedExpenses.sort(
-          (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-        );
-      });
+      const updatedExpenses = [...expenses, ...newExpenses].sort(
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+      );
+      updateCache({ expenses: updatedExpenses, saldoInicial });
       toast.success('Gasto añadido exitosamente');
     } catch (error) {
       console.error('Error adding expense:', error);
@@ -69,6 +61,10 @@ function Dashboard() {
     setExpenses(expenses.filter((expense) => expense.id !== id));
     try {
       await deleteExpense(id);
+      const updatedExpenses = previousExpenses.filter(
+        (expense) => expense.id !== id
+      );
+      updateCache({ expenses: updatedExpenses, saldoInicial });
       toast.success('Gasto eliminado exitosamente');
     } catch (error) {
       console.error('Error deleting expense:', error);

@@ -70,6 +70,11 @@ function Header({ mode, toggleColorMode }) {
     setDrawerOpen(open);
   };
 
+  const handleClearCache = () => {
+    clearCache();
+    window.location.reload();
+  };
+
   return (
     <>
       <AppBar position="static">
@@ -100,10 +105,10 @@ function Header({ mode, toggleColorMode }) {
           {user && (
             <Button
               color="inherit"
-              onClick={clearCache}
+              onClick={handleClearCache}
               startIcon={<RefreshIcon />}
             >
-              Actualizar Caché
+              Actualizar
             </Button>
           )}
         </Toolbar>
