@@ -90,7 +90,7 @@ function Header({ mode, toggleColorMode }) {
             </IconButton>
           )}
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Rastreador de Gastos
+            Finanzas
           </Typography>
           <IconButton
             sx={{
@@ -107,9 +107,7 @@ function Header({ mode, toggleColorMode }) {
               color="inherit"
               onClick={handleClearCache}
               startIcon={<RefreshIcon />}
-            >
-              Actualizar
-            </Button>
+            ></Button>
           )}
         </Toolbar>
       </AppBar>

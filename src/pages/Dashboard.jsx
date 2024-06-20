@@ -11,6 +11,8 @@ import {
   Paper,
   TextField,
   Divider,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm/ExpenseForm';
 import ExpenseList from '../components/ExpenseList/ExpenseList';
@@ -31,6 +33,9 @@ function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
   const [filterDate, setFilterDate] = useState('');
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (cachedData && Array.isArray(cachedData.expenses)) {
@@ -125,9 +130,14 @@ function Dashboard() {
       <CssBaseline />
       <ToastContainer position="top-right" />
       <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
-        Dashboard de Gastos
+        Dashboard
       </Typography>
       <Grid container spacing={4}>
+        {isMobile && (
+          <Grid item xs={12}>
+            <ExpenseForm onAddExpense={handleAddExpense} />
+          </Grid>
+        )}
         <Grid item xs={12} md={6}>
           <Grid container spacing={4} sx={{ height: '100%' }}>
             <Grid item xs={12} md={sortedExpenses.length === 0 ? 12 : 6}>
@@ -187,9 +197,11 @@ function Dashboard() {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <ExpenseForm onAddExpense={handleAddExpense} />
-        </Grid>
+        {!isMobile && (
+          <Grid item xs={12} md={6}>
+            <ExpenseForm onAddExpense={handleAddExpense} />
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
