@@ -35,6 +35,12 @@ file_monitor.py
 __pycache__/
 .venv/
 
+# Ignore all JSON files
+*.json
+
+# Exception: Do not ignore this specific JSON file
+!public/frases_estoicas_es.json
+
 # Other
 modifications.json
 *.txt
