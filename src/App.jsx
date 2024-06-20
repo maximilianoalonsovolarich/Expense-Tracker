@@ -1,3 +1,4 @@
+// App.jsx
 import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
@@ -20,6 +21,8 @@ import getTheme from './theme';
 import useAuth from './hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StoicQuoteModal from './components/StoicQuoteModal/StoicQuoteModal';
+import { ModalProvider } from './hooks/useModal.jsx';
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -56,47 +59,52 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Header mode={mode} toggleColorMode={toggleColorMode} />
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback={<CircularProgress />}>
-            <Routes>
-              <Route
-                path="/login"
-                element={user ? <Navigate to="/" /> : <Login />}
-              />
-              <Route
-                path="/register"
-                element={user ? <Navigate to="/" /> : <Register />}
-              />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/statistics"
-                element={
-                  <ProtectedRoute>
-                    <Statistics />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tabla"
-                element={
-                  <ProtectedRoute>
-                    <Tabla />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<ErrorPage />} />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-        <ToastContainer />
+        <ModalProvider>
+          {' '}
+          {/* envolvemos la aplicación con el proveedor de modal */}
+          <Header mode={mode} toggleColorMode={toggleColorMode} />
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<CircularProgress />}>
+              <Routes>
+                <Route
+                  path="/login"
+                  element={user ? <Navigate to="/" /> : <Login />}
+                />
+                <Route
+                  path="/register"
+                  element={user ? <Navigate to="/" /> : <Register />}
+                />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/statistics"
+                  element={
+                    <ProtectedRoute>
+                      <Statistics />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tabla"
+                  element={
+                    <ProtectedRoute>
+                      <Tabla />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+          <ToastContainer />
+          <StoicQuoteModal />
+        </ModalProvider>
       </Router>
     </ThemeProvider>
   );

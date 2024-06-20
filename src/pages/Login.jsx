@@ -26,7 +26,7 @@ function Login() {
       <Paper elevation={6} sx={{ p: 4, textAlign: 'center' }}>
         <ToastContainer />
         <Typography variant="h4" gutterBottom>
-          Bienvenido App de Gastos
+          Bienvenido
         </Typography>
         <Divider sx={{ my: 2 }} />
         <Button

@@ -1,0 +1,1804 @@
+{
+    "frases": [
+        {
+            "texto": "Nunca digas: 'Yo he perdido algo', sino 'He devuelto algo'. ¿Acaso no te devolvieron tu dinero, tu salud, o tu reputación?",
+            "autor": "Epicteto.",
+            "id": 1
+        },
+        {
+            "texto": "Lo que no depende de ti, no te afecta.",
+            "autor": "Epicteto",
+            "id": 2
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y gozar, sino en no desear nada, pues consiste en ser libre\".",
+            "autor": "Epicteto.",
+            "id": 3
+        },
+        {
+            "texto": "La felicidad no consiste en tener mucho, sino en contentarse con poco.",
+            "autor": "Séneca",
+            "id": 4
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 5
+        },
+        {
+            "texto": "El que tiene un porqué para vivir, puede enfrentar cualquier cosa.",
+            "autor": "Marco Aurelio",
+            "id": 6
+        },
+        {
+            "texto": "La felicidad yace en la virtud, no en los placeres materiales.",
+            "autor": "Séneca.",
+            "id": 7
+        },
+        {
+            "texto": "Lo que nos hace sufrir no es la realidad, sino la idea que tenemos de ella.",
+            "autor": "Epicteto",
+            "id": 8
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con la razón.",
+            "autor": "Séneca",
+            "id": 9
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando logras aceptar las cosas que no puedes cambiar.",
+            "autor": "Epicteto",
+            "id": 10
+        },
+        {
+            "texto": "El hombre no es perturbado por las cosas, sino por las opiniones que tiene de las cosas.",
+            "autor": "Epicteto",
+            "id": 11
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear nada, pues consta de gozar de lo que se tiene y de desear solamente lo que es justo y razonable.",
+            "autor": "Séneca",
+            "id": 12
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 13
+        },
+        {
+            "texto": "La felicidad no consiste en tener todo lo que se desea, sino en conformarse con lo que se tiene.",
+            "autor": "Séneca",
+            "id": 14
+        },
+        {
+            "texto": "La felicidad es adquirida al dejar de preocuparse por las cosas que están fuera de nuestro control.",
+            "autor": "Séneca",
+            "id": 15
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 16
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir lo que deseas, sino en aprender a contentarte con lo que tienes.",
+            "autor": "Epicteto",
+            "id": 17
+        },
+        {
+            "texto": "Lo que nos hace infelices no es la realidad, sino nuestras ideas sobre la realidad.",
+            "autor": "Epicteto",
+            "id": 18
+        },
+        {
+            "texto": "La felicidad es un logro interno, no externo.",
+            "autor": "Epicteto",
+            "id": 19
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 20
+        },
+        {
+            "texto": "La felicidad consiste en no depender de cosas externas.",
+            "autor": "Epicteto",
+            "id": 21
+        },
+        {
+            "texto": "La felicidad radica en la virtud y en la sabiduría, no en la riqueza ni en el placer; la honestidad y la rectitud son superiores a la fama y a la fortuna.",
+            "autor": "Séneca",
+            "id": 22
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 23
+        },
+        {
+            "texto": "Lo que no depende de ti, déjalo pasar",
+            "autor": "Epicteto",
+            "id": 24
+        },
+        {
+            "texto": "La felicidad humana no reside en la posesión de cosas exteriores, sino en el dominio de sí mismo.",
+            "autor": "Séneca",
+            "id": 25
+        },
+        {
+            "texto": "La felicidad no consiste en poseer muchas cosas, sino en sentirse rico con lo poco que se tiene.",
+            "autor": "Séneca",
+            "id": 26
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Séneca",
+            "id": 27
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 28
+        },
+        {
+            "texto": "El dolor es inevitable, pero el sufrimiento es opcional.",
+            "autor": "Marco Aurelio",
+            "id": 29
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 30
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio.",
+            "id": 31
+        },
+        {
+            "texto": "La felicidad es vivir en armonía con la naturaleza.",
+            "autor": "Séneca",
+            "id": 32
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio.",
+            "id": 33
+        },
+        {
+            "texto": "El hombre sabio se basta a sí mismo.",
+            "autor": "Séneca",
+            "id": 34
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 35
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 36
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en gozar, sino en no desear.",
+            "autor": "Séneca",
+            "id": 37
+        },
+        {
+            "texto": "La felicidad radica en la satisfacción de los propios logros y en la virtud de vivir de acuerdo con la razón.",
+            "autor": "Séneca",
+            "id": 38
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 39
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 40
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y disfrutar, sino en no desear nada, pues solo así somos libres.",
+            "autor": "Epicteto",
+            "id": 41
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 42
+        },
+        {
+            "texto": "Lo que nos molesta no son las cosas, sino nuestra opinión acerca de las cosas",
+            "autor": "Epicteto",
+            "id": 43
+        },
+        {
+            "texto": "El hombre es perturbado no por las cosas, sino por la opinión que tiene de las cosas",
+            "autor": "Epicteto.",
+            "id": 44
+        },
+        {
+            "texto": "La felicidad no se logra con la satisfacción de los deseos, sino con la eliminación de los deseos.\"\n- Séneca",
+            "autor": "Desconocido",
+            "id": 45
+        },
+        {
+            "texto": "El hombre sabio es el que siempre ordena sus pensamientos para llevar una vida tranquila.",
+            "autor": "Séneca",
+            "id": 46
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Séneca",
+            "id": 47
+        },
+        {
+            "texto": "La felicidad yace en la virtud, no en la riqueza.",
+            "autor": "Séneca.",
+            "id": 48
+        },
+        {
+            "texto": "El hombre sabio se buscará a sí mismo en su interior, no en posesiones exteriores.",
+            "autor": "Séneca",
+            "id": 49
+        },
+        {
+            "texto": "El hombre es dueño de su destino y responsable de su alma.",
+            "autor": "Séneca",
+            "id": 50
+        },
+        {
+            "texto": "La felicidad depende de tu actitud, no de tu situación.",
+            "autor": "Marco Aurelio.",
+            "id": 51
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 52
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 53
+        },
+        {
+            "texto": "La felicidad no depende de lo que nos falta, sino del buen uso de lo que tenemos.",
+            "autor": "Séneca",
+            "id": 54
+        },
+        {
+            "texto": "La adversidad es la mejor maestra.",
+            "autor": "Séneca",
+            "id": 55
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 56
+        },
+        {
+            "texto": "La felicidad no es algo que se busca, sino algo que se tiene dentro de uno mismo.",
+            "autor": "Séneca",
+            "id": 57
+        },
+        {
+            "texto": "La felicidad es alcanzable para aquellos que saben controlar sus pasiones y deseos.",
+            "autor": "Séneca",
+            "id": 58
+        },
+        {
+            "texto": "El hombre sabio siempre está contento porque no espera nada y se adapta a todo lo que suceda",
+            "autor": "Epicteto.",
+            "id": 59
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 60
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio, filósofo estoico romano.",
+            "id": 61
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando adoptamos una actitud de aceptación ante aquello que no podemos cambiar.",
+            "autor": "Epicteto",
+            "id": 62
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 63
+        },
+        {
+            "texto": "La felicidad la hace el hombre perfecto, no el dinero ni el poder",
+            "autor": "Séneca",
+            "id": 64
+        },
+        {
+            "texto": "El hombre es perturbado no por las cosas, sino por la opinión que tiene de las cosas.",
+            "autor": "Epicteto.",
+            "id": 65
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca.",
+            "id": 66
+        },
+        {
+            "texto": "El hombre sabio es aquel que es capaz de dominar su voluntad y sus pasiones.",
+            "autor": "Séneca.",
+            "id": 67
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 68
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 69
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 70
+        },
+        {
+            "texto": "Ningún hombre es libre si no es amo de sí mismo.",
+            "autor": "Epicteto",
+            "id": 71
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto",
+            "id": 72
+        },
+        {
+            "texto": "La tranquilidad de la mente es uno de los más grandes tesoros que podemos tener.",
+            "autor": "Séneca",
+            "id": 73
+        },
+        {
+            "texto": "El hombre sabio es aquel que busca que sus deseos coincidan con lo que obtiene",
+            "autor": "Epicteto.",
+            "id": 74
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 75
+        },
+        {
+            "texto": "El hombre no se perturba por las cosas, sino por la opinión que tiene de las cosas.",
+            "autor": "Epicteto",
+            "id": 76
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 77
+        },
+        {
+            "texto": "La felicidad no consiste en tener todo lo que deseas, sino en saber disfrutar de todo lo que tienes.",
+            "autor": "Séneca",
+            "id": 78
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en saber disfrutar de lo que tenemos.",
+            "autor": "Séneca",
+            "id": 79
+        },
+        {
+            "texto": "El hombre feliz no es aquel que no tiene preocupaciones, sino aquel que las domina.",
+            "autor": "Séneca",
+            "id": 80
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 81
+        },
+        {
+            "texto": "La felicidad yace en la virtud, no en las riquezas.",
+            "autor": "Séneca",
+            "id": 82
+        },
+        {
+            "texto": "La felicidad también la podemos alcanzar cuando no hay desfavorables cosas que soportar.",
+            "autor": "Séneca",
+            "id": 83
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 84
+        },
+        {
+            "texto": "La felicidad no reside en la posesión de lo que no tenemos, sino en el buen uso de lo que sí tenemos.",
+            "autor": "Séneca",
+            "id": 85
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 86
+        },
+        {
+            "texto": "El hombre es perturbado no por las cosas, sino por sus opiniones sobre las cosas\".",
+            "autor": "Epicteto",
+            "id": 87
+        },
+        {
+            "texto": "La felicidad no consiste en cosas externas, sino en cómo las valoramos.",
+            "autor": "Séneca",
+            "id": 88
+        },
+        {
+            "texto": "La única causa de tristeza es el pensamiento.",
+            "autor": "Séneca",
+            "id": 89
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 90
+        },
+        {
+            "texto": "El hombre sabio es dueño de sí mismo.",
+            "autor": "Séneca.",
+            "id": 91
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en hacer lo mejor con lo que tienes.",
+            "autor": "Séneca.",
+            "id": 92
+        },
+        {
+            "texto": "La felicidad yace en la virtud, y no en los placeres materiales\".",
+            "autor": "Séneca",
+            "id": 93
+        },
+        {
+            "texto": "La felicidad no consiste en alcanzar la meta, sino en el camino que recorres para llegar a ella.",
+            "autor": "Séneca",
+            "id": 94
+        },
+        {
+            "texto": "Lo que más atasca a la humanidad es tener que hacer lo que los demás hacen, creer lo que los demás creen y vivir como los demás viven\".",
+            "autor": "Séneca",
+            "id": 95
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y gozar, sino en no desear nada, porque consiste en ser libre.",
+            "autor": "Séneca",
+            "id": 96
+        },
+        {
+            "texto": "La felicidad radica en la virtud y en la razón, y no en la riqueza y la fama.",
+            "autor": "Séneca",
+            "id": 97
+        },
+        {
+            "texto": "El obstáculo es el camino.",
+            "autor": "Marco Aurelio",
+            "id": 98
+        },
+        {
+            "texto": "Sufrimos más a menudo en la imaginación que en la realidad.",
+            "autor": "Séneca",
+            "id": 99
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en saber disfrutar de lo que se tiene.",
+            "autor": "Epicteto, filósofo estoico.",
+            "id": 100
+        },
+        {
+            "texto": "Lo que nos hace sufrir no son las cosas en sí, sino nuestra interpretación de ellas",
+            "autor": "Epicteto",
+            "id": 101
+        },
+        {
+            "texto": "El verdadero poder de un hombre reside en la facultad de ponerse feliz en las circunstancias más adversas\".",
+            "autor": "Séneca",
+            "id": 102
+        },
+        {
+            "texto": "La felicidad consiste en aceptar la realidad tal como es.",
+            "autor": "Epicteto",
+            "id": 103
+        },
+        {
+            "texto": "Lo que no depende de ti, déjalo pasar.",
+            "autor": "Epicteto",
+            "id": 104
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto.",
+            "id": 105
+        },
+        {
+            "texto": "Quien tiene un por qué para vivir puede soportar casi cualquier cómo.",
+            "autor": "Friedrich Nietzsche",
+            "id": 106
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se aflige por las cosas que no posee, sino que se regocija con aquellas que tiene.",
+            "autor": "Epicteto",
+            "id": 107
+        },
+        {
+            "texto": "El hombre sabio es sabio en todas las circunstancias",
+            "autor": "Séneca.",
+            "id": 108
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 109
+        },
+        {
+            "texto": "La verdadera felicidad es disfrutar del presente, sin dependencia ansiosa del futuro.",
+            "autor": "Séneca",
+            "id": 110
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir lo que nos falta, sino en disfrutar de lo que tenemos",
+            "autor": "Séneca.",
+            "id": 111
+        },
+        {
+            "texto": "La felicidad exige que vivamos sin prisa, pero sin pausa.",
+            "autor": "Séneca",
+            "id": 112
+        },
+        {
+            "texto": "La felicidad es alcanzar la paz consigo mismo.",
+            "autor": "Séneca",
+            "id": 113
+        },
+        {
+            "texto": "La felicidad, la tranquilidad y la paz interior no son cosas que se nos den hechas, sino que resultan de nuestras propias acciones.",
+            "autor": "Epicteto",
+            "id": 114
+        },
+        {
+            "texto": "La parte más importante de la educación es aprender a soportar, con firmeza y serenidad, lo que no podemos cambiar.",
+            "autor": "Epicteto",
+            "id": 115
+        },
+        {
+            "texto": "La felicidad no depende de cosas externas, sino de cómo las percibimos.",
+            "autor": "Epicteto",
+            "id": 116
+        },
+        {
+            "texto": "El hombre sabio es dueño de sí mismo, aunque sea esclavo; el necio es esclavo, aunque sea rey.",
+            "autor": "Séneca",
+            "id": 117
+        },
+        {
+            "texto": "El hombre sabio siempre será feliz, porque sabe contentarse con lo que le ofrece el momento presente\".",
+            "autor": "Epicteto",
+            "id": 118
+        },
+        {
+            "texto": "La felicidad no consiste en estar libre de imperfecciones, sino en tener el corazón dispuesto a vencerlas.",
+            "autor": "Séneca",
+            "id": 119
+        },
+        {
+            "texto": "La felicidad radica en la virtud y en la sabiduría de la mente\".",
+            "autor": "Séneca, filósofo estoico romano.",
+            "id": 120
+        },
+        {
+            "texto": "La felicidad es disfrutar de lo que tienes, no desear lo que no tienes.",
+            "autor": "Séneca",
+            "id": 121
+        },
+        {
+            "texto": "La felicidad es un don que reside en el alma.",
+            "autor": "Séneca",
+            "id": 122
+        },
+        {
+            "texto": "Lo que no depende de ti, déjalo estar en paz.",
+            "autor": "Epicteto",
+            "id": 123
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando aceptas lo que no puedes cambiar.",
+            "autor": "Epicteto.",
+            "id": 124
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en gozar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Lucio Anneo Séneca",
+            "id": 125
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 126
+        },
+        {
+            "texto": "El hombre que tiene la fuerza de la paciencia, puede soportar cualquier cosa.”",
+            "autor": "Séneca",
+            "id": 127
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que uno piensa, lo que uno dice, y lo que uno hace están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 128
+        },
+        {
+            "texto": "El sabio se contenta consigo mismo y con las circunstancias.",
+            "autor": "Séneca",
+            "id": 129
+        },
+        {
+            "texto": "La felicidad es tener lo que deseas, la virtud es desear lo que tienes.",
+            "autor": "Séneca",
+            "id": 130
+        },
+        {
+            "texto": "La felicidad depende de lo que somos más que de lo que tenemos.",
+            "autor": "Séneca",
+            "id": 131
+        },
+        {
+            "texto": "Lo que define a una buena vida no es la duración, sino la intensidad.",
+            "autor": "Séneca",
+            "id": 132
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 133
+        },
+        {
+            "texto": "La felicidad no consiste en dominar el mundo, sino en dominarse a uno mismo.",
+            "autor": "Séneca",
+            "id": 134
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 135
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 136
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y disfrutar, sino en no desear nada, pues consiste en ser libre\".",
+            "autor": "Epicteto",
+            "id": 137
+        },
+        {
+            "texto": "La felicidad es el objetivo natural de nuestros deseos.",
+            "autor": "Séneca",
+            "id": 138
+        },
+        {
+            "texto": "La felicidad es tener lo que deseas, la virtud es desear lo que tienes.",
+            "autor": "Séneca",
+            "id": 139
+        },
+        {
+            "texto": "La única riqueza verdadera es la riqueza de la mente.",
+            "autor": "Séneca",
+            "id": 140
+        },
+        {
+            "texto": "Si buscas la verdad, prepárate para lo inesperado.",
+            "autor": "Séneca",
+            "id": 141
+        },
+        {
+            "texto": "La felicidad no consiste en tener lo que deseas, sino en desear lo que tienes.",
+            "autor": "Séneca",
+            "id": 142
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando dejas de compararte con los demás y te centras en tu propio camino.",
+            "autor": "Epicteto",
+            "id": 143
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto",
+            "id": 144
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 145
+        },
+        {
+            "texto": "La felicidad, para quienes sinceramente la buscan, es un bien invulnerable, y en su felicidad misma encuentran el consuelo, aun si están lejos de todo lo que desean.",
+            "autor": "Séneca",
+            "id": 146
+        },
+        {
+            "texto": "Vive de tal manera que nada te sorprenda, nada te concierna, nada te frustre, nada te desanime, nada te abata.",
+            "autor": "Séneca",
+            "id": 147
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 148
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 149
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto",
+            "id": 150
+        },
+        {
+            "texto": "La felicidad no consiste en vivir sin problemas, sino en vencerlos",
+            "autor": "Séneca.",
+            "id": 151
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Epicteto",
+            "id": 152
+        },
+        {
+            "texto": "La vida no es problema para ser resuelto, sino una realidad que experimentar.",
+            "autor": "Epicteto",
+            "id": 153
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Séneca",
+            "id": 154
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y mantenerla inmutable.",
+            "autor": "Séneca.",
+            "id": 155
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 156
+        },
+        {
+            "texto": "La felicidad del alma radica en la aceptación de lo inevitable con tranquilidad.",
+            "autor": "Séneca",
+            "id": 157
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 158
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 159
+        },
+        {
+            "texto": "Si quieres ser feliz, no te aferres a cosas externas",
+            "autor": "Epicteto",
+            "id": 160
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos\".",
+            "autor": "Marco Aurelio",
+            "id": 161
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 162
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 163
+        },
+        {
+            "texto": "Si quieres mejorar, sé contento con tus deseos",
+            "autor": "Epícteto",
+            "id": 164
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en gozar, sino en no desear nada, pues consiste en ser libres.",
+            "autor": "Epicteto.",
+            "id": 165
+        },
+        {
+            "texto": "La felicidad es alcanzable, pero solo a través de la virtud.",
+            "autor": "Séneca",
+            "id": 166
+        },
+        {
+            "texto": "El sufrimiento no depende de las cosas, sino de la opinión que tenemos sobre ellas.",
+            "autor": "Epicteto",
+            "id": 167
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con la naturaleza.",
+            "autor": "Séneca, filósofo estoico romano.",
+            "id": 168
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con la razón.",
+            "autor": "Séneca",
+            "id": 169
+        },
+        {
+            "texto": "El dolor es inevitable, pero el sufrimiento es opcional\".",
+            "autor": "Séneca",
+            "id": 170
+        },
+        {
+            "texto": "El hombre sabio es el que no se entristece por aquello que no tiene, sino que se regocija por lo que sí posee.",
+            "autor": "Séneca",
+            "id": 171
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en hacer lo mejor con lo que tienes.",
+            "autor": "Séneca",
+            "id": 172
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 173
+        },
+        {
+            "texto": "La felicidad no es adquirida ni poseída, es interior, y pertenece al alma.",
+            "autor": "Séneca",
+            "id": 174
+        },
+        {
+            "texto": "La felicidad tranquila reside en la libertad de todo mal.",
+            "autor": "Séneca",
+            "id": 175
+        },
+        {
+            "texto": "La felicidad descansa en la virtud y en la naturaleza de cada uno, y no en la opinión de los demás.",
+            "autor": "Séneca",
+            "id": 176
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 177
+        },
+        {
+            "texto": "La felicidad es alcanzar lo que se desea y ser capaz de disfrutarlo.",
+            "autor": "Séneca",
+            "id": 178
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 179
+        },
+        {
+            "texto": "El hombre sabio es aquel que conoce la verdadera riqueza, que consiste en no desear nada superfluo",
+            "autor": "Séneca.",
+            "id": 180
+        },
+        {
+            "texto": "El dolor es inevitable, pero el sufrimiento es opcional.",
+            "autor": "Marco Aurelio",
+            "id": 181
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en saber disfrutar de lo que se tiene.",
+            "autor": "Séneca",
+            "id": 182
+        },
+        {
+            "texto": "La felicidad es alcanzable solo cuando te das cuenta de que algunas cosas están dentro de tu control y otras no.",
+            "autor": "Epicteto",
+            "id": 183
+        },
+        {
+            "texto": "La virtud es firme y constante, y tú, en cambio, eres vacilante y falible, y si te apoyas en la virtud, no vacilarás. Si tienes una gran fe en la virtud, y te mantienes en ella jamás",
+            "autor": "Desconocido",
+            "id": 184
+        },
+        {
+            "texto": "El hombre que lleva en sí mismo una buena razón para vivir, puede soportar casi cualquier cómo.",
+            "autor": "Séneca, filósofo estoico romano.",
+            "id": 185
+        },
+        {
+            "texto": "Perder poco duele, si hay esperanza de recobrarlo; pero perderlo todo, aunque sea poco, duele en extremo.",
+            "autor": "Séneca",
+            "id": 186
+        },
+        {
+            "texto": "El sufrimiento es como una roca. Si te golpea un demonio, será indiferente si lo soportas valientemente.",
+            "autor": "Séneca",
+            "id": 187
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 188
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando te das cuenta de que no necesitas nada más para ser feliz que tu propia mente.",
+            "autor": "Séneca.",
+            "id": 189
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se alegra por las que sí posee.",
+            "autor": "Epicteto",
+            "id": 190
+        },
+        {
+            "texto": "La felicidad o desdicha de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Séneca",
+            "id": 191
+        },
+        {
+            "texto": "El tiempo es como un río que arrastra cualquier cosa puesta en su camino y nada permanece inmutable",
+            "autor": "Séneca",
+            "id": 192
+        },
+        {
+            "texto": "La felicidad es alcanzable solo cuando te conviertes en protagonista de tu propia historia.",
+            "autor": "Séneca",
+            "id": 193
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 194
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir lo que nos falta, sino en saber disfrutar de lo que tenemos",
+            "autor": "Séneca.",
+            "id": 195
+        },
+        {
+            "texto": "La felicidad es un logro propio y viene de la satisfacción de la razón, no de la posesión de bienes.",
+            "autor": "Séneca",
+            "id": 196
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 197
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 198
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con ella.",
+            "autor": "Séneca.",
+            "id": 199
+        },
+        {
+            "texto": "Lo que no depende de nosotros mismos, no es responsabilidad nuestra.",
+            "autor": "Epicteto",
+            "id": 200
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos",
+            "autor": "Epicteto",
+            "id": 201
+        },
+        {
+            "texto": "La felicidad no es adquirida por el destino, sino por nuestro carácter.",
+            "autor": "Séneca",
+            "id": 202
+        },
+        {
+            "texto": "La felicidad es vivir conforme a la propia naturaleza.",
+            "autor": "Séneca",
+            "id": 203
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 204
+        },
+        {
+            "texto": "Si buscas la paz, sé tú mismo",
+            "autor": "Séneca.",
+            "id": 205
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 206
+        },
+        {
+            "texto": "El hombre sabio es aquel que se contenta con lo que tiene.",
+            "autor": "Séneca",
+            "id": 207
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 208
+        },
+        {
+            "texto": "La felicidad no consiste en que todo te salga bien, sino en cómo te tomas lo que te sale mal.",
+            "autor": "Epicteto",
+            "id": 209
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se regocija por las que sí posee.",
+            "autor": "Epicteto",
+            "id": 210
+        },
+        {
+            "texto": "La felicidad no es tener lo que deseas, sino desear lo que tienes.",
+            "autor": "Lucio Anneo Séneca",
+            "id": 211
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 212
+        },
+        {
+            "texto": "El hombre sabio es aquel que desea lo que posee y no lo que no posee.",
+            "autor": "Séneca",
+            "id": 213
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 214
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 215
+        },
+        {
+            "texto": "Ni lo bueno ni lo malo reside en nuestras circunstancias, sino en nuestra actitud",
+            "autor": "Séneca.",
+            "id": 216
+        },
+        {
+            "texto": "Lo importante no es lo que te sucede, sino cómo reaccionas a ello.",
+            "autor": "Epicteto",
+            "id": 217
+        },
+        {
+            "texto": "Lo que no depende de ti, deja de preocuparte por ello",
+            "autor": "Epicteto",
+            "id": 218
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 219
+        },
+        {
+            "texto": "La felicidad yace en la virtud y en la virtud solo\".",
+            "autor": "Séneca.",
+            "id": 220
+        },
+        {
+            "texto": "El sufrimiento es inevitable, pero la forma en que elegimos abordarlo es siempre nuestra decisión.",
+            "autor": "Séneca",
+            "id": 221
+        },
+        {
+            "texto": "Un hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se regocija por las que tiene.",
+            "autor": "Epicteto",
+            "id": 222
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 223
+        },
+        {
+            "texto": "La felicidad no es tener lo que deseas, es apreciar lo que tienes.",
+            "autor": "Séneca",
+            "id": 224
+        },
+        {
+            "texto": "La felicidad no radica en tener lo que deseas, sino en desear lo que tienes.",
+            "autor": "Séneca",
+            "id": 225
+        },
+        {
+            "texto": "El dolor es inevitable, pero el sufrimiento es opcional",
+            "autor": "Epicteto",
+            "id": 226
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 227
+        },
+        {
+            "texto": "La felicidad no es adquirida, es experimentada, en la quietud y seguridad del alma.",
+            "autor": "Séneca",
+            "id": 228
+        },
+        {
+            "texto": "La felicidad no consiste en dominar el mundo, sino en dominarse a sí mismo.",
+            "autor": "Séneca",
+            "id": 229
+        },
+        {
+            "texto": "La felicidad no es más que una actitud de la mente, es imposible tener una vida feliz sin actuar virtuosamente.",
+            "autor": "Séneca",
+            "id": 230
+        },
+        {
+            "texto": "La virtud es el único bien y el único mal es el vicio.",
+            "autor": "Séneca",
+            "id": 231
+        },
+        {
+            "texto": "La felicidad es alcanzar la sabiduría y vivir de acuerdo con ella.",
+            "autor": "Séneca",
+            "id": 232
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 233
+        },
+        {
+            "texto": "La felicidad es un bien interno.",
+            "autor": "Séneca.",
+            "id": 234
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 235
+        },
+        {
+            "texto": "Las cosas que no controlamos no son ni buenas ni malas en sí mismas; es nuestra actitud hacia ellas lo que las hace una u otra cosa.",
+            "autor": "Epicteto",
+            "id": 236
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio.",
+            "id": 237
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 238
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 239
+        },
+        {
+            "texto": "La felicidad consiste en vivir de acuerdo con la propia naturaleza.",
+            "autor": "Séneca",
+            "id": 240
+        },
+        {
+            "texto": "El hombre bueno es aquel que no añade nada a la suma de su vida excepto la rectitud y la sabiduría.",
+            "autor": "Séneca",
+            "id": 241
+        },
+        {
+            "texto": "El hombre sabio es el que siempre mira a fin de no desesperar nunca.",
+            "autor": "Séneca",
+            "id": 242
+        },
+        {
+            "texto": "La felicidad solo puede alcanzarse cuando se deja de buscarla; cuando se busca directamente, suele eludirnos.",
+            "autor": "Séneca",
+            "id": 243
+        },
+        {
+            "texto": "La felicidad es un logro alcanzado a través del entrenamiento de la mente.",
+            "autor": "Séneca",
+            "id": 244
+        },
+        {
+            "texto": "La felicidad no consiste en alcanzar la meta, sino en el viaje mismo.",
+            "autor": "Séneca",
+            "id": 245
+        },
+        {
+            "texto": "El hombre sabio no se entristece por lo que no tiene, sino que se regocija por lo que sí tiene.",
+            "autor": "Epicteto, filósofo estoico.",
+            "id": 246
+        },
+        {
+            "texto": "Todo está en manos de la divinidad, y nunca es desventajoso estar dispuesto a lo que suceda\".",
+            "autor": "Epicteto.",
+            "id": 247
+        },
+        {
+            "texto": "Que la clave de la felicidad no sea en la posesión, sino en dar, es una verdad que no ha perdido actualidad.",
+            "autor": "Séneca",
+            "id": 248
+        },
+        {
+            "texto": "La felicidad es un bien interior, no exterior; por lo tanto, no depende de lo que tenemos, sino de lo que somos.",
+            "autor": "Lucio Anneo Séneca",
+            "id": 249
+        },
+        {
+            "texto": "El hombre sabio se basta a sí mismo para ser feliz.",
+            "autor": "Séneca",
+            "id": 250
+        },
+        {
+            "texto": "Lo que nos hace sufrir no es la adversidad en sí misma, sino cómo pensamos acerca de ella.",
+            "autor": "Epicteto",
+            "id": 251
+        },
+        {
+            "texto": "La felicidad es ser libre, independientemente de lo que ocurra a nuestro alrededor.",
+            "autor": "Séneca",
+            "id": 252
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se regocija por las que sí tiene",
+            "autor": "Epicteto",
+            "id": 253
+        },
+        {
+            "texto": "El sufrimiento nace de la resistencia a las cosas que no pueden cambiarse.",
+            "autor": "Epicteto",
+            "id": 254
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y disfrutar, sino en no desear nada, pues consiste en ser libre",
+            "autor": "Epicteto",
+            "id": 255
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 256
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 257
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se alegra por las que sí tiene\".",
+            "autor": "Séneca",
+            "id": 258
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Séneca",
+            "id": 259
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que piensas, lo que dices y lo que haces están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 260
+        },
+        {
+            "texto": "La felicidad no consiste en tener lo que deseas, sino en desear lo que tienes.",
+            "autor": "Séneca",
+            "id": 261
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece ni se regocija por lo que acontece en el mundo externo, sino que mantiene la tranquilidad en su interior\".",
+            "autor": "Epicteto.",
+            "id": 262
+        },
+        {
+            "texto": "Si quieres ser feliz, no esperes que los acontecimientos sean como tú deseas, sino deséalo como suceden",
+            "autor": "Epicteto.",
+            "id": 263
+        },
+        {
+            "texto": "Cuanto más te preocupes por lo que piensen los demás, menos pensarás por ti mismo.",
+            "autor": "Séneca",
+            "id": 264
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 265
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo a la razón.",
+            "autor": "Séneca",
+            "id": 266
+        },
+        {
+            "texto": "La felicidad es no desear nada, o lo que es lo mismo, tener todo lo que se desea.",
+            "autor": "Séneca",
+            "id": 267
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 268
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 269
+        },
+        {
+            "texto": "La felicidad no es alcanzar nuestros deseos, sino aprender a controlarlos.",
+            "autor": "Epicteto",
+            "id": 270
+        },
+        {
+            "texto": "El hombre sabio es aquel que convierte los obstáculos en oportunidades.",
+            "autor": "Séneca",
+            "id": 271
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 272
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con la naturaleza.",
+            "autor": "Séneca",
+            "id": 273
+        },
+        {
+            "texto": "Lo que nos hiere no es aquello que sucede, sino nuestra opinión sobre lo que sucede.",
+            "autor": "Epicteto, filósofo estoico.",
+            "id": 274
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir lo que falta, sino en no desear lo que falta.",
+            "autor": "Séneca",
+            "id": 275
+        },
+        {
+            "texto": "Si buscas la paz, prepárate para la guerra",
+            "autor": "Séneca",
+            "id": 276
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio.",
+            "id": 277
+        },
+        {
+            "texto": "La felicidad es una buena salud y una mala memoria\".",
+            "autor": "Séneca",
+            "id": 278
+        },
+        {
+            "texto": "Si quieres ser feliz, no añadas más cosas a tu vida, sino más deseos a tu alma.",
+            "autor": "Séneca",
+            "id": 279
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 280
+        },
+        {
+            "texto": "El sufrimiento no depende de los eventos, sino de la opinión que tenemos sobre los eventos",
+            "autor": "Epicteto",
+            "id": 281
+        },
+        {
+            "texto": "La felicidad es un bien interior, no exterior; por lo tanto, no depende de lo que tenemos, sino de lo que somos\".",
+            "autor": "Lucio Anneo Séneca",
+            "id": 282
+        },
+        {
+            "texto": "La felicidad no consiste en hacer siempre lo que se quiere, sino en querer siempre lo que se hace.",
+            "autor": "Epicteto, filósofo estoico.",
+            "id": 283
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio, filósofo estoico.",
+            "id": 284
+        },
+        {
+            "texto": "Lo que nos duele no es la cosa en sí, sino nuestra opinión sobre la cosa.\" -Epicteto",
+            "autor": "Desconocido",
+            "id": 285
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en saber sacar lo mejor de lo que se tiene.",
+            "autor": "Séneca",
+            "id": 286
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 287
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y disfrutar, sino en no desear y en no depender.",
+            "autor": "Séneca",
+            "id": 288
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que uno piensa, dice y hace están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 289
+        },
+        {
+            "texto": "La felicidad no es conseguir lo que deseas, sino desear lo que ya tienes.",
+            "autor": "Séneca",
+            "id": 290
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 291
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos",
+            "autor": "Séneca",
+            "id": 292
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando dejamos de esperar que sea alcanzable\".",
+            "autor": "Séneca",
+            "id": 293
+        },
+        {
+            "texto": "La felicidad no es adquirida por el destino, sino por nuestra actitud.",
+            "autor": "Séneca",
+            "id": 294
+        },
+        {
+            "texto": "La felicidad no es conseguir lo que queremos, sino querer lo que tenemos.",
+            "autor": "Séneca, filósofo estoico romano.",
+            "id": 295
+        },
+        {
+            "texto": "La felicidad no es tener todo lo que deseas, sino saber apreciar todo lo que tienes.",
+            "autor": "Séneca",
+            "id": 296
+        },
+        {
+            "texto": "El hombre sabio es aquel que siempre sabe ser feliz.",
+            "autor": "Séneca.",
+            "id": 297
+        },
+        {
+            "texto": "El hombre sabio es aquel que se altera por nada de lo que no está en su poder",
+            "autor": "Séneca.",
+            "id": 298
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 299
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y disfrutar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto",
+            "id": 300
+        },
+        {
+            "texto": "El dolor es inevitable, pero el sufrimiento es opcional.",
+            "autor": "Marco Aurelio",
+            "id": 301
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca.",
+            "id": 302
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Séneca",
+            "id": 303
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 304
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 305
+        },
+        {
+            "texto": "La felicidad de tu vida dependerá de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 306
+        },
+        {
+            "texto": "La felicidad no es alcanzar el placer, sino dominar la angustia.",
+            "autor": "Séneca",
+            "id": 307
+        },
+        {
+            "texto": "El sabio es dueño de sí mismo, y no necesita a nadie más, pero se complace en la amistad honesta de aquellos que pueden también ser útiles para él.",
+            "autor": "Séneca.",
+            "id": 308
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que uno piensa, lo que uno dice y lo que uno hace están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 309
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 310
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 311
+        },
+        {
+            "texto": "La felicidad es alcanzable cuando somos capaces de controlar nuestras pasiones y deseos\".",
+            "autor": "Epicteto",
+            "id": 312
+        },
+        {
+            "texto": "Lo que nos hace sufrir no es la realidad, sino la imagen que tenemos de ella.",
+            "autor": "Epicteto.",
+            "id": 313
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 314
+        },
+        {
+            "texto": "La felicidad humana comienza con la aceptación de la vida tal como es, no como nos gustaría que fuera",
+            "autor": "Epicteto",
+            "id": 315
+        },
+        {
+            "texto": "La felicidad depende de ti mismo.",
+            "autor": "Epicteto",
+            "id": 316
+        },
+        {
+            "texto": "El hombre sabio es su propio mejor amigo.",
+            "autor": "Séneca",
+            "id": 317
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que uno piensa, lo que uno dice y lo que uno hace están en armonía.",
+            "autor": "Marco Aurelio",
+            "id": 318
+        },
+        {
+            "texto": "Ama la virtud y haz justicia, pero no te inquietes por la fama ni por la muerte.",
+            "autor": "Séneca",
+            "id": 319
+        },
+        {
+            "texto": "La felicidad es alcanzada cuando lo que uno piensa, lo que uno dice y lo que uno hace están en armonía.",
+            "autor": "Marco Aurelio.",
+            "id": 320
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 321
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 322
+        },
+        {
+            "texto": "El hombre sabio es el que no se entristece por las cosas que no tiene, sino que se regocija por las que sí tiene.",
+            "autor": "Epicteto",
+            "id": 323
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir ni en disfrutar, sino en no desear. Por eso es importante disfrutar de lo que tienes, no desear lo que no tienes\".",
+            "autor": "Séneca.",
+            "id": 324
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 325
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 326
+        },
+        {
+            "texto": "El mejor modo de vengarse de un enemigo es no asemejársele",
+            "autor": "Séneca",
+            "id": 327
+        },
+        {
+            "texto": "La felicidad es ser libre, ser fuerte, ser sabio, ser justo y ser moderado.",
+            "autor": "Séneca.",
+            "id": 328
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 329
+        },
+        {
+            "texto": "El hombre sabio es el que siempre quiere lo que necesita, y no lo que le gusta",
+            "autor": "Séneca.",
+            "id": 330
+        },
+        {
+            "texto": "La felicidad es alcanzar la virtud y vivir de acuerdo con la razón.",
+            "autor": "Séneca",
+            "id": 331
+        },
+        {
+            "texto": "La felicidad es serenidad del alma.",
+            "autor": "Séneca.",
+            "id": 332
+        },
+        {
+            "texto": "La felicidad depende de lo que somos; no de lo que tenemos.",
+            "autor": "Séneca",
+            "id": 333
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 334
+        },
+        {
+            "texto": "El hombre sabio se busca a sí mismo, el necio se busca a sí mismo en los demás.",
+            "autor": "Séneca",
+            "id": 335
+        },
+        {
+            "texto": "La felicidad humana no sólo reside en poseer, sino en no desear muchas cosas",
+            "autor": "Séneca.",
+            "id": 336
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 337
+        },
+        {
+            "texto": "La felicidad no consiste en poseer todo lo que deseamos, sino en saber disfrutar de lo que tenemos.",
+            "autor": "Epicteto",
+            "id": 338
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 339
+        },
+        {
+            "texto": "La felicidad no depende de lo que nos falta, sino del buen uso de lo que tenemos.",
+            "autor": "Séneca",
+            "id": 340
+        },
+        {
+            "texto": "La felicidad no es alcanzar lo que deseas, sino desear lo que ya tienes.",
+            "autor": "Epicteto",
+            "id": 341
+        },
+        {
+            "texto": "La felicidad depende de ti.",
+            "autor": "Epicteto",
+            "id": 342
+        },
+        {
+            "texto": "Todo lo que no está en nuestro poder tiene que ser soportado con paciencia.",
+            "autor": "Séneca",
+            "id": 343
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en saber disfrutar de lo que se tiene",
+            "autor": "Séneca.",
+            "id": 344
+        },
+        {
+            "texto": "El fruto de la justicia es la paz interior",
+            "autor": "Séneca",
+            "id": 345
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 346
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 347
+        },
+        {
+            "texto": "La verdadera felicidad es disfrutar del presente, sin dependencia ansiosa sobre el futuro.",
+            "autor": "Séneca",
+            "id": 348
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 349
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 350
+        },
+        {
+            "texto": "La felicidad depende de nosotros mismos.",
+            "autor": "Séneca",
+            "id": 351
+        },
+        {
+            "texto": "Ni el éxito ni el fracaso son permanentes\".",
+            "autor": "Epicteto, filósofo estoico.",
+            "id": 352
+        },
+        {
+            "texto": "La felicidad no consiste en tenerlo todo, sino en hacer lo mejor con lo que se tiene.",
+            "autor": "Séneca",
+            "id": 353
+        },
+        {
+            "texto": "El hombre sabio es aquel que no se entristece por las cosas que no tiene, sino que se regocija con las que tiene.",
+            "autor": "Séneca",
+            "id": 354
+        },
+        {
+            "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "autor": "Marco Aurelio",
+            "id": 355
+        },
+        {
+            "texto": "La felicidad no se encuentra en la abundancia de las cosas, sino en la disposición de nuestra mente.",
+            "autor": "Séneca",
+            "id": 356
+        },
+        {
+            "texto": "El hombre sabio es aquel que sabe ser feliz con lo que tiene.",
+            "autor": "Séneca",
+            "id": 357
+        },
+        {
+            "texto": "La felicidad no consiste en adquirir y gozar, sino en no desear nada, pues consiste en ser libre.",
+            "autor": "Epicteto",
+            "id": 358
+        },
+        {
+            "texto": "La felicidad es siempre un reto, no una consecuencia.",
+            "autor": "Epicteto",
+            "id": 359
+        },
+        {
+            "texto": "Si quieres avanzar, encuentra la felicidad en la acción, no en el resultado.",
+            "autor": "Marco Aurelio",
+            "id": 360
+        }
+    ]
+}

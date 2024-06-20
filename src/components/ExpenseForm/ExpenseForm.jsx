@@ -1,3 +1,4 @@
+// ExpenseForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useModal } from '../../hooks/useModal.jsx';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),
@@ -28,6 +30,7 @@ const validationSchema = Yup.object({
 
 function ExpenseForm({ onAddExpense }) {
   const [categories, setCategories] = useState([]);
+  const { showModal } = useModal(); // usamos el hook
 
   useEffect(() => {
     async function fetchCategoriesFromAPI() {
@@ -77,6 +80,7 @@ function ExpenseForm({ onAddExpense }) {
           Gasto: values.gasto,
         });
         resetForm();
+        showModal(); // mostramos el modal al añadir un gasto
       } else {
         toast.error('Debe seleccionar al menos Ganancia o Gasto');
       }
