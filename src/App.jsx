@@ -1,4 +1,4 @@
-// App.jsx
+// src/App.jsx
 import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
@@ -16,7 +16,6 @@ import {
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Header from './components/Header/Header';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
-import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
 import useAuth from './hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
@@ -60,8 +59,6 @@ function App() {
       <CssBaseline />
       <Router>
         <ModalProvider>
-          {' '}
-          {/* envolvemos la aplicación con el proveedor de modal */}
           <Header mode={mode} toggleColorMode={toggleColorMode} />
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={<CircularProgress />}>
@@ -98,7 +95,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>
