@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Button,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -18,20 +19,25 @@ import {
   Brightness7,
   Home as HomeIcon,
   BarChart as BarChartIcon,
-  TableChart as TableChartIcon, // Importar el icono de tabla
+  TableChart as TableChartIcon,
   ExitToApp as ExitToAppIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, logOut } from '../../services/firebase';
 import 'react-toastify/dist/ReactToastify.css';
+import useCache from '../../hooks/useCache';
+import { fetchExpenses } from '../../services/api';
 
 function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const { clearCache } = useCache('expenses', fetchExpenses);
 
   useEffect(() => {
     if (user) {
@@ -91,6 +97,15 @@ function Header({ mode, toggleColorMode }) {
           >
             {mode === 'light' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
+          {user && (
+            <Button
+              color="inherit"
+              onClick={clearCache}
+              startIcon={<RefreshIcon />}
+            >
+              Actualizar Caché
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       {user && (

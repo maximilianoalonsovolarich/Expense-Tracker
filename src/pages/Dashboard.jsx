@@ -25,6 +25,7 @@ function Dashboard() {
     data: cachedData,
     loading,
     error,
+    clearCache,
   } = useCache('expenses', fetchExpenses);
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);

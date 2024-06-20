@@ -64,7 +64,7 @@ const StoicQuoteModal = () => {
             <CloseIcon />
           </IconButton>
           <Typography id="stoic-quote-title" variant="h6" component="h2">
-            Stoic Quote
+            Estoicismo
           </Typography>
           <Typography id="stoic-quote-description" sx={{ mt: 2 }}>
             {quote.text}

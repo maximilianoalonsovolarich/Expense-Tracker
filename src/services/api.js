@@ -16,7 +16,7 @@ export const fetchExpenses = async () => {
       .map((record) => ({
         ...record.fields,
         id: record.id,
-        ID: record.fields.ID, // Asegúrate de incluir el campo ID aquí
+        ID: record.fields.ID,
         Fecha: record.fields.Fecha || 'No disponible',
         Cantidad: record.fields.Cantidad || 0,
         Categoría: record.fields.Categoría || 'No especificada',
