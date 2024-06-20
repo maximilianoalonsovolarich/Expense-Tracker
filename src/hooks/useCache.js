@@ -1,11 +1,13 @@
 // src/hooks/useCache.js
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useCache = (key, fetchFunction, expiryTime = 3600000) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -32,6 +34,12 @@ const useCache = (key, fetchFunction, expiryTime = 3600000) => {
   useEffect(() => {
     fetchData();
   }, [key, fetchFunction, expiryTime]);
+
+  useEffect(() => {
+    if (error) {
+      navigate('/');
+    }
+  }, [error, navigate]);
 
   const clearCache = () => {
     localStorage.removeItem(key);
