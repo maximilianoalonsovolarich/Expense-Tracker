@@ -33,7 +33,8 @@ function Statistics() {
     loading: loadingCategories,
     error: errorCategories,
   } = useCache('categories', fetchCategories);
-  const [filterDate, setFilterDate] = useState('');
+  const [filterStartDate, setFilterStartDate] = useState('');
+  const [filterEndDate, setFilterEndDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
 
   if (loading || loadingCategories) {
@@ -57,8 +58,12 @@ function Statistics() {
     );
   }
 
-  const handleDateChange = (event) => {
-    setFilterDate(event.target.value);
+  const handleStartDateChange = (event) => {
+    setFilterStartDate(event.target.value);
+  };
+
+  const handleEndDateChange = (event) => {
+    setFilterEndDate(event.target.value);
   };
 
   const handleCategoryChange = (event) => {
@@ -94,7 +99,12 @@ function Statistics() {
 
   const filteredExpenses = cachedData.expenses
     .filter((expense) =>
-      filterDate ? new Date(expense.Fecha) <= new Date(filterDate) : true
+      filterStartDate
+        ? new Date(expense.Fecha) >= new Date(filterStartDate)
+        : true
+    )
+    .filter((expense) =>
+      filterEndDate ? new Date(expense.Fecha) <= new Date(filterEndDate) : true
     )
     .filter((expense) =>
       filterCategory ? expense.Categoría === filterCategory : true
@@ -122,17 +132,27 @@ function Statistics() {
       </Typography>
       <Box sx={{ mb: 2 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <TextField
-              label="Filtrar por Fecha"
+              label="Desde"
               type="date"
-              value={filterDate}
-              onChange={handleDateChange}
+              value={filterStartDate}
+              onChange={handleStartDateChange}
               InputLabelProps={{ shrink: true }}
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              label="Hasta"
+              type="date"
+              value={filterEndDate}
+              onChange={handleEndDateChange}
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
             <FormControl fullWidth variant="outlined" sx={{ minWidth: 120 }}>
               <InputLabel htmlFor="filter-category">Categoría</InputLabel>
               <Select
@@ -153,7 +173,8 @@ function Statistics() {
           <Grid
             item
             xs={12}
-            sm={4}
+            sm={6}
+            md={3}
             sx={{ display: 'flex', justifyContent: 'flex-end' }}
           >
             <Button variant="contained" color="primary" onClick={handleExport}>

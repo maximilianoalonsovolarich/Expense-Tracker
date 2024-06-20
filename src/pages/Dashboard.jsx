@@ -32,7 +32,8 @@ function Dashboard() {
   } = useCache('expenses', fetchExpenses);
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
-  const [filterDate, setFilterDate] = useState('');
+  const [filterStartDate, setFilterStartDate] = useState('');
+  const [filterEndDate, setFilterEndDate] = useState('');
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -78,8 +79,12 @@ function Dashboard() {
     }
   };
 
-  const handleFilterDateChange = (event) => {
-    setFilterDate(event.target.value);
+  const handleFilterStartDateChange = (event) => {
+    setFilterStartDate(event.target.value);
+  };
+
+  const handleFilterEndDateChange = (event) => {
+    setFilterEndDate(event.target.value);
   };
 
   if (loading) {
@@ -103,11 +108,12 @@ function Dashboard() {
     );
   }
 
-  const filteredExpenses = filterDate
-    ? expenses.filter(
-        (expense) => new Date(expense.Fecha) <= new Date(filterDate)
-      )
-    : expenses;
+  const filteredExpenses = expenses.filter(
+    (expense) =>
+      (!filterStartDate ||
+        new Date(expense.Fecha) >= new Date(filterStartDate)) &&
+      (!filterEndDate || new Date(expense.Fecha) <= new Date(filterEndDate))
+  );
 
   const sortedExpenses = [...filteredExpenses].sort(
     (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
@@ -175,9 +181,19 @@ function Dashboard() {
                   Saldo Actual: ${saldoActual}
                 </Typography>
                 <TextField
+                  label="Desde"
                   type="date"
-                  value={filterDate}
-                  onChange={handleFilterDateChange}
+                  value={filterStartDate}
+                  onChange={handleFilterStartDateChange}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  sx={{ mt: 2 }}
+                />
+                <TextField
+                  label="Hasta"
+                  type="date"
+                  value={filterEndDate}
+                  onChange={handleFilterEndDateChange}
                   fullWidth
                   InputLabelProps={{ shrink: true }}
                   sx={{ mt: 2 }}

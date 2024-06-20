@@ -1,3 +1,5 @@
+// src/pages/Tabla.jsx
+
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -17,7 +19,8 @@ function Tabla() {
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filterDate, setFilterDate] = useState('');
+  const [filterStartDate, setFilterStartDate] = useState('');
+  const [filterEndDate, setFilterEndDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [pageSize, setPageSize] = useState(6);
@@ -42,13 +45,20 @@ function Tabla() {
     setFilteredExpenses(
       expenses
         .filter((expense) =>
-          filterDate ? new Date(expense.Fecha) <= new Date(filterDate) : true
+          filterStartDate
+            ? new Date(expense.Fecha) >= new Date(filterStartDate)
+            : true
+        )
+        .filter((expense) =>
+          filterEndDate
+            ? new Date(expense.Fecha) <= new Date(filterEndDate)
+            : true
         )
         .filter((expense) =>
           filterCategory ? expense.Categoría === filterCategory : true
         )
     );
-  }, [expenses, filterDate, filterCategory]);
+  }, [expenses, filterStartDate, filterEndDate, filterCategory]);
 
   const handleExport = () => {
     const csvData = filteredExpenses.map((expense) => ({
@@ -116,10 +126,20 @@ function Tabla() {
       >
         <Grid item xs={12} sm={6} md={3}>
           <TextField
-            label="Filtrar por Fecha"
+            label="Desde"
             type="date"
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
+            value={filterStartDate}
+            onChange={(e) => setFilterStartDate(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
+            label="Hasta"
+            type="date"
+            value={filterEndDate}
+            onChange={(e) => setFilterEndDate(e.target.value)}
             InputLabelProps={{ shrink: true }}
             fullWidth
           />
@@ -140,7 +160,7 @@ function Tabla() {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} textAlign="right">
+        <Grid item xs={12} sm={12} md={3} textAlign="right">
           <Button variant="contained" color="primary" onClick={handleExport}>
             Exportar a CSV
           </Button>
