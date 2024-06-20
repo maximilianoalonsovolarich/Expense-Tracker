@@ -117,7 +117,9 @@ function Header({ mode, toggleColorMode }) {
               <MenuIcon />
             </MenuButton>
           )}
-          <HeaderTitle variant="h6">Finanzas</HeaderTitle>
+          <HeaderTitle variant="h6">
+            {user ? `Bienvenido ${user.displayName}` : 'Finanzas'}
+          </HeaderTitle>
           <IconButton
             sx={{
               color: '#FFFFFF',
@@ -133,7 +135,7 @@ function Header({ mode, toggleColorMode }) {
               color="inherit"
               onClick={handleClearCache}
               startIcon={<RefreshIcon />}
-            ></Button>
+            />
           )}
         </Toolbar>
       </AppBar>

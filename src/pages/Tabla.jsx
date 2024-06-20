@@ -1,19 +1,9 @@
-// src/pages/Tabla.jsx
-
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Box,
-  Typography,
-  CircularProgress,
-  TextField,
-  Button,
-  Grid,
-  MenuItem,
-} from '@mui/material';
+import { Container, Box, Typography, CircularProgress } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { fetchExpenses, fetchCategories } from '../services/api';
 import { saveAs } from 'file-saver';
+import FiltersAndExport from '../components/FiltersAndExport/FiltersAndExport';
 
 function Tabla() {
   const [expenses, setExpenses] = useState([]);
@@ -22,6 +12,7 @@ function Tabla() {
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [searchText, setSearchText] = useState('');
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [pageSize, setPageSize] = useState(6);
 
@@ -57,8 +48,15 @@ function Tabla() {
         .filter((expense) =>
           filterCategory ? expense.Categoría === filterCategory : true
         )
+        .filter((expense) =>
+          searchText
+            ? Object.values(expense).some((value) =>
+                String(value).toLowerCase().includes(searchText.toLowerCase())
+              )
+            : true
+        )
     );
-  }, [expenses, filterStartDate, filterEndDate, filterCategory]);
+  }, [expenses, filterStartDate, filterEndDate, filterCategory, searchText]);
 
   const handleExport = () => {
     const csvData = filteredExpenses.map((expense) => ({
@@ -114,58 +112,22 @@ function Tabla() {
       <Typography
         variant="h4"
         gutterBottom
-        sx={{ mt: 2, mb: 2, textAlign: 'center' }}
+        sx={{ mt: 2, mb: 2, textAlign: 'left' }}
       >
         Tabla de Gastos
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        sx={{ mb: 2, justifyContent: 'center' }}
-      >
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Desde"
-            type="date"
-            value={filterStartDate}
-            onChange={(e) => setFilterStartDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Hasta"
-            type="date"
-            value={filterEndDate}
-            onChange={(e) => setFilterEndDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Filtrar por Categoría"
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            select
-            fullWidth
-          >
-            <MenuItem value="">Todas</MenuItem>
-            {categories.map((category, index) => (
-              <MenuItem key={index} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} textAlign="right">
-          <Button variant="contained" color="primary" onClick={handleExport}>
-            Exportar a CSV
-          </Button>
-        </Grid>
-      </Grid>
+      <FiltersAndExport
+        filterDateFrom={filterStartDate}
+        filterDateTo={filterEndDate}
+        filterCategory={filterCategory}
+        searchText={searchText}
+        handleDateFromChange={(e) => setFilterStartDate(e.target.value)}
+        handleDateToChange={(e) => setFilterEndDate(e.target.value)}
+        handleCategoryChange={(e) => setFilterCategory(e.target.value)}
+        handleSearchTextChange={(e) => setSearchText(e.target.value)}
+        handleExport={handleExport}
+        categories={categories}
+      />
       <Box sx={{ height: 500, width: '100%' }}>
         <DataGrid
           rows={filteredExpenses}

@@ -1,0 +1,81 @@
+/* TicketGrid.css */
+.ticket-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.ticket-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.ticket-exit {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.ticket-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    /* Añade espacio entre los elementos */
+}
+
+.grid-item {
+    flex: 1 1 calc(25% - 1rem);
+    /* Ajusta el tamaño de los elementos */
+    margin: 1rem 0;
+    /* Espaciado vertical */
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.grid-item:hover {
+    transform: scale(1.05);
+}
+
+.ticket-card {
+    padding: 1rem;
+    border-radius: 15px;
+    background: var(--ticket-background);
+    color: var(--ticket-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.ticket-card:hover {
+    background: var(--ticket-background-hover);
+    color: var(--ticket-text-hover);
+}
+
+/* Estilo para el último elemento cargado */
+.latest-item .ticket-card {
+    background: #e0f7fa;
+    /* Color diferente para el último elemento */
+}
+
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .grid-item {
+        flex: 1 1 100%;
+        /* Full width on small screens */
+    }
+}

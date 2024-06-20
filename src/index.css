@@ -1,3 +1,5 @@
+/* Archivo: index.css */
+
 /* Estilos generales */
 body {
   margin: 0;
@@ -10,8 +12,18 @@ body {
 
 .container {
   padding: 1rem;
+  margin-top: 0;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.no-background {
+  background-color: transparent;
+}
+
+/* Estilos del header */
 .header-title {
   flex-grow: 1;
   font-size: 1.5rem;
@@ -26,6 +38,7 @@ body {
   margin-right: 1rem;
 }
 
+/* Estilos específicos */
 .common-container {
   padding: 1rem;
   background-color: var(--background-paper);
@@ -54,7 +67,6 @@ body {
   margin-top: -3rem;
 }
 
-/* Estilos de las filas de la tabla */
 .even-row {
   background-color: var(--even-row-bg);
 }
@@ -63,7 +75,7 @@ body {
   background-color: var(--odd-row-bg);
 }
 
-/* Variables para modo claro */
+/* Variables CSS */
 :root {
   --background-default: #F1F3F4;
   --background-paper: #FFFFFF;
@@ -75,11 +87,12 @@ body {
   --input-border: #000000;
   --input-background: #ffffff;
   --input-text: #000000;
-  --ticket-background: #FFFFFF;
+  --ticket-background: #ffffff;
   --ticket-text: #000000;
+  --ticket-background-hover: #f0f0f0;
+  --ticket-text-hover: #000000;
 }
 
-/* Variables para modo oscuro */
 [data-theme="dark"] {
   --background-default: #121212;
   --background-paper: #424242;
@@ -91,9 +104,11 @@ body {
   --input-text: #ffffff;
   --ticket-background: #424242;
   --ticket-text: #ffffff;
+  --ticket-background-hover: #575757;
+  --ticket-text-hover: #ffffff;
 }
 
-/* Estilos de transición */
+/* Transiciones */
 .fade-enter {
   opacity: 0;
 }
@@ -112,22 +127,17 @@ body {
   transition: opacity 300ms;
 }
 
-/* Estilos específicos para formularios */
 .MuiOutlinedInput-root {
   background-color: var(--input-background);
   color: var(--input-text);
+}
 
-  fieldset {
-    border-color: var(--input-border);
-  }
+.MuiOutlinedInput-root fieldset {
+  border-color: var(--input-border);
+}
 
-  & fieldset {
-    border-color: var(--input-border);
-  }
-
-  &.Mui-focused fieldset {
-    border-color: var(--input-border);
-  }
+.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: var(--input-border);
 }
 
 .MuiInputLabel-root {
@@ -146,6 +156,7 @@ body {
   border-color: var(--input-border);
 }
 
+/* Estilos responsivos */
 @media (max-width: 768px) {
   .header-title {
     font-size: 1.25rem;
@@ -163,5 +174,29 @@ body {
 
   .form-container {
     margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-title {
+    font-size: 2rem;
+  }
+
+  .common-container,
+  .expense-card {
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-title {
+    font-size: 2.5rem;
+  }
+
+  .common-container,
+  .expense-card {
+    padding: 3rem;
+    margin-top: 3rem;
   }
 }

@@ -1,3 +1,5 @@
+// src/components/ExpenseForm/ExpenseForm.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -16,6 +18,7 @@ import {
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useModal } from '../../hooks/useModal.jsx';
+import { fetchCategories } from '../../services/api';
 
 const validationSchema = Yup.object({
   fecha: Yup.string().required('Requerido'),
@@ -49,22 +52,7 @@ function ExpenseForm({ onAddExpense }) {
   useEffect(() => {
     async function fetchCategoriesFromAPI() {
       try {
-        const response = await fetch(
-          'https://api.airtable.com/v0/meta/bases/app30fCoAP4n2LysL/tables',
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_KEY}`,
-            },
-          }
-        );
-        const data = await response.json();
-        const categoryField = data.tables[0].fields.find(
-          (field) => field.name === 'Categoría'
-        );
-        const categoriesData = categoryField.options.choices.map((choice) => ({
-          name: choice.name,
-          color: choice.color,
-        }));
+        const categoriesData = await fetchCategories();
         setCategories(categoriesData);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -83,6 +71,14 @@ function ExpenseForm({ onAddExpense }) {
       gasto: false,
     },
     validationSchema: validationSchema,
+    validate: (values) => {
+      const errors = {};
+      if (values.ganancia && values.gasto) {
+        errors.ganancia = 'No puede seleccionar Ganancia y Gasto a la vez';
+        errors.gasto = 'No puede seleccionar Ganancia y Gasto a la vez';
+      }
+      return errors;
+    },
     onSubmit: (values, { resetForm }) => {
       if (values.ganancia || values.gasto) {
         onAddExpense({
@@ -150,8 +146,8 @@ function ExpenseForm({ onAddExpense }) {
               helperText={formik.touched.categoria && formik.errors.categoria}
             >
               {categories.map((category, index) => (
-                <MenuItem key={index} value={category.name}>
-                  {category.name}
+                <MenuItem key={index} value={category}>
+                  {category}
                 </MenuItem>
               ))}
             </TextField>
@@ -206,6 +202,7 @@ function ExpenseForm({ onAddExpense }) {
           variant="contained"
           fullWidth
           type="submit"
+          disabled={formik.values.ganancia && formik.values.gasto}
         >
           Añadir Gasto
         </ButtonContainer>

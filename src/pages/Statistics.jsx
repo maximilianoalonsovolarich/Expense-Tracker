@@ -1,41 +1,64 @@
-// src/pages/Statistics.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
   Typography,
   CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
   Paper,
-  Grid,
-  TextField,
 } from '@mui/material';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
-import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 import useCache from '../hooks/useCache';
-import { fetchExpenses, fetchCategories } from '../services/api';
+import { fetchExpenses, fetchCategories, deleteExpense } from '../services/api';
+import TicketGrid from '../components/TicketGrid/TicketGrid';
+import FiltersAndExport from '../components/FiltersAndExport/FiltersAndExport';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Statistics() {
   const {
     data: cachedData,
     loading,
     error,
+    updateCache,
   } = useCache('expenses', fetchExpenses);
   const {
     data: cachedCategories,
     loading: loadingCategories,
     error: errorCategories,
   } = useCache('categories', fetchCategories);
-  const [filterStartDate, setFilterStartDate] = useState('');
-  const [filterEndDate, setFilterEndDate] = useState('');
+  const [filterDateFrom, setFilterDateFrom] = useState('');
+  const [filterDateTo, setFilterDateTo] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+
+  useEffect(() => {
+    if (cachedData && Array.isArray(cachedData.expenses)) {
+      const sortedExpenses = cachedData.expenses.sort(
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+      );
+      setExpenses(sortedExpenses);
+    }
+  }, [cachedData]);
+
+  const [expenses, setExpenses] = useState([]);
+
+  const handleDeleteExpense = async (id) => {
+    const previousExpenses = expenses;
+    setExpenses(expenses.filter((expense) => expense.id !== id));
+    try {
+      await deleteExpense(id);
+      const updatedExpenses = previousExpenses.filter(
+        (expense) => expense.id !== id
+      );
+      updateCache({ expenses: updatedExpenses });
+      toast.success('Gasto eliminado exitosamente');
+    } catch (error) {
+      console.error('Error deleting expense:', error);
+      setExpenses(previousExpenses);
+      toast.error('Error al eliminar el gasto');
+    }
+  };
 
   if (loading || loadingCategories) {
     return (
@@ -58,12 +81,12 @@ function Statistics() {
     );
   }
 
-  const handleStartDateChange = (event) => {
-    setFilterStartDate(event.target.value);
+  const handleDateFromChange = (event) => {
+    setFilterDateFrom(event.target.value);
   };
 
-  const handleEndDateChange = (event) => {
-    setFilterEndDate(event.target.value);
+  const handleDateToChange = (event) => {
+    setFilterDateTo(event.target.value);
   };
 
   const handleCategoryChange = (event) => {
@@ -71,7 +94,7 @@ function Statistics() {
   };
 
   const handleExport = () => {
-    const csvData = cachedData.expenses.map((expense) => ({
+    const csvData = expenses.map((expense) => ({
       Fecha: expense.Fecha,
       Cantidad: expense.Cantidad,
       Categoría: expense.Categoría,
@@ -99,12 +122,12 @@ function Statistics() {
 
   const filteredExpenses = cachedData.expenses
     .filter((expense) =>
-      filterStartDate
-        ? new Date(expense.Fecha) >= new Date(filterStartDate)
+      filterDateFrom
+        ? new Date(expense.Fecha) >= new Date(filterDateFrom)
         : true
     )
     .filter((expense) =>
-      filterEndDate ? new Date(expense.Fecha) <= new Date(filterEndDate) : true
+      filterDateTo ? new Date(expense.Fecha) <= new Date(filterDateTo) : true
     )
     .filter((expense) =>
       filterCategory ? expense.Categoría === filterCategory : true
@@ -130,59 +153,16 @@ function Statistics() {
       <Typography variant="h4" gutterBottom sx={{ mt: 2, mb: 2 }}>
         Estadísticas de Gastos
       </Typography>
-      <Box sx={{ mb: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              label="Desde"
-              type="date"
-              value={filterStartDate}
-              onChange={handleStartDateChange}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              label="Hasta"
-              type="date"
-              value={filterEndDate}
-              onChange={handleEndDateChange}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <FormControl fullWidth variant="outlined" sx={{ minWidth: 120 }}>
-              <InputLabel htmlFor="filter-category">Categoría</InputLabel>
-              <Select
-                value={filterCategory}
-                onChange={handleCategoryChange}
-                label="Categoría"
-                inputProps={{ name: 'filter-category', id: 'filter-category' }}
-              >
-                <MenuItem value="">Todas</MenuItem>
-                {cachedCategories.map((category, index) => (
-                  <MenuItem key={index} value={category}>
-                    {category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            sx={{ display: 'flex', justifyContent: 'flex-end' }}
-          >
-            <Button variant="contained" color="primary" onClick={handleExport}>
-              Exportar a CSV
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+      <FiltersAndExport
+        filterDateFrom={filterDateFrom}
+        filterDateTo={filterDateTo}
+        filterCategory={filterCategory}
+        handleDateFromChange={handleDateFromChange}
+        handleDateToChange={handleDateToChange}
+        handleCategoryChange={handleCategoryChange}
+        handleExport={handleExport}
+        categories={cachedCategories}
+      />
       <Paper
         elevation={3}
         sx={{ padding: 2, height: '100%', position: 'relative' }}
@@ -206,8 +186,16 @@ function Statistics() {
           </Typography>
         </Box>
         <ExpenseCharts expenses={sortedExpenses} saldoInicial={saldoInicial} />
-        <Box sx={{ height: 100, mt: 2 }}>
-          <SmallLineChart expenses={sortedExpenses} />
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h6" gutterBottom>
+            Tickets Cargados
+          </Typography>
+          <TicketGrid
+            expenses={sortedExpenses}
+            categories={cachedCategories}
+            handleExport={handleExport}
+            handleDeleteExpense={handleDeleteExpense}
+          />
         </Box>
       </Paper>
     </Container>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Box, Paper, Typography, Grid } from '@mui/material';
 import {
   Chart as ChartJS,
@@ -7,6 +7,8 @@ import {
   LinearScale,
   BarElement,
   ArcElement,
+  LineElement,
+  PointElement,
   Tooltip,
   Legend,
 } from 'chart.js';
@@ -18,6 +20,8 @@ ChartJS.register(
   LinearScale,
   BarElement,
   ArcElement,
+  LineElement,
+  PointElement,
   Tooltip,
   Legend
 );
@@ -78,19 +82,58 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
     ],
   };
 
+  // Agregar datos para el gráfico lineal
+  const lineData = {
+    labels: expenses
+      .map((expense) => {
+        const date = parseISO(expense.Fecha);
+        return isValid(date) ? format(date, 'yyyy-MM-dd') : null;
+      })
+      .filter(Boolean),
+    datasets: [
+      {
+        label: 'Saldo Diario',
+        data: expenses.reduce((acc, expense, index) => {
+          const date = parseISO(expense.Fecha);
+          if (!isValid(date)) {
+            console.error(`Fecha inválida: ${expense.Fecha}`);
+            return acc;
+          }
+          const saldo =
+            index === 0
+              ? saldoInicial +
+                (expense.Ganancia ? expense.Cantidad : -expense.Cantidad)
+              : acc[index - 1] +
+                (expense.Ganancia ? expense.Cantidad : -expense.Cantidad);
+          return [...acc, saldo];
+        }, []),
+        fill: false,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1,
+        pointRadius: expenses.map((_, index) => (index % 15 === 0 ? 5 : 2)), // Punto de inflexión cada 15 días
+      },
+    ],
+  };
+
   return (
     <Paper elevation={3} className="chart-container">
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6} className="chart-grid-item">
+        <Grid item xs={12} md={4} className="chart-grid-item">
           <Typography variant="h6" className="chart-title">
             Gráfico de Barras
           </Typography>
           <Bar data={data} />
         </Grid>
-        <Grid item xs={12} md={6} className="chart-grid-item">
+        <Grid item xs={12} md={4} className="chart-grid-item">
           <Box className="pie-chart-container">
             <Pie data={pieData} options={{ maintainAspectRatio: false }} />
           </Box>
+        </Grid>
+        <Grid item xs={12} md={4} className="chart-grid-item">
+          <Typography variant="h6" className="chart-title">
+            Gráfico Lineal
+          </Typography>
+          <Line data={lineData} />
         </Grid>
       </Grid>
     </Paper>

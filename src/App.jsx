@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useMemo } from 'react';
+import React, { Suspense, useCallback, useMemo, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -24,6 +24,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import StoicQuoteModal from './components/StoicQuoteModal/StoicQuoteModal';
 import { ModalProvider } from './hooks/useModal.jsx';
 
+import './index.css';
+
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import('./pages/Register'));
@@ -42,10 +44,11 @@ function App() {
 
   const theme = useMemo(() => getTheme(mode), [mode]);
 
-  // Apply theme class to body
   React.useEffect(() => {
     document.body.setAttribute('data-theme', mode);
   }, [mode]);
+
+  const nodeRef = useRef(null);
 
   if (loading) {
     return (
@@ -108,8 +111,12 @@ function App() {
                     key={path}
                     path={path}
                     element={
-                      <CSSTransition timeout={300} classNames="fade">
-                        <div>{element}</div>
+                      <CSSTransition
+                        timeout={300}
+                        classNames="fade"
+                        nodeRef={nodeRef}
+                      >
+                        <div ref={nodeRef}>{element}</div>
                       </CSSTransition>
                     }
                   />
