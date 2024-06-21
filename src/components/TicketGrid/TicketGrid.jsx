@@ -93,7 +93,7 @@ const TicketGrid = ({
         <Box className="ticket-row">
           <AttachMoneyIcon className="ticket-icon" />
           <Typography variant="h5" className="ticket-amount">
-            ${expense.Cantidad.toFixed(2)}
+            {expense.Cantidad.toFixed(2)}
           </Typography>
         </Box>
         <Box className="ticket-row">
