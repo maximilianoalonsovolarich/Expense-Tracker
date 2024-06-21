@@ -12,18 +12,17 @@ import {
   Button,
 } from '@mui/material';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../../hooks/useAuth';
 
 const allowedEmails = import.meta.env.VITE_ALLOWED_EMAILS.split(',');
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading, error } = useAuth();
-  const [open, setOpen] = useState(false);
+  const [unauthorized, setUnauthorized] = useState(false);
 
   useEffect(() => {
     if (user && !allowedEmails.includes(user.email)) {
-      setOpen(true);
+      setUnauthorized(true);
       toast.error('No tienes autorización para acceder a esta aplicación.');
     }
   }, [user]);
@@ -45,18 +44,18 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  if (user && !allowedEmails.includes(user.email)) {
+  if (unauthorized) {
     return (
       <>
         <Navigate to="/login" />
-        <Dialog open={open} onClose={() => setOpen(false)}>
+        <Dialog open={unauthorized} onClose={() => setUnauthorized(false)}>
           <DialogTitle>Sin autorización</DialogTitle>
           <DialogContent>
             No tienes autorización para acceder a esta aplicación. Solicita
             acceso al administrador.
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpen(false)} color="primary">
+            <Button onClick={() => setUnauthorized(false)} color="primary">
               Cerrar
             </Button>
           </DialogActions>
