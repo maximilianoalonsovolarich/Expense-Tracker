@@ -30,6 +30,7 @@ import { auth, logOut } from '../../services/firebase';
 import 'react-toastify/dist/ReactToastify.css';
 import useCache from '../../hooks/useCache';
 import { fetchExpenses } from '../../services/api';
+import './Header.css';
 
 const HeaderTitle = styled(Typography)`
   flex-grow: 1;
@@ -118,8 +119,12 @@ function Header({ mode, toggleColorMode }) {
             </MenuButton>
           )}
           <HeaderTitle variant="h6">
-            {user ? `Bienvenido ${user.displayName}` : 'Finanzas'}
+            <span className="welcome-message">
+              {user ? 'Bienvenido' : 'Finanzas'}
+            </span>
+            {user && <span className="user-name"> {user.displayName}</span>}
           </HeaderTitle>
+
           <IconButton
             sx={{
               color: '#FFFFFF',

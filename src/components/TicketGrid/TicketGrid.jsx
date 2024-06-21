@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Grid,
   Paper,
@@ -6,9 +6,17 @@ import {
   Box,
   IconButton,
   Button,
+  useMediaQuery,
 } from '@mui/material';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CategoryIcon from '@mui/icons-material/Category';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import DescriptionIcon from '@mui/icons-material/Description';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import Carousel from 'react-material-ui-carousel';
 import FiltersAndExport from '../FiltersAndExport/FiltersAndExport';
 import './TicketGrid.css';
 
@@ -26,6 +34,7 @@ const TicketGrid = ({
   const [searchText, setSearchText] = useState('');
   const itemsPerPage = 8;
   const nodeRefs = useRef([]);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleNextPage = () => setCurrentPage((prevPage) => prevPage + 1);
   const handlePreviousPage = () =>
@@ -55,7 +64,6 @@ const TicketGrid = ({
         : true
     );
 
-  // Reordenar los gastos para que el último cargado aparezca primero
   const sortedExpenses = filteredExpenses.sort((a, b) => {
     if (a.id === lastLoadedId) return -1;
     if (b.id === lastLoadedId) return 1;
@@ -65,6 +73,56 @@ const TicketGrid = ({
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentExpenses = sortedExpenses.slice(startIndex, endIndex);
+
+  const renderExpense = (expense, index) => (
+    <Paper elevation={3} className="ticket-card" key={index}>
+      <Box className="ticket-header">
+        <Typography variant="h6" className="ticket-title">
+          Ticket de {expense.Ganancia ? 'Ingreso' : 'Gasto'}
+        </Typography>
+      </Box>
+      <Box className="ticket-content">
+        <Box className="ticket-row">
+          <DateRangeIcon className="ticket-icon" />
+          <Typography variant="subtitle1">{expense.Fecha}</Typography>
+        </Box>
+        <Box className="ticket-row">
+          <CategoryIcon className="ticket-icon" />
+          <Typography variant="body1">{expense.Categoría}</Typography>
+        </Box>
+        <Box className="ticket-row">
+          <AttachMoneyIcon className="ticket-icon" />
+          <Typography variant="h5" className="ticket-amount">
+            ${expense.Cantidad.toFixed(2)}
+          </Typography>
+        </Box>
+        <Box className="ticket-row">
+          <DescriptionIcon className="ticket-icon" />
+          <Typography variant="body2">{expense.Descripción}</Typography>
+        </Box>
+        <Box className="ticket-row">
+          {expense.Ganancia ? (
+            <TrendingUpIcon className="ticket-icon income" />
+          ) : (
+            <TrendingDownIcon className="ticket-icon expense" />
+          )}
+          <Typography variant="body2">
+            {expense.Ganancia ? 'Ingreso' : 'Gasto'}
+          </Typography>
+        </Box>
+      </Box>
+      <Box className="ticket-footer">
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={() => handleDeleteExpense(expense.id)}
+          className="delete-button"
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Box>
+    </Paper>
+  );
 
   return (
     <Box sx={{ mb: 2 }}>
@@ -80,58 +138,50 @@ const TicketGrid = ({
         handleExport={handleExport}
         categories={categories}
       />
-      <Grid container spacing={2} className="grid-container">
-        <TransitionGroup component={null}>
-          {currentExpenses.map((expense, index) => {
-            if (!nodeRefs.current[index]) {
-              nodeRefs.current[index] = React.createRef();
-            }
+      {isMobile ? (
+        <Carousel
+          interval={3000}
+          indicators={false}
+          navButtonsAlwaysVisible={false}
+        >
+          {currentExpenses.map((expense, index) =>
+            renderExpense(expense, index)
+          )}
+        </Carousel>
+      ) : (
+        <Grid container spacing={2} className="grid-container">
+          <TransitionGroup component={null}>
+            {currentExpenses.map((expense, index) => {
+              if (!nodeRefs.current[index]) {
+                nodeRefs.current[index] = React.createRef();
+              }
 
-            return (
-              <CSSTransition
-                key={expense.id}
-                timeout={300}
-                classNames="ticket"
-                nodeRef={nodeRefs.current[index]}
-              >
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                  ref={nodeRefs.current[index]}
-                  className={`grid-item ${
-                    expense.id === lastLoadedId ? 'latest-item' : ''
-                  }`}
+              return (
+                <CSSTransition
+                  key={expense.id}
+                  timeout={300}
+                  classNames="ticket"
+                  nodeRef={nodeRefs.current[index]}
                 >
-                  <Paper elevation={3} className="ticket-card">
-                    <Typography variant="subtitle1">{expense.Fecha}</Typography>
-                    <Typography variant="body2">{expense.Categoría}</Typography>
-                    <Typography variant="body2">${expense.Cantidad}</Typography>
-                    <Typography variant="body2">
-                      {expense.Descripción}
-                    </Typography>
-                    <Typography variant="body2">
-                      Ganancia: {expense.Ganancia ? 'Sí' : 'No'}
-                    </Typography>
-                    <Typography variant="body2">
-                      Gasto: {expense.Gasto ? 'Sí' : 'No'}
-                    </Typography>
-                    <IconButton
-                      edge="end"
-                      aria-label="delete"
-                      onClick={() => handleDeleteExpense(expense.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Paper>
-                </Grid>
-              </CSSTransition>
-            );
-          })}
-        </TransitionGroup>
-      </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    ref={nodeRefs.current[index]}
+                    className={`grid-item ${
+                      expense.id === lastLoadedId ? 'latest-item' : ''
+                    }`}
+                  >
+                    {renderExpense(expense, index)}
+                  </Grid>
+                </CSSTransition>
+              );
+            })}
+          </TransitionGroup>
+        </Grid>
+      )}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <Button
           variant="contained"

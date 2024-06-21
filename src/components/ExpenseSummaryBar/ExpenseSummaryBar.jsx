@@ -1,6 +1,11 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Grid, Paper, Typography, Box, useMediaQuery } from '@mui/material';
 import CountUp from 'react-countup';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import Carousel from 'react-material-ui-carousel';
 import './ExpenseSummaryBar.css';
 
 const ExpenseSummaryBar = ({
@@ -9,26 +14,77 @@ const ExpenseSummaryBar = ({
   totalGasto,
   saldoActual,
 }) => {
+  const isMobile = useMediaQuery('(max-width:600px)');
+
+  const summaryItems = [
+    {
+      title: 'Total Tickets',
+      value: totalGastos,
+      icon: ReceiptIcon,
+      prefix: '',
+    },
+    {
+      title: 'Total Ganancia',
+      value: totalGanancia,
+      icon: TrendingUpIcon,
+      prefix: '$',
+    },
+    {
+      title: 'Total Gasto',
+      value: totalGasto,
+      icon: TrendingDownIcon,
+      prefix: '$',
+    },
+    {
+      title: 'Saldo Actual',
+      value: saldoActual,
+      icon: AccountBalanceWalletIcon,
+      prefix: '$',
+    },
+  ];
+
+  const renderSummaryItem = (item, index) => (
+    <Paper elevation={2} className="summary-card" key={index}>
+      <Box className="summary-icon">
+        <item.icon fontSize="small" />
+      </Box>
+      <Box className="summary-content">
+        <Typography variant="body2" className="summary-title">
+          {item.title}
+        </Typography>
+        <Typography variant="body1" className="summary-value">
+          <CountUp
+            end={item.value}
+            prefix={item.prefix}
+            duration={1.5}
+            separator=","
+            decimals={item.prefix === '$' ? 2 : 0}
+          />
+        </Typography>
+      </Box>
+    </Paper>
+  );
+
   return (
-    <Box className="expense-summary-bar">
-      <Typography variant="body1" className="summary-item">
-        Total Tickets: {totalGastos}
-      </Typography>
-      <Typography variant="body1" className="summary-item">
-        Total Ganancia:{' '}
-        <CountUp end={totalGanancia} prefix="$" duration={1.5} />
-      </Typography>
-      <Typography variant="body1" className="summary-item">
-        Total Gasto: <CountUp end={totalGasto} prefix="$" duration={1.5} />
-      </Typography>
-      <Typography
-        variant="body1"
-        className="summary-item"
-        style={{ color: saldoActual < 0 ? 'red' : 'inherit' }}
-      >
-        Saldo Actual: <CountUp end={saldoActual} prefix="$" duration={1.5} />
-      </Typography>
-    </Box>
+    <div className="expense-summary-bar">
+      {isMobile ? (
+        <Carousel
+          interval={3000}
+          indicators={false}
+          navButtonsAlwaysVisible={false}
+        >
+          {summaryItems.map((item, index) => renderSummaryItem(item, index))}
+        </Carousel>
+      ) : (
+        <Grid container spacing={2}>
+          {summaryItems.map((item, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              {renderSummaryItem(item, index)}
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </div>
   );
 };
 

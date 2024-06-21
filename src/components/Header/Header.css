@@ -1,29 +1,31 @@
+/* Estilos del header */
 .header-title {
     flex-grow: 1;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    /* Reduce the font size for "Bienvenido" and "Finanzas" */
 }
 
-.header-buttons {
-    display: flex;
-    align-items: center;
+/* Estilos específicos */
+.welcome-message {
+    font-size: 1rem;
+    /* Adjust the font size for "Bienvenido" */
 }
 
-.header-buttons .menu-button {
-    margin-right: 1rem;
+.user-name {
+    font-size: 1rem;
+    /* Adjust the font size for the user's name */
 }
 
+/* Estilos responsivos */
 @media (max-width: 768px) {
     .header-title {
-        font-size: 1.25rem;
+        font-size: 1rem;
+        /* Further reduce the font size for "Bienvenido" and "Finanzas" on mobile */
     }
 
-    .header-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .header-buttons .menu-button {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
+    .welcome-message,
+    .user-name {
+        display: block;
+        /* Display "Bienvenido" and the name on separate lines on mobile */
     }
 }
