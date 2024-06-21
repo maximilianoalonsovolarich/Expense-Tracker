@@ -1,3 +1,4 @@
+//Ticket Grid component that displays the expenses in a grid layout. It includes a pagination system, filters, and export options.
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Grid,
