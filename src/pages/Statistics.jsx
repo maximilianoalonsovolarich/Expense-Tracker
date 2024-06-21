@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Paper,
 } from '@mui/material';
-import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
 import useCache from '../hooks/useCache';
@@ -31,6 +30,7 @@ function Statistics() {
   const [filterDateFrom, setFilterDateFrom] = useState('');
   const [filterDateTo, setFilterDateTo] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [lastLoadedId, setLastLoadedId] = useState(null);
 
   useEffect(() => {
     if (cachedData && Array.isArray(cachedData.expenses)) {
@@ -81,17 +81,9 @@ function Statistics() {
     );
   }
 
-  const handleDateFromChange = (event) => {
-    setFilterDateFrom(event.target.value);
-  };
-
-  const handleDateToChange = (event) => {
-    setFilterDateTo(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setFilterCategory(event.target.value);
-  };
+  const handleDateFromChange = (event) => setFilterDateFrom(event.target.value);
+  const handleDateToChange = (event) => setFilterDateTo(event.target.value);
+  const handleCategoryChange = (event) => setFilterCategory(event.target.value);
 
   const handleExport = () => {
     const csvData = expenses.map((expense) => ({
@@ -140,7 +132,6 @@ function Statistics() {
   const totalGanancia = sortedExpenses
     .filter((expense) => expense.Ganancia)
     .reduce((total, expense) => total + expense.Cantidad, 0);
-
   const totalGasto = sortedExpenses
     .filter((expense) => expense.Gasto)
     .reduce((total, expense) => total + expense.Cantidad, 0);
@@ -195,6 +186,7 @@ function Statistics() {
             categories={cachedCategories}
             handleExport={handleExport}
             handleDeleteExpense={handleDeleteExpense}
+            lastLoadedId={lastLoadedId} // Pasar la ID del último cargado
           />
         </Box>
       </Paper>

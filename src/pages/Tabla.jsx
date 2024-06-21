@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Box, Typography, CircularProgress } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { fetchExpenses, fetchCategories } from '../services/api';
+import { fetchExpenses, fetchCategories, deleteExpense } from '../services/api';
 import { saveAs } from 'file-saver';
 import FiltersAndExport from '../components/FiltersAndExport/FiltersAndExport';
+import TicketGrid from '../components/TicketGrid/TicketGrid';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Tabla() {
   const [expenses, setExpenses] = useState([]);
@@ -15,6 +18,7 @@ function Tabla() {
   const [searchText, setSearchText] = useState('');
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [pageSize, setPageSize] = useState(6);
+  const [lastLoadedId, setLastLoadedId] = useState(null);
 
   useEffect(() => {
     async function getExpenses() {
@@ -58,6 +62,11 @@ function Tabla() {
     );
   }, [expenses, filterStartDate, filterEndDate, filterCategory, searchText]);
 
+  const updateCache = (updatedExpenses) => {
+    setExpenses(updatedExpenses);
+    setFilteredExpenses(updatedExpenses);
+  };
+
   const handleExport = () => {
     const csvData = filteredExpenses.map((expense) => ({
       Fecha: expense.Fecha,
@@ -93,6 +102,23 @@ function Tabla() {
     { field: 'Ganancia', headerName: 'Ganancia', width: 150 },
     { field: 'Gasto', headerName: 'Gasto', width: 150 },
   ];
+
+  const handleDeleteExpense = async (id) => {
+    const previousExpenses = expenses;
+    setExpenses(expenses.filter((expense) => expense.id !== id));
+    try {
+      await deleteExpense(id);
+      const updatedExpenses = previousExpenses.filter(
+        (expense) => expense.id !== id
+      );
+      updateCache(updatedExpenses);
+      toast.success('Gasto eliminado exitosamente');
+    } catch (error) {
+      console.error('Error deleting expense:', error);
+      setExpenses(previousExpenses);
+      toast.error('Error al eliminar el gasto');
+    }
+  };
 
   if (loading) {
     return (
@@ -143,6 +169,13 @@ function Tabla() {
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
+      <TicketGrid
+        expenses={filteredExpenses}
+        categories={categories}
+        handleExport={handleExport}
+        handleDeleteExpense={handleDeleteExpense}
+        lastLoadedId={lastLoadedId}
+      />
     </Container>
   );
 }

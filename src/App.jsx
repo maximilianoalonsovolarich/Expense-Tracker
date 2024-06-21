@@ -1,4 +1,11 @@
-import React, { Suspense, useCallback, useMemo, useRef } from 'react';
+import React, {
+  Suspense,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+  useState,
+} from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -33,9 +40,7 @@ const Statistics = React.lazy(() => import('./pages/Statistics'));
 const Tabla = React.lazy(() => import('./pages/Tabla'));
 
 function App() {
-  const [mode, setMode] = React.useState(
-    localStorage.getItem('theme') || 'light'
-  );
+  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
   const { user, loading } = useAuth();
 
   const toggleColorMode = useCallback(() => {
@@ -44,7 +49,7 @@ function App() {
 
   const theme = useMemo(() => getTheme(mode), [mode]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.setAttribute('data-theme', mode);
   }, [mode]);
 
@@ -68,7 +73,7 @@ function App() {
       <CssBaseline />
       <Router>
         <ModalProvider>
-          <Header mode={mode} toggleColorMode={toggleColorMode} />
+          <Header mode={mode} toggleColorMode={toggleColorMode} user={user} />
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={<CircularProgress />}>
               <Routes>
@@ -124,7 +129,7 @@ function App() {
               </Routes>
             </Suspense>
           </ErrorBoundary>
-          <ToastContainer />
+          <ToastContainer position="top-right" autoClose={3000} />
           <StoicQuoteModal />
         </ModalProvider>
       </Router>

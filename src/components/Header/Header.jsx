@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
 import {
@@ -57,13 +56,30 @@ const MenuButton = styled(IconButton)`
   }
 `;
 
-function Header({ mode, toggleColorMode }) {
-  const [user] = useAuthState(auth);
+function Header({ mode, toggleColorMode, user }) {
+  const [additionalMessage, setAdditionalMessage] = useState(
+    'finanzas personales'
+  );
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const [fadeClass, setFadeClass] = useState('fade-in');
   const { clearCache } = useCache('expenses', fetchExpenses);
+
+  useEffect(() => {
+    let index = 0;
+    const messages = ['Finanzas personales', user ? user.displayName : ''];
+    const interval = setInterval(() => {
+      setFadeClass('fade-out');
+      setTimeout(() => {
+        setAdditionalMessage(messages[index]);
+        setFadeClass('fade-in');
+        index = (index + 1) % messages.length;
+      }, 1000); // Duration of fade-out transition
+    }, 10000); // Change every 10 seconds
+
+    return () => clearInterval(interval);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -119,10 +135,7 @@ function Header({ mode, toggleColorMode }) {
             </MenuButton>
           )}
           <HeaderTitle variant="h6">
-            <span className="welcome-message">
-              {user ? 'Bienvenido' : 'Finanzas'}
-            </span>
-            {user && <span className="user-name"> {user.displayName}</span>}
+            Bienvenido <span className={fadeClass}>{additionalMessage}</span>
           </HeaderTitle>
 
           <IconButton
