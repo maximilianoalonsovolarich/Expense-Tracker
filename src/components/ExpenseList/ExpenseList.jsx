@@ -1,30 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   Typography,
   IconButton,
-  Divider,
   Box,
   Grid,
   Paper,
+  Button,
+  Chip,
+  Tooltip,
+  Zoom,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { motion } from 'framer-motion';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
-const ExpenseCard = styled(Paper)`
-  padding: 1rem;
-  background-color: var(--ticket-background); // Usando la variable CSS
+const ExpenseCard = styled(motion(Paper))`
+  padding: 1.5rem;
+  background-color: var(--ticket-background);
   border-radius: 15px;
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const ExpenseTitle = styled(Typography)`
   color: var(--primary-main);
+  font-weight: 600;
 `;
 
 const IconButtonStyled = styled(IconButton)`
   color: var(--primary-main);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const NoExpensesContainer = styled(Box)`
@@ -35,118 +54,130 @@ const NoExpensesContainer = styled(Box)`
   margin-top: -3rem;
 `;
 
+const ITEMS_PER_PAGE = 8;
+
 function ExpenseList({ expenses = [], onDeleteExpense }) {
-  const [currentExpenseIndex, setCurrentExpenseIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  useEffect(() => {
-    if (expenses.length > 0) {
-      setCurrentExpenseIndex(expenses.length - 1);
-    }
-  }, [expenses]);
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
 
-  const handlePrevious = () => {
-    setCurrentExpenseIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : prevIndex
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) =>
+      Math.min(prevPage + 1, Math.ceil(expenses.length / ITEMS_PER_PAGE) - 1)
     );
   };
 
-  const handleNext = () => {
-    setCurrentExpenseIndex((prevIndex) =>
-      prevIndex < expenses.length - 1 ? prevIndex + 1 : prevIndex
-    );
-  };
+  const currentExpenses = expenses.slice(
+    currentPage * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE
+  );
 
   if (!expenses || expenses.length === 0) {
-    return null;
+    return (
+      <NoExpensesContainer>
+        <Typography variant="h6">No hay gastos disponibles</Typography>
+      </NoExpensesContainer>
+    );
   }
 
-  const currentExpense = expenses[currentExpenseIndex];
-
   return (
-    <ExpenseCard
-      sx={{
-        backgroundColor: currentExpense?.Ganancia
-          ? 'rgba(0, 128, 0, 0.1)'
-          : 'rgba(255, 0, 0, 0.1)',
-      }}
-    >
-      <Typography variant="h5" gutterBottom>
-        Ticket #{currentExpense?.ID || 'No disponible'}
-      </Typography>
-      <Typography variant="subtitle2" color="textSecondary" sx={{ mb: 1 }}>
-        {currentExpense?.Descripción || 'No disponible'}
-      </Typography>
-      <Box sx={{ position: 'relative' }}>
-        <Typography variant="subtitle1" color="textPrimary">
-          Fecha: {currentExpense?.Fecha || 'No disponible'}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Cantidad: {currentExpense?.Cantidad || 'No disponible'}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Categoría: {currentExpense?.Categoría || 'No disponible'}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Ganancia: {currentExpense?.Ganancia ? 'Sí' : 'No'}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          Gasto: {currentExpense?.Gasto ? 'Sí' : 'No'}
-        </Typography>
-        <IconButtonStyled
-          edge="end"
-          aria-label="delete"
-          onClick={() => onDeleteExpense(currentExpense.id)}
-          sx={{ position: 'absolute', top: 8, right: 8 }}
+    <Box>
+      <Grid container spacing={3}>
+        {currentExpenses.map((expense, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <ExpenseCard
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ExpenseTitle variant="h6" gutterBottom>
+                Ticket #{expense?.ID || 'No disponible'}
+              </ExpenseTitle>
+              <Typography
+                variant="subtitle2"
+                color="textSecondary"
+                sx={{ mb: 2 }}
+              >
+                {expense?.Descripción || 'No disponible'}
+              </Typography>
+              <Box sx={{ position: 'relative', mb: 2 }}>
+                <Typography variant="body2" color="textSecondary">
+                  Fecha:{' '}
+                  {expense?.Fecha
+                    ? format(new Date(expense.Fecha), 'dd MMMM yyyy', {
+                        locale: es,
+                      })
+                    : 'No disponible'}
+                </Typography>
+                <Typography variant="body1" color="textPrimary" sx={{ my: 1 }}>
+                  Cantidad:{' '}
+                  {expense?.Cantidad
+                    ? new Intl.NumberFormat('es-ES', {
+                        style: 'currency',
+                        currency: 'EUR',
+                      }).format(expense.Cantidad)
+                    : 'No disponible'}
+                </Typography>
+                <Chip
+                  label={expense?.Categoría || 'No especificada'}
+                  color="primary"
+                  size="small"
+                  sx={{ mb: 1 }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Chip
+                  label={expense?.Ganancia ? 'Ganancia' : 'Gasto'}
+                  color={expense?.Ganancia ? 'success' : 'error'}
+                  size="small"
+                />
+                <Tooltip title="Eliminar gasto" TransitionComponent={Zoom}>
+                  <IconButtonStyled
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => onDeleteExpense(expense.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButtonStyled>
+                </Tooltip>
+              </Box>
+            </ExpenseCard>
+          </Grid>
+        ))}
+      </Grid>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handlePreviousPage}
+          disabled={currentPage === 0}
+          startIcon={<ArrowBackIosIcon />}
         >
-          <DeleteIcon />
-        </IconButtonStyled>
-        <Divider sx={{ my: 2 }} />
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <IconButton
-              onClick={handlePrevious}
-              disabled={currentExpenseIndex === 0}
-              sx={{
-                width: '100%',
-                borderRadius: '15px',
-                backgroundColor:
-                  currentExpenseIndex === 0 ? '#BDBDBD' : '#1976D2',
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor:
-                    currentExpenseIndex === 0 ? '#BDBDBD' : '#115293',
-                },
-              }}
-            >
-              <ArrowBackIosIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-          <Grid item xs={6}>
-            <IconButton
-              onClick={handleNext}
-              disabled={currentExpenseIndex === expenses.length - 1}
-              sx={{
-                width: '100%',
-                borderRadius: '15px',
-                backgroundColor:
-                  currentExpenseIndex === expenses.length - 1
-                    ? '#BDBDBD'
-                    : '#1976D2',
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor:
-                    currentExpenseIndex === expenses.length - 1
-                      ? '#BDBDBD'
-                      : '#115293',
-                },
-              }}
-            >
-              <ArrowForwardIosIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
+          Anterior
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleNextPage}
+          disabled={
+            currentPage >= Math.ceil(expenses.length / ITEMS_PER_PAGE) - 1
+          }
+          endIcon={<ArrowForwardIosIcon />}
+        >
+          Siguiente
+        </Button>
       </Box>
-    </ExpenseCard>
+    </Box>
   );
 }
 

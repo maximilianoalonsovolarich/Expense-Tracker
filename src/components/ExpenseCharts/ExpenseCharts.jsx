@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { format, parseISO, isValid } from 'date-fns';
+import { es } from 'date-fns/locale';
 import './ExpenseCharts.css';
 
 ChartJS.register(
@@ -30,7 +31,7 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
         console.error(`Fecha inválida: ${expense.Fecha}`);
         return acc;
       }
-      const month = format(date, 'yyyy-MM');
+      const month = format(date, 'MMMM yyyy', { locale: es });
       if (!acc.ganancias[month]) {
         acc.ganancias[month] = 0;
       }

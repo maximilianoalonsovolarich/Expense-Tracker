@@ -17,6 +17,7 @@ import {
   eachDayOfInterval,
   startOfMonth,
 } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,7 @@ const getQuincenalLabels = (startDate, endDate) => {
   const labels = eachDayOfInterval({ start, end: endDate }).filter(
     (date) => date.getDate() === 1 || date.getDate() === 15
   );
-  return labels.map((date) => format(date, 'yyyy-MM-dd'));
+  return labels.map((date) => format(date, "d 'de' MMMM yyyy", { locale: es }));
 };
 
 const groupExpensesByQuincena = (expenses) => {
@@ -45,7 +46,7 @@ const groupExpensesByQuincena = (expenses) => {
     }
 
     const day = date.getDate() <= 15 ? '01' : '15';
-    const quincena = `${format(date, 'yyyy-MM')}-${day}`;
+    const quincena = format(date, `yyyy-MM-${day}`);
 
     if (!acc[quincena]) {
       acc[quincena] = 0;

@@ -6,9 +6,6 @@ import {
   CssBaseline,
   CircularProgress,
   Typography,
-  Paper,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm/ExpenseForm';
 import ExpenseList from '../components/ExpenseList/ExpenseList';

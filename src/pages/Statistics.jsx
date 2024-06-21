@@ -6,13 +6,12 @@ import {
   Box,
   CircularProgress,
   Paper,
-  Typography, // Agregar importación de Typography
+  Typography,
 } from '@mui/material';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
 import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
-import ExpenseList from '../components/ExpenseList/ExpenseList';
 import ExpenseFilters from '../components/ExpenseFilters/ExpenseFilters';
 import ExpenseSummaryBar from '../components/ExpenseSummaryBar/ExpenseSummaryBar';
 import useCache from '../hooks/useCache';
@@ -167,9 +166,6 @@ function Statistics() {
         <ExpenseCharts expenses={sortedExpenses} saldoInicial={saldoInicial} />
         <Box sx={{ height: 100, mt: 2 }}>
           <SmallLineChart expenses={sortedExpenses} />
-        </Box>
-        <Box sx={{ mt: 4 }}>
-          <ExpenseList expenses={sortedExpenses} onDeleteExpense={() => {}} />
         </Box>
       </Paper>
     </Container>

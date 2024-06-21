@@ -1,31 +1,38 @@
-import React from 'react';
-import { Bar, Pie } from 'react-chartjs-2';
-import { Box, Paper, Typography, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+import {
+  Box,
+  Paper,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  ArcElement,
   Tooltip,
   Legend,
 } from 'chart.js';
+import { format, parseISO, isValid } from 'date-fns';
+import { es } from 'date-fns/locale';
 import './ExpensePieChart.css';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 function ExpenseChart({ expenses }) {
   const [filter, setFilter] = useState('Cantidad');
 
   const data = {
-    labels: expenses.map((expense) => expense.fields.Fecha),
+    labels: expenses.map((expense) => {
+      const date = parseISO(expense.fields.Fecha);
+      return isValid(date)
+        ? format(date, 'd MMMM yyyy', { locale: es })
+        : 'Fecha inválida';
+    }),
     datasets: [
       {
         label: filter,
