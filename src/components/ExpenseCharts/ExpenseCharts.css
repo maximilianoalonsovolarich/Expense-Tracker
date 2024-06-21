@@ -15,3 +15,26 @@
     position: relative;
     height: 200px;
 }
+
+/* ExpenseSummaryBar.css */
+.summary-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: var(--background-paper);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-main);
+    color: white;
+    margin-right: 0.5rem;
+}

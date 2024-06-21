@@ -1,3 +1,5 @@
+// src/components/ExpenseCharts/SmallLineChart.jsx
+
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -17,7 +19,6 @@ import {
   eachDayOfInterval,
   startOfMonth,
 } from 'date-fns';
-import { es } from 'date-fns/locale';
 
 ChartJS.register(
   CategoryScale,
@@ -34,7 +35,7 @@ const getQuincenalLabels = (startDate, endDate) => {
   const labels = eachDayOfInterval({ start, end: endDate }).filter(
     (date) => date.getDate() === 1 || date.getDate() === 15
   );
-  return labels.map((date) => format(date, "d 'de' MMMM yyyy", { locale: es }));
+  return labels.map((date) => format(date, 'yyyy-MM-dd'));
 };
 
 const groupExpensesByQuincena = (expenses) => {
@@ -46,7 +47,7 @@ const groupExpensesByQuincena = (expenses) => {
     }
 
     const day = date.getDate() <= 15 ? '01' : '15';
-    const quincena = format(date, `yyyy-MM-${day}`);
+    const quincena = `${format(date, 'yyyy-MM')}-${day}`;
 
     if (!acc[quincena]) {
       acc[quincena] = 0;
@@ -78,6 +79,10 @@ const SmallLineChart = ({ expenses }) => {
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: false,
         tension: 0.1,
+        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
       },
     ],
   };
@@ -92,12 +97,46 @@ const SmallLineChart = ({ expenses }) => {
           display: true,
           color: 'rgba(200, 200, 200, 0.1)',
         },
+        title: {
+          display: true,
+          text: 'Fecha',
+          color: '#666',
+          font: {
+            family: 'Arial',
+            size: 12,
+            weight: 'bold',
+          },
+        },
+        ticks: {
+          color: '#666',
+          font: {
+            family: 'Arial',
+            size: 10,
+          },
+        },
       },
       y: {
         display: true,
         grid: {
           display: true,
           color: 'rgba(200, 200, 200, 0.1)',
+        },
+        title: {
+          display: true,
+          text: 'Saldo',
+          color: '#666',
+          font: {
+            family: 'Arial',
+            size: 12,
+            weight: 'bold',
+          },
+        },
+        ticks: {
+          color: '#666',
+          font: {
+            family: 'Arial',
+            size: 10,
+          },
         },
       },
     },

@@ -1,3 +1,5 @@
+// src/pages/Dashboard.jsx
+
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -6,6 +8,7 @@ import {
   CssBaseline,
   CircularProgress,
   Typography,
+  Paper,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm/ExpenseForm';
 import ExpenseList from '../components/ExpenseList/ExpenseList';
@@ -15,6 +18,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCache from '../hooks/useCache';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
+import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
 
 function Dashboard() {
   const {
@@ -120,7 +124,25 @@ function Dashboard() {
           <ExpenseForm onAddExpense={handleAddExpense} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <ExpenseCharts expenses={expenses} saldoInicial={saldoInicial} />
+          <Box>
+            <Paper elevation={3} sx={{ p: 2, mb: 4 }}>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Gráfico de Barras
+              </Typography>
+              <ExpenseCharts expenses={expenses} saldoInicial={saldoInicial} />
+            </Paper>
+            <Paper
+              elevation={3}
+              sx={{ p: 2, height: '350px', overflow: 'hidden' }}
+            >
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Saldo Quincenal
+              </Typography>
+              <Box sx={{ height: 'calc(100% - 32px)', width: '100%' }}>
+                <SmallLineChart expenses={expenses} />
+              </Box>
+            </Paper>
+          </Box>
         </Grid>
         <Grid item xs={12}>
           <ExpenseList

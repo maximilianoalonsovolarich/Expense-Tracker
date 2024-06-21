@@ -141,10 +141,7 @@ function Statistics() {
         handleCategoryChange={handleCategoryChange}
         handleExport={handleExport}
       />
-      <Paper
-        elevation={3}
-        sx={{ padding: 2, height: '100%', position: 'relative' }}
-      >
+      <Paper elevation={3} sx={{ p: 2, mb: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
           <Typography variant="h6">
             Total Ganancia:{' '}
@@ -164,7 +161,19 @@ function Statistics() {
           </Typography>
         </Box>
         <ExpenseCharts expenses={sortedExpenses} saldoInicial={saldoInicial} />
-        <Box sx={{ height: 100, mt: 2 }}>
+      </Paper>
+      <Paper elevation={3} sx={{ p: 2, mb: 4 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          Saldo Quincenal
+        </Typography>
+        <Box
+          sx={{
+            height: '300px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
           <SmallLineChart expenses={sortedExpenses} />
         </Box>
       </Paper>
