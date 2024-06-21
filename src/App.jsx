@@ -30,7 +30,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StoicQuoteModal from './components/StoicQuoteModal/StoicQuoteModal';
 import { ModalProvider } from './hooks/useModal.jsx';
-import { fetchCategories } from './services/api';
 
 import './index.css';
 
@@ -42,7 +41,6 @@ const Tabla = React.lazy(() => import('./pages/Tabla'));
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
-  const [categories, setCategories] = useState([]); // Estado para almacenar las categorías
   const { user, loading } = useAuth();
 
   const toggleColorMode = useCallback(() => {
@@ -56,16 +54,6 @@ function App() {
   }, [mode]);
 
   const nodeRef = useRef(null);
-
-  // Cargar categorías de Airtable al iniciar el componente
-  useEffect(() => {
-    async function loadCategories() {
-      const categoriesData = await fetchCategories();
-      setCategories(categoriesData);
-    }
-
-    loadCategories();
-  }, []);
 
   if (loading) {
     return (
@@ -102,7 +90,7 @@ function App() {
                     path: '/',
                     element: (
                       <ProtectedRoute>
-                        <Dashboard categories={categories} />
+                        <Dashboard />
                       </ProtectedRoute>
                     ),
                   },
@@ -110,7 +98,7 @@ function App() {
                     path: '/statistics',
                     element: (
                       <ProtectedRoute>
-                        <Statistics categories={categories} />
+                        <Statistics />
                       </ProtectedRoute>
                     ),
                   },
@@ -118,7 +106,7 @@ function App() {
                     path: '/tabla',
                     element: (
                       <ProtectedRoute>
-                        <Tabla categories={categories} />
+                        <Tabla />
                       </ProtectedRoute>
                     ),
                   },
@@ -150,4 +138,3 @@ function App() {
 }
 
 export default App;
-//se ajusta..
