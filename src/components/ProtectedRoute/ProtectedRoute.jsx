@@ -17,13 +17,18 @@ import useAuth from '../../hooks/useAuth';
 const allowedEmails = import.meta.env.VITE_ALLOWED_EMAILS.split(',');
 
 const ProtectedRoute = ({ children }) => {
-  const { user, loading, error } = useAuth();
+  const { user, loading } = useAuth();
   const [unauthorized, setUnauthorized] = useState(false);
 
   useEffect(() => {
-    if (user && !allowedEmails.includes(user.email)) {
-      setUnauthorized(true);
-      toast.error('No tienes autorización para acceder a esta aplicación.');
+    // Se actualiza el estado de autorización solo cuando el usuario está definido
+    if (user) {
+      if (!allowedEmails.includes(user.email)) {
+        setUnauthorized(true);
+        toast.error('No tienes autorización para acceder a esta aplicación.');
+      } else {
+        setUnauthorized(false);
+      }
     }
   }, [user]);
 
@@ -41,10 +46,12 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!user) {
+    // Redirecciona al login si no hay usuario autenticado
     return <Navigate to="/login" />;
   }
 
   if (unauthorized) {
+    // Redirecciona y muestra el diálogo de no autorizado
     return (
       <>
         <Navigate to="/login" />
