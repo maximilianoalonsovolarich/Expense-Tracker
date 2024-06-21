@@ -1,3 +1,5 @@
+// src/components/ProtectedRoute/ProtectedRoute.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
@@ -20,14 +22,11 @@ const ProtectedRoute = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (error) {
-      toast.error('Error de autenticación: ' + error.message);
-    }
-    if (user && !allowedEmails.includes(user.email) && !open) {
+    if (user && !allowedEmails.includes(user.email)) {
       setOpen(true);
       toast.error('No tienes autorización para acceder a esta aplicación.');
     }
-  }, [user, error, open]);
+  }, [user]);
 
   if (loading) {
     return (
@@ -42,17 +41,14 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (error) {
-    return <Navigate to="/login" replace />;
-  }
-
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" />;
   }
 
   if (user && !allowedEmails.includes(user.email)) {
     return (
       <>
+        <Navigate to="/login" />
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Sin autorización</DialogTitle>
           <DialogContent>
@@ -65,7 +61,6 @@ const ProtectedRoute = ({ children }) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Navigate to="/login" replace />
       </>
     );
   }
