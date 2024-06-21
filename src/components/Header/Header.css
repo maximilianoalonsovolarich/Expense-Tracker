@@ -11,32 +11,21 @@
 }
 
 .header-title {
-    flex-grow: 1;
-    font-size: 1.25rem;
-    /* Reduce the font size for "Bienvenido" and "Finanzas" */
-}
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-/* Estilos específicos */
-.welcome-message {
-    font-size: 1rem;
-    /* Adjust the font size for "Bienvenido" */
-}
-
-.user-name {
-    font-size: 1rem;
-    /* Adjust the font size for the user's name */
-}
-
-/* Estilos responsivos */
-@media (max-width: 768px) {
-    .header-title {
-        font-size: 1rem;
-        /* Further reduce the font size for "Bienvenido" and "Finanzas" on mobile */
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
     }
+}
 
-    .welcome-message,
-    .user-name {
-        display: block;
-        /* Display "Bienvenido" and the name on separate lines on mobile */
+.additional-message {
+    font-size: 1rem;
+
+    @media (min-width: 768px) {
+        font-size: 1rem;
+        margin-left: 0.5rem;
     }
 }

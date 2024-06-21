@@ -31,20 +31,26 @@ import useCache from '../../hooks/useCache';
 import { fetchExpenses } from '../../services/api';
 import './Header.css';
 
-const HeaderTitle = styled(Typography)`
+const HeaderTitle = styled.div`
   flex-grow: 1;
   font-size: 1.5rem;
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 
-const HeaderButtons = styled.div`
-  display: flex;
-  align-items: center;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
+const AdditionalMessage = styled.span`
+  display: block;
+  font-size: 1rem;
+  @media (min-width: 768px) {
+    display: inline;
+    font-size: 1rem;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -58,7 +64,7 @@ const MenuButton = styled(IconButton)`
 
 function Header({ mode, toggleColorMode, user }) {
   const [additionalMessage, setAdditionalMessage] = useState(
-    'finanzas personales'
+    'Finanzas personales'
   );
   const navigate = useNavigate();
   const location = useLocation();
@@ -134,8 +140,11 @@ function Header({ mode, toggleColorMode, user }) {
               <MenuIcon />
             </MenuButton>
           )}
-          <HeaderTitle variant="h6">
-            Bienvenido <span className={fadeClass}>{additionalMessage}</span>
+          <HeaderTitle>
+            <Typography variant="h6">Bienvenido</Typography>
+            <AdditionalMessage className={fadeClass}>
+              {additionalMessage}
+            </AdditionalMessage>
           </HeaderTitle>
 
           <IconButton
