@@ -1,70 +1,41 @@
-// src/components/ProtectedRoute/ProtectedRoute.jsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import {
-  Box,
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from '@mui/material';
+import { useAuth } from '../../hooks/useAuth'; // Asegúrate de que este hook retorna el usuario y el estado de carga
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { toast } from 'react-toastify';
-import useAuth from '../../hooks/useAuth';
 
-const allowedEmails = import.meta.env.VITE_ALLOWED_EMAILS.split(',');
+const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS.split(',');
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const [unauthorized, setUnauthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    // Se actualiza el estado de autorización solo cuando el usuario está definido
-    if (user) {
-      if (!allowedEmails.includes(user.email)) {
-        setUnauthorized(true);
-        toast.error('No tienes autorización para acceder a esta aplicación.');
+    if (!loading && user) {
+      if (allowedEmails.includes(user.email)) {
+        setIsAuthorized(true);
       } else {
-        setUnauthorized(false);
+        setIsAuthorized(false);
+        toast.error("No tienes autorización para acceder a esta aplicación.");
       }
     }
-  }, [user]);
+  }, [user, loading]);
 
   if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <div>Loading...</div>; // O algún otro componente de carga
   }
 
-  if (!user) {
-    // Redirecciona al login si no hay usuario autenticado
-    return <Navigate to="/login" />;
-  }
-
-  if (unauthorized) {
-    // Redirecciona y muestra el diálogo de no autorizado
+  if (!user || !isAuthorized) {
     return (
       <>
-        <Navigate to="/login" />
-        <Dialog open={unauthorized} onClose={() => setUnauthorized(false)}>
+        <Navigate to="/login" replace />
+        <Dialog open={!isAuthorized} onClose={() => {}}>
           <DialogTitle>Sin autorización</DialogTitle>
           <DialogContent>
-            No tienes autorización para acceder a esta aplicación. Solicita
-            acceso al administrador.
+            No tienes autorización para acceder a esta aplicación. Solicita acceso al administrador.
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setUnauthorized(false)} color="primary">
-              Cerrar
-            </Button>
+            <Button onClick={() => {}}>Cerrar</Button>
           </DialogActions>
         </Dialog>
       </>
