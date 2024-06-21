@@ -20,11 +20,14 @@ const ProtectedRoute = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (user && !allowedEmails.includes(user.email)) {
+    if (error) {
+      toast.error('Error de autenticación: ' + error.message);
+    }
+    if (user && !allowedEmails.includes(user.email) && !open) {
       setOpen(true);
       toast.error('No tienes autorización para acceder a esta aplicación.');
     }
-  }, [user]);
+  }, [user, error, open]);
 
   if (loading) {
     return (
@@ -39,14 +42,17 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
+  if (error) {
+    return <Navigate to="/login" replace />;
+  }
+
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   if (user && !allowedEmails.includes(user.email)) {
     return (
       <>
-        <Navigate to="/login" />
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Sin autorización</DialogTitle>
           <DialogContent>
@@ -59,6 +65,7 @@ const ProtectedRoute = ({ children }) => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Navigate to="/login" replace />
       </>
     );
   }
