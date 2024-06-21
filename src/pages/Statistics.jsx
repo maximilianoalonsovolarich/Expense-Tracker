@@ -4,40 +4,38 @@ import React, { useState } from 'react';
 import {
   Container,
   Box,
-  Typography,
   CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
   Paper,
-  Grid,
-  TextField,
+  Typography, // Agregar importación de Typography
 } from '@mui/material';
 import { saveAs } from 'file-saver';
 import CountUp from 'react-countup';
 import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
 import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
+import ExpenseList from '../components/ExpenseList/ExpenseList';
+import ExpenseFilters from '../components/ExpenseFilters/ExpenseFilters';
+import ExpenseSummaryBar from '../components/ExpenseSummaryBar/ExpenseSummaryBar';
 import useCache from '../hooks/useCache';
 import { fetchExpenses, fetchCategories } from '../services/api';
 
 function Statistics() {
   const {
     data: cachedData,
-    loading,
-    error,
+    loading: loadingExpenses,
+    error: errorExpenses,
   } = useCache('expenses', fetchExpenses);
+
   const {
     data: cachedCategories,
     loading: loadingCategories,
     error: errorCategories,
   } = useCache('categories', fetchCategories);
+
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
 
-  if (loading || loadingCategories) {
+  if (loadingExpenses || loadingCategories) {
     return (
       <Box
         display="flex"
@@ -50,10 +48,11 @@ function Statistics() {
     );
   }
 
-  if (error || errorCategories) {
+  if (errorExpenses || errorCategories) {
     return (
       <Typography variant="h6" color="error">
-        Error al cargar los datos: {error?.message || errorCategories?.message}
+        Error al cargar los datos:{' '}
+        {errorExpenses?.message || errorCategories?.message}
       </Typography>
     );
   }
@@ -97,7 +96,6 @@ function Statistics() {
     saveAs(blob, 'gastos.csv');
   };
 
-  // Asegúrate de que cachedData.expenses esté definido antes de aplicar filtros
   const filteredExpenses = (cachedData.expenses || [])
     .filter((expense) =>
       filterStartDate
@@ -128,62 +126,22 @@ function Statistics() {
 
   return (
     <Container maxWidth="lg" className="container" sx={{ mt: 2 }}>
-      <Typography variant="h4" gutterBottom sx={{ mt: 2, mb: 2 }}>
-        Estadísticas de Gastos
-      </Typography>
-      <Box sx={{ mb: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              label="Desde"
-              type="date"
-              value={filterStartDate}
-              onChange={handleStartDateChange}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              label="Hasta"
-              type="date"
-              value={filterEndDate}
-              onChange={handleEndDateChange}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <FormControl fullWidth variant="outlined" sx={{ minWidth: 120 }}>
-              <InputLabel htmlFor="filter-category">Categoría</InputLabel>
-              <Select
-                value={filterCategory}
-                onChange={handleCategoryChange}
-                label="Categoría"
-                inputProps={{ name: 'filter-category', id: 'filter-category' }}
-              >
-                <MenuItem value="">Todas</MenuItem>
-                {cachedCategories.map((category, index) => (
-                  <MenuItem key={index} value={category}>
-                    {category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            sx={{ display: 'flex', justifyContent: 'flex-end' }}
-          >
-            <Button variant="contained" color="primary" onClick={handleExport}>
-              Exportar a CSV
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+      <ExpenseSummaryBar
+        totalGastos={sortedExpenses.length}
+        totalGanancia={totalGanancia}
+        totalGasto={totalGasto}
+        saldoActual={saldoActual}
+      />
+      <ExpenseFilters
+        filterStartDate={filterStartDate}
+        filterEndDate={filterEndDate}
+        filterCategory={filterCategory}
+        categories={cachedCategories || []}
+        handleStartDateChange={handleStartDateChange}
+        handleEndDateChange={handleEndDateChange}
+        handleCategoryChange={handleCategoryChange}
+        handleExport={handleExport}
+      />
       <Paper
         elevation={3}
         sx={{ padding: 2, height: '100%', position: 'relative' }}
@@ -209,6 +167,9 @@ function Statistics() {
         <ExpenseCharts expenses={sortedExpenses} saldoInicial={saldoInicial} />
         <Box sx={{ height: 100, mt: 2 }}>
           <SmallLineChart expenses={sortedExpenses} />
+        </Box>
+        <Box sx={{ mt: 4 }}>
+          <ExpenseList expenses={sortedExpenses} onDeleteExpense={() => {}} />
         </Box>
       </Paper>
     </Container>

@@ -1,29 +1,29 @@
+.fade-in {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
 .header-title {
-    flex-grow: 1;
-    font-size: 1.5rem;
-}
-
-.header-buttons {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+    }
 }
 
-.header-buttons .menu-button {
-    margin-right: 1rem;
-}
+.additional-message {
+    font-size: 1rem;
 
-@media (max-width: 768px) {
-    .header-title {
-        font-size: 1.25rem;
-    }
-
-    .header-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .header-buttons .menu-button {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
+    @media (min-width: 768px) {
+        font-size: 1rem;
+        margin-left: 0.5rem;
     }
 }

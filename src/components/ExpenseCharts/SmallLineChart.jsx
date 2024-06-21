@@ -15,7 +15,6 @@ import {
   parseISO,
   isValid,
   eachDayOfInterval,
-  addDays,
   startOfMonth,
 } from 'date-fns';
 
@@ -31,8 +30,7 @@ ChartJS.register(
 
 const getQuincenalLabels = (startDate, endDate) => {
   const start = startOfMonth(startDate);
-  const end = endDate;
-  const labels = eachDayOfInterval({ start, end }).filter(
+  const labels = eachDayOfInterval({ start, end: endDate }).filter(
     (date) => date.getDate() === 1 || date.getDate() === 15
   );
   return labels.map((date) => format(date, 'yyyy-MM-dd'));
@@ -70,7 +68,7 @@ const SmallLineChart = ({ expenses }) => {
   );
 
   const data = {
-    labels: labels,
+    labels,
     datasets: [
       {
         label: 'Saldo',

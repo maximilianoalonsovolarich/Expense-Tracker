@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
 import {
@@ -27,24 +26,31 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, logOut } from '../../services/firebase';
-import 'react-toastify/dist/ReactToastify.css';
 import useCache from '../../hooks/useCache';
 import { fetchExpenses } from '../../services/api';
+import 'react-toastify/dist/ReactToastify.css';
+import './Header.css';
 
-const HeaderTitle = styled(Typography)`
+const HeaderTitle = styled.div`
   flex-grow: 1;
   font-size: 1.5rem;
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 
-const HeaderButtons = styled.div`
-  display: flex;
-  align-items: center;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
+const AdditionalMessage = styled.span`
+  display: block;
+  font-size: 1rem;
+  @media (min-width: 768px) {
+    display: inline;
+    font-size: 1rem;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -58,11 +64,28 @@ const MenuButton = styled(IconButton)`
 
 function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
+  const [additionalMessage, setAdditionalMessage] = useState(
+    'Finanzas personales'
+  );
   const navigate = useNavigate();
-  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const [fadeClass, setFadeClass] = useState('fade-in');
   const { clearCache } = useCache('expenses', fetchExpenses);
+
+  useEffect(() => {
+    let index = 0;
+    const messages = ['Finanzas personales', user ? user.displayName : ''];
+    const interval = setInterval(() => {
+      setFadeClass('fade-out');
+      setTimeout(() => {
+        setAdditionalMessage(messages[index]);
+        setFadeClass('fade-in');
+        index = (index + 1) % messages.length;
+      }, 1000);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -117,7 +140,13 @@ function Header({ mode, toggleColorMode }) {
               <MenuIcon />
             </MenuButton>
           )}
-          <HeaderTitle variant="h6">Finanzas</HeaderTitle>
+          <HeaderTitle>
+            <Typography variant="h6">Bienvenido</Typography>
+            <AdditionalMessage className={fadeClass}>
+              {additionalMessage}
+            </AdditionalMessage>
+          </HeaderTitle>
+
           <IconButton
             sx={{
               color: '#FFFFFF',
@@ -133,7 +162,7 @@ function Header({ mode, toggleColorMode }) {
               color="inherit"
               onClick={handleClearCache}
               startIcon={<RefreshIcon />}
-            ></Button>
+            />
           )}
         </Toolbar>
       </AppBar>

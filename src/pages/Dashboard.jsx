@@ -1,5 +1,3 @@
-// src/pages/Dashboard.jsx
-
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -9,18 +7,17 @@ import {
   CircularProgress,
   Typography,
   Paper,
-  TextField,
-  Divider,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm/ExpenseForm';
 import ExpenseList from '../components/ExpenseList/ExpenseList';
-import SmallLineChart from '../components/ExpenseCharts/SmallLineChart';
+import ExpenseSummaryBar from '../components/ExpenseSummaryBar/ExpenseSummaryBar';
 import { fetchExpenses, addExpense, deleteExpense } from '../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCache from '../hooks/useCache';
+import ExpenseCharts from '../components/ExpenseCharts/ExpenseCharts';
 
 function Dashboard() {
   const {
@@ -32,11 +29,6 @@ function Dashboard() {
   } = useCache('expenses', fetchExpenses);
   const [expenses, setExpenses] = useState([]);
   const [saldoInicial, setSaldoInicial] = useState(0);
-  const [filterStartDate, setFilterStartDate] = useState('');
-  const [filterEndDate, setFilterEndDate] = useState('');
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (cachedData && Array.isArray(cachedData.expenses)) {
@@ -79,14 +71,6 @@ function Dashboard() {
     }
   };
 
-  const handleFilterStartDateChange = (event) => {
-    setFilterStartDate(event.target.value);
-  };
-
-  const handleFilterEndDateChange = (event) => {
-    setFilterEndDate(event.target.value);
-  };
-
   if (loading) {
     return (
       <Box
@@ -108,116 +92,45 @@ function Dashboard() {
     );
   }
 
-  const filteredExpenses = expenses.filter(
-    (expense) =>
-      (!filterStartDate ||
-        new Date(expense.Fecha) >= new Date(filterStartDate)) &&
-      (!filterEndDate || new Date(expense.Fecha) <= new Date(filterEndDate))
-  );
-
-  const sortedExpenses = [...filteredExpenses].sort(
-    (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-  );
-
-  const totalGastos = sortedExpenses.length;
-
-  const totalGanancia = sortedExpenses
-    .filter((expense) => expense.Ganancia)
-    .reduce((total, expense) => total + expense.Cantidad, 0);
-
-  const totalGasto = sortedExpenses
-    .filter((expense) => expense.Gasto)
-    .reduce((total, expense) => total + expense.Cantidad, 0);
-
-  const saldoActual = saldoInicial + totalGanancia - totalGasto;
-
   return (
     <Container maxWidth="lg" className="container" sx={{ mt: 0, pt: 2 }}>
       <CssBaseline />
       <ToastContainer position="top-right" />
-      <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
-        Dashboard
-      </Typography>
-      <Grid container spacing={4}>
-        {isMobile && (
-          <Grid item xs={12}>
-            <ExpenseForm onAddExpense={handleAddExpense} />
-          </Grid>
+      <ExpenseSummaryBar
+        totalGastos={expenses.length}
+        totalGanancia={expenses.reduce(
+          (sum, expense) => (expense.Ganancia ? sum + expense.Cantidad : sum),
+          0
         )}
+        totalGasto={expenses.reduce(
+          (sum, expense) => (expense.Gasto ? sum + expense.Cantidad : sum),
+          0
+        )}
+        saldoActual={
+          saldoInicial +
+          expenses.reduce(
+            (sum, expense) => (expense.Ganancia ? sum + expense.Cantidad : sum),
+            0
+          ) -
+          expenses.reduce(
+            (sum, expense) => (expense.Gasto ? sum + expense.Cantidad : sum),
+            0
+          )
+        }
+      />
+      <Grid container spacing={4} justifyContent="center">
         <Grid item xs={12} md={6}>
-          <Grid container spacing={4} sx={{ height: '100%' }}>
-            <Grid item xs={12} md={sortedExpenses.length === 0 ? 12 : 6}>
-              <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 2,
-                    color: saldoActual < 0 ? 'error.main' : 'success.main',
-                    backgroundColor:
-                      saldoActual < 0
-                        ? 'rgba(255, 99, 71, 0.1)'
-                        : 'rgba(144, 238, 144, 0.1)',
-                    padding: '8px',
-                    borderRadius: '4px',
-                  }}
-                >
-                  Total de Tickets: {totalGastos}
-                </Typography>
-                <Divider sx={{ my: 1 }} />
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  Total Ganancia: ${totalGanancia}
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  Total Gasto: ${totalGasto}
-                </Typography>
-                <Divider sx={{ my: 1 }} />
-                <Typography
-                  variant="body1"
-                  sx={{
-                    mb: 2,
-                    color: saldoActual < 0 ? 'error.main' : 'text.primary',
-                  }}
-                >
-                  Saldo Actual: ${saldoActual}
-                </Typography>
-                <TextField
-                  label="Desde"
-                  type="date"
-                  value={filterStartDate}
-                  onChange={handleFilterStartDateChange}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  sx={{ mt: 2 }}
-                />
-                <TextField
-                  label="Hasta"
-                  type="date"
-                  value={filterEndDate}
-                  onChange={handleFilterEndDateChange}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  sx={{ mt: 2 }}
-                />
-                <Box sx={{ height: 100, mt: 2 }}>
-                  <SmallLineChart expenses={sortedExpenses} />
-                </Box>
-              </Paper>
-            </Grid>
-            {sortedExpenses.length > 0 && (
-              <Grid item xs={12} md={6}>
-                <ExpenseList
-                  expenses={sortedExpenses}
-                  onDeleteExpense={handleDeleteExpense}
-                />
-              </Grid>
-            )}
-          </Grid>
+          <ExpenseForm onAddExpense={handleAddExpense} />
         </Grid>
-        {!isMobile && (
-          <Grid item xs={12} md={6}>
-            <ExpenseForm onAddExpense={handleAddExpense} />
-          </Grid>
-        )}
+        <Grid item xs={12} md={6}>
+          <ExpenseCharts expenses={expenses} saldoInicial={saldoInicial} />
+        </Grid>
+        <Grid item xs={12}>
+          <ExpenseList
+            expenses={expenses}
+            onDeleteExpense={handleDeleteExpense}
+          />
+        </Grid>
       </Grid>
     </Container>
   );

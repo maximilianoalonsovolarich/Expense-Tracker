@@ -4,16 +4,18 @@ import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
-  Typography,
   CircularProgress,
   TextField,
   Button,
   Grid,
   MenuItem,
+  Typography, // Agregar importación de Typography
 } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { fetchExpenses, fetchCategories } from '../services/api';
 import { saveAs } from 'file-saver';
+import ExpenseFilters from '../components/ExpenseFilters/ExpenseFilters';
+import ExpenseSummaryBar from '../components/ExpenseSummaryBar/ExpenseSummaryBar';
 
 function Tabla() {
   const [expenses, setExpenses] = useState([]);
@@ -109,63 +111,40 @@ function Tabla() {
     );
   }
 
+  const totalGanancia = filteredExpenses
+    .filter((expense) => expense.Ganancia)
+    .reduce((total, expense) => total + expense.Cantidad, 0);
+
+  const totalGasto = filteredExpenses
+    .filter((expense) => expense.Gasto)
+    .reduce((total, expense) => total + expense.Cantidad, 0);
+
+  const saldoInicial = expenses.reduce(
+    (sum, expense) =>
+      expense.Categoría === 'Saldo Inicial' ? sum + expense.Cantidad : sum,
+    0
+  );
+
+  const saldoActual = saldoInicial + totalGanancia - totalGasto;
+
   return (
     <Container maxWidth="lg" sx={{ mt: 2 }}>
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{ mt: 2, mb: 2, textAlign: 'center' }}
-      >
-        Tabla de Gastos
-      </Typography>
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        sx={{ mb: 2, justifyContent: 'center' }}
-      >
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Desde"
-            type="date"
-            value={filterStartDate}
-            onChange={(e) => setFilterStartDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Hasta"
-            type="date"
-            value={filterEndDate}
-            onChange={(e) => setFilterEndDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            label="Filtrar por Categoría"
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            select
-            fullWidth
-          >
-            <MenuItem value="">Todas</MenuItem>
-            {categories.map((category, index) => (
-              <MenuItem key={index} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} textAlign="right">
-          <Button variant="contained" color="primary" onClick={handleExport}>
-            Exportar a CSV
-          </Button>
-        </Grid>
-      </Grid>
+      <ExpenseSummaryBar
+        totalGastos={filteredExpenses.length}
+        totalGanancia={totalGanancia}
+        totalGasto={totalGasto}
+        saldoActual={saldoActual}
+      />
+      <ExpenseFilters
+        filterStartDate={filterStartDate}
+        filterEndDate={filterEndDate}
+        filterCategory={filterCategory}
+        categories={categories}
+        handleStartDateChange={(e) => setFilterStartDate(e.target.value)}
+        handleEndDateChange={(e) => setFilterEndDate(e.target.value)}
+        handleCategoryChange={(e) => setFilterCategory(e.target.value)}
+        handleExport={handleExport}
+      />
       <Box sx={{ height: 500, width: '100%' }}>
         <DataGrid
           rows={filteredExpenses}

@@ -1,5 +1,3 @@
-// src/services/api.js
-
 import axios from 'axios';
 
 const AIRTABLE_ENDPOINT = import.meta.env.VITE_AIRTABLE_ENDPOINT;
@@ -8,24 +6,19 @@ const HEADERS = {
   'Content-Type': 'application/json',
 };
 
-// Fetch expenses
 export const fetchExpenses = async () => {
   try {
     const response = await axios.get(AIRTABLE_ENDPOINT, { headers: HEADERS });
-    const records = response.data.records
-      .map((record) => ({
-        ...record.fields,
-        id: record.id,
-        ID: record.fields.ID,
-        Fecha: record.fields.Fecha || 'No disponible',
-        Cantidad: record.fields.Cantidad || 0,
-        Categoría: record.fields.Categoría || 'No especificada',
-        Descripción: record.fields.Descripción || 'No disponible',
-        Ganancia: record.fields.Ganancia || false,
-        Gasto: record.fields.Gasto || false,
-      }))
-      .filter((record) => record.Fecha && record.Fecha !== 'No disponible');
-
+    const records = response.data.records.map((record) => ({
+      ...record.fields,
+      id: record.id,
+      Fecha: record.fields.Fecha || 'No disponible',
+      Cantidad: record.fields.Cantidad || 0,
+      Categoría: record.fields.Categoría || 'No especificada',
+      Descripción: record.fields.Descripción || 'No disponible',
+      Ganancia: record.fields.Ganancia || false,
+      Gasto: record.fields.Gasto || false,
+    }));
     const saldoInicialRecord = records.find(
       (record) => record.Categoría === 'Saldo Inicial'
     );
@@ -38,7 +31,6 @@ export const fetchExpenses = async () => {
   }
 };
 
-// Fetch categories
 export const fetchCategories = async () => {
   try {
     const response = await axios.get(AIRTABLE_ENDPOINT, { headers: HEADERS });
@@ -52,7 +44,6 @@ export const fetchCategories = async () => {
   }
 };
 
-// Add expense
 export const addExpense = async (expense) => {
   try {
     const response = await axios.post(
@@ -76,7 +67,6 @@ export const addExpense = async (expense) => {
   }
 };
 
-// Delete expense
 export const deleteExpense = async (id) => {
   try {
     const response = await axios.delete(`${AIRTABLE_ENDPOINT}/${id}`, {
