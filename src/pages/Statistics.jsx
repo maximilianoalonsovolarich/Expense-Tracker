@@ -97,7 +97,8 @@ function Statistics() {
     saveAs(blob, 'gastos.csv');
   };
 
-  const filteredExpenses = cachedData.expenses
+  // Asegúrate de que cachedData.expenses esté definido antes de aplicar filtros
+  const filteredExpenses = (cachedData.expenses || [])
     .filter((expense) =>
       filterStartDate
         ? new Date(expense.Fecha) >= new Date(filterStartDate)
