@@ -1,3 +1,4 @@
+//ajuste
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth'; // Asegúrate de que este hook retorna el usuario y el estado de carga
