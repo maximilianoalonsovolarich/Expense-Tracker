@@ -6,14 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    cors: true, // Enables CORS
-  },
-  base: '/', // Sets base path for the project
-  build: {
-    outDir: 'dist', // Output directory for build files
-    emptyOutDir: true, // Clears the directory on each build
-    rollupOptions: {
-      input: 'dist/index.html', // Adjusted to the correct path to your index.html
+    cors: {
+      origin: '*', // Permite todas las solicitudes de origen cruzado
     },
+  },
+  define: {
+    'process.env': process.env,
   },
 });
