@@ -6,16 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    cors: {
-      origin: '*', // Allows all cross-origin requests
-    },
+    cors: true, // Enables CORS
   },
-  define: {
-    'process.env': process.env,
-  },
-  base: './', // Ensure the base is set to deploy the directory correctly on Vercel
+  base: '/', // Sets base path for the project
   build: {
-    outDir: 'dist', // Makes sure to compile all files to the 'dist' directory
+    outDir: 'dist', // Output directory for build files
+    emptyOutDir: true, // Clears the directory on each build
     rollupOptions: {
       input: 'dist/index.html', // Adjusted to the correct path to your index.html
     },
