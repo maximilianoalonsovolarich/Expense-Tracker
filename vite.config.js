@@ -17,7 +17,7 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Makes sure to compile all files to the 'dist' directory
     rollupOptions: {
-      input: '/path/to/your/index.html', // Adjust if your index.html is not at the root
+      input: 'dist/index.html', // Adjusted to the correct path to your index.html
     },
   },
 });
