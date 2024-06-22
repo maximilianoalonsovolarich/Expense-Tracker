@@ -1,9 +1,32 @@
+// api.js
 import axios from 'axios';
 
 const AIRTABLE_ENDPOINT = import.meta.env.VITE_AIRTABLE_ENDPOINT;
 const HEADERS = {
   Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_KEY}`,
   'Content-Type': 'application/json',
+};
+
+let queue = [];
+let isProcessingQueue = false;
+
+const processQueue = async () => {
+  if (isProcessingQueue || queue.length === 0) return;
+
+  isProcessingQueue = true;
+  const { id, resolve, reject } = queue.shift();
+
+  try {
+    const response = await axios.delete(`${AIRTABLE_ENDPOINT}/${id}`, {
+      headers: HEADERS,
+    });
+    resolve(response.data);
+  } catch (error) {
+    reject(error);
+  } finally {
+    isProcessingQueue = false;
+    setTimeout(processQueue, 500); // Pausa de 500 ms entre cada solicitud
+  }
 };
 
 export const fetchExpenses = async () => {
@@ -67,14 +90,9 @@ export const addExpense = async (expense) => {
   }
 };
 
-export const deleteExpense = async (id) => {
-  try {
-    const response = await axios.delete(`${AIRTABLE_ENDPOINT}/${id}`, {
-      headers: HEADERS,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting expense:', error);
-    throw error;
-  }
+export const deleteExpense = (id) => {
+  return new Promise((resolve, reject) => {
+    queue.push({ id, resolve, reject });
+    processQueue();
+  });
 };

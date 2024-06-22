@@ -1,3 +1,5 @@
+// ExpenseCharts.jsx
+
 import React from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Box, Paper, Typography, Grid } from '@mui/material';
@@ -23,14 +25,18 @@ ChartJS.register(
   Legend
 );
 
-function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
-  const groupedExpenses = expenses.reduce(
+const filterValidExpenses = (expenses) => {
+  return expenses.filter((expense) => {
+    const { Fecha } = expense;
+    const date = parseISO(Fecha);
+    return Fecha !== 'No disponible' && isValid(date);
+  });
+};
+
+const groupExpensesByMonth = (expenses) => {
+  return expenses.reduce(
     (acc, expense) => {
       const date = parseISO(expense.Fecha);
-      if (!isValid(date)) {
-        console.error(`Fecha inválida: ${expense.Fecha}`);
-        return acc;
-      }
       const month = format(date, 'MMMM yyyy', { locale: es });
       if (!acc.ganancias[month]) {
         acc.ganancias[month] = 0;
@@ -48,6 +54,11 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
     },
     { ganancias: {}, gastos: {} }
   );
+};
+
+const ExpenseCharts = ({ expenses = [], saldoInicial = 0 }) => {
+  const validExpenses = filterValidExpenses(expenses);
+  const groupedExpenses = groupExpensesByMonth(validExpenses);
 
   const data = {
     labels: Object.keys(groupedExpenses.ganancias),
@@ -96,6 +107,6 @@ function ExpenseCharts({ expenses = [], saldoInicial = 0 }) {
       </Grid>
     </Paper>
   );
-}
+};
 
 export default ExpenseCharts;

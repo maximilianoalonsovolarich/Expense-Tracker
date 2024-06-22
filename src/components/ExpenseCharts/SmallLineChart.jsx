@@ -1,4 +1,4 @@
-// src/components/ExpenseCharts/SmallLineChart.jsx
+// SmallLineChart-CwtACpS9.js
 
 import React from 'react';
 import { Line } from 'react-chartjs-2';
@@ -18,6 +18,7 @@ import {
   isValid,
   eachDayOfInterval,
   startOfMonth,
+  endOfMonth,
 } from 'date-fns';
 
 ChartJS.register(
@@ -32,7 +33,8 @@ ChartJS.register(
 
 const getQuincenalLabels = (startDate, endDate) => {
   const start = startOfMonth(startDate);
-  const labels = eachDayOfInterval({ start, end: endDate }).filter(
+  const end = endOfMonth(endDate);
+  const labels = eachDayOfInterval({ start, end }).filter(
     (date) => date.getDate() === 1 || date.getDate() === 15
   );
   return labels.map((date) => format(date, 'yyyy-MM-dd'));
@@ -40,15 +42,17 @@ const getQuincenalLabels = (startDate, endDate) => {
 
 const groupExpensesByQuincena = (expenses) => {
   return expenses.reduce((acc, expense) => {
+    if (expense.Fecha === 'No disponible') {
+      console.warn(`Fecha no disponible para el gasto: ${expense.ID}`);
+      return acc;
+    }
     const date = parseISO(expense.Fecha);
     if (!isValid(date)) {
       console.error(`Fecha inválida: ${expense.Fecha}`);
       return acc;
     }
-
     const day = date.getDate() <= 15 ? '01' : '15';
     const quincena = `${format(date, 'yyyy-MM')}-${day}`;
-
     if (!acc[quincena]) {
       acc[quincena] = 0;
     }
@@ -63,11 +67,19 @@ const groupExpensesByQuincena = (expenses) => {
 };
 
 const SmallLineChart = ({ expenses }) => {
-  const groupedExpenses = groupExpensesByQuincena(expenses);
-  const labels = getQuincenalLabels(
-    new Date(expenses[0]?.Fecha),
-    new Date(expenses[expenses.length - 1]?.Fecha)
+  const validExpenses = expenses.filter(
+    (expense) =>
+      expense.Fecha !== 'No disponible' && isValid(parseISO(expense.Fecha))
   );
+
+  if (validExpenses.length === 0) {
+    return <div>No hay datos válidos para mostrar en el gráfico.</div>;
+  }
+
+  const groupedExpenses = groupExpensesByQuincena(validExpenses);
+  const startDate = parseISO(validExpenses[0]?.Fecha);
+  const endDate = parseISO(validExpenses[validExpenses.length - 1]?.Fecha);
+  const labels = getQuincenalLabels(startDate, endDate);
 
   const data = {
     labels,
