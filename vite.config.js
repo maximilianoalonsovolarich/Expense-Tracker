@@ -7,10 +7,17 @@ export default defineConfig({
   server: {
     port: 5173,
     cors: {
-      origin: '*', // Permite todas las solicitudes de origen cruzado
+      origin: '*', // Allows all cross-origin requests
     },
   },
   define: {
     'process.env': process.env,
+  },
+  base: './', // Ensure the base is set to deploy the directory correctly on Vercel
+  build: {
+    outDir: 'dist', // Makes sure to compile all files to the 'dist' directory
+    rollupOptions: {
+      input: '/path/to/your/index.html', // Adjust if your index.html is not at the root
+    },
   },
 });
