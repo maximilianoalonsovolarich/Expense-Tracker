@@ -1,4 +1,4 @@
-// api.js
+// src/services/api.js
 import axios from 'axios';
 
 const AIRTABLE_ENDPOINT = import.meta.env.VITE_AIRTABLE_ENDPOINT;
@@ -25,7 +25,7 @@ const processQueue = async () => {
     reject(error);
   } finally {
     isProcessingQueue = false;
-    setTimeout(processQueue, 500); // Pausa de 500 ms entre cada solicitud
+    setTimeout(processQueue, 500); // Pause of 500 ms between each request
   }
 };
 
