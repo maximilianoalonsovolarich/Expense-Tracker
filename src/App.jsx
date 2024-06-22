@@ -16,7 +16,6 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Header from './components/Header/Header';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
-import ErrorPage from './pages/ErrorPage';
 import getTheme from './theme';
 import useAuth from './hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
@@ -102,7 +101,14 @@ function App() {
                       </ProtectedRoute>
                     ),
                   },
-                  { path: '*', element: <ErrorPage /> },
+                  {
+                    path: '*',
+                    element: user ? (
+                      <Navigate to="/" />
+                    ) : (
+                      <Navigate to="/login" />
+                    ),
+                  },
                 ].map(({ path, element }) => (
                   <Route
                     key={path}
