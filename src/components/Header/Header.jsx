@@ -130,7 +130,7 @@ function Header({ mode, toggleColorMode }) {
             </MenuButton>
           )}
           <HeaderTitle>
-            <Typography variant="h6">Bienvenido</Typography>
+            <Typography variant="br">Bienvenido</Typography>
             <AdditionalMessage className={fadeClass}>
               {additionalMessage}
             </AdditionalMessage>

@@ -18,25 +18,25 @@ const ExpenseSummaryBar = ({
 
   const summaryItems = [
     {
-      title: 'Total Tickets',
+      title: 'Tickets',
       value: totalGastos,
       icon: ReceiptIcon,
       prefix: '',
     },
     {
-      title: 'Total Ganancia',
+      title: 'Ingreso',
       value: totalGanancia,
       icon: TrendingUpIcon,
       prefix: '$',
     },
     {
-      title: 'Total Gasto',
+      title: 'Egreso',
       value: totalGasto,
       icon: TrendingDownIcon,
       prefix: '$',
     },
     {
-      title: 'Saldo Actual',
+      title: 'Saldo',
       value: saldoActual,
       icon: AccountBalanceWalletIcon,
       prefix: '$',
