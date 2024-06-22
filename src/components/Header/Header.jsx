@@ -38,19 +38,18 @@ const HeaderTitle = styled.div`
   flex-direction: column;
   align-items: flex-start;
   @media (min-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.5rem; // Tamaño constante en todas las resoluciones
     flex-direction: row;
     align-items: center;
   }
 `;
 
 const AdditionalMessage = styled.span`
+  font-size: 1.5rem; // Igual que HeaderTitle
   display: block;
-  font-size: 1rem;
   @media (min-width: 768px) {
     display: inline;
-    font-size: 1rem;
-    margin-left: 0.5rem;
+    margin-left: 0.5rem; // Espaciado solo en resoluciones grandes
   }
 `;
 
@@ -64,17 +63,23 @@ const MenuButton = styled(IconButton)`
 
 function Header({ mode, toggleColorMode }) {
   const [user] = useAuthState(auth);
-  const [additionalMessage, setAdditionalMessage] = useState(
-    'Finanzas personales'
-  );
+  const [additionalMessage, setAdditionalMessage] = useState('a Finanzas');
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [fadeClass, setFadeClass] = useState('fade-in');
   const { clearCache } = useCache('expenses', fetchExpenses);
 
+  // Definición correcta de toggleDrawer
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
+
   useEffect(() => {
     let index = 0;
-    const messages = ['Finanzas personales', user ? user.displayName : ''];
+    const messages = [
+      'a Finanzas', // Mensaje actualizado
+      user ? user.displayName : '',
+    ];
     const interval = setInterval(() => {
       setFadeClass('fade-out');
       setTimeout(() => {
@@ -86,18 +91,6 @@ function Header({ mode, toggleColorMode }) {
 
     return () => clearInterval(interval);
   }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('isLoggedIn', 'true');
-    } else {
-      localStorage.removeItem('isLoggedIn');
-    }
-  }, [user]);
-
-  useEffect(() => {
-    localStorage.setItem('theme', mode);
-  }, [mode]);
 
   const handleNavigate = useCallback(
     (path) => {
@@ -116,10 +109,6 @@ function Header({ mode, toggleColorMode }) {
       toast.error('Error al cerrar sesión: ' + error.message);
     }
   }, [navigate]);
-
-  const toggleDrawer = (open) => () => {
-    setDrawerOpen(open);
-  };
 
   const handleClearCache = useCallback(() => {
     clearCache();
